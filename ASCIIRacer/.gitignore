@@ -1,0 +1,10 @@
+*.exe
+.vs
+.vscode
+build
+Debug
+Release
+#*.sln
+#*.vcxproj
+#*.filters
+#*.user
