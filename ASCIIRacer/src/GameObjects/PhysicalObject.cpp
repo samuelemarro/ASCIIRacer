@@ -1,18 +1,21 @@
+#include "Engine/GameEngine.hpp"
 #include "GameObjects/PhysicalObject.hpp"
 #include "Core/Utilities.hpp"
 
-PhysicalObject::PhysicalObject(Rect rect, Layer layer, char* sprite, Layer collisionLayer, Point2D speed, bool* collisionMask) : GameObject(rect, layer, sprite), collisionLayer(collisionLayer), speed(speed) {
-	if (collisionMask == NULL) {
-		this->collisionMask = new bool[rect.size.length()];
-		Utilities::fill2D(this->collisionMask, rect.size, true);
-	}
-	else {
-		this->collisionMask = collisionMask;
-	}
+PhysicalObject::PhysicalObject() : GameObject() {
+	GameEngine::AddPhysicalObject(*this);
 }
 
-PhysicalObject::PhysicalObject(Rect rect, Layer layer, char* sprite) : PhysicalObject(rect, layer, sprite, layer) {
+PhysicalObject::PhysicalObject(Rect rect, Layer layer, Sprite sprite) : GameObject(rect, layer, sprite) {
+	GameEngine::AddPhysicalObject(*this);
 }
+
+PhysicalObject::PhysicalObject(Rect rect, Layer layer, Sprite sprite, Layer collisionLayer, Point2D speed, CollisionMask collisionMask) : PhysicalObject(rect, layer, sprite) {
+	this->collisionLayer = collisionLayer;
+	this->speed = speed;
+	this->collisionMask = collisionMask;
+}
+
 
 void PhysicalObject::onStart() {}
 void PhysicalObject::onUpdate() {}

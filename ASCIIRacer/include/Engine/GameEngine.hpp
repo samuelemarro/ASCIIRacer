@@ -3,29 +3,27 @@
 #include <vector>
 
 #include "GameObjects/GameObject.hpp"
-#include "Engine/GameObjectTracker.hpp"
+#include "GameObjects/PhysicalObject.hpp"
 
 class GameEngine
 {
 private:
 	GameEngine();
+	static std::vector<GameObject> newGameObjects_;
+	static std::vector<PhysicalObject> newPhysicalObjects_;
 
 public:
-	static std::vector<GameObjectTracker> trackedObjects;
+	static std::vector<GameObject> gameObjects;
+	static std::vector<PhysicalObject> physicalObjects;
 
 	static int fps;
+
 	static int score;
 	//Eventuali informazioni di gioco
 
-	/**
-	 * @brief Aggiunge un oggetto al motore.
-	 *
-	 * Verrà aggiunto solo all'inizio del ciclo successivo.
-	 * Ogni oggetto aggiunto riceve la chiamata di onStart().
-	 *
-	 * @param newObject L'oggetto da aggiungere.
-	 */
-	static void AddObject(GameObject newObject);
+	//Accetta oggetti o i loro puntatori?
+	static void AddGameObject(GameObject gameObject);
+	static void AddPhysicalObject(PhysicalObject physicalObject);
 
 	/**
 	 * @brief Rimuove un oggetto dal motore e lo elimina.

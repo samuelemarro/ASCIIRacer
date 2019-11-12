@@ -14,7 +14,7 @@ using std::map;
 using std::vector;
 using std::string;
 
-vector<Key> Keyboard::currentDownKeys;
+KeyboardStatus Keyboard::currentStatus = KeyboardStatus();
 map<string, Key> Keyboard::keyBindings = { {"w", Key::Up}, {"a", Key::Left}, {"s", Key::Down}, {"d", Key::Right} };
 
 char Keyboard::readKeyboard()
@@ -77,7 +77,7 @@ vector<Key> Keyboard::parseKeys(string input)
 	return keys;
 }
 
-KeyboardStatus* Keyboard::getStatus()
+void Keyboard::updateStatus()
 {
 	string input = readAll();
 	vector<Key> inputKeys = parseKeys(input);
@@ -89,7 +89,7 @@ KeyboardStatus* Keyboard::getStatus()
 	//Identifica i pressed e i down
 	for (auto inputKey : inputKeys)
 	{
-		if (!Utilities::isIn(Keyboard::currentDownKeys.begin(), Keyboard::currentDownKeys.end(), inputKey))
+		if (!Keyboard::currentStatus.isDown(inputKey))
 		{
 			pressed.push_back(inputKey);
 		}
@@ -97,7 +97,7 @@ KeyboardStatus* Keyboard::getStatus()
 	}
 
 	//Identifica i released
-	for (auto downKey : Keyboard::currentDownKeys)
+	for (auto downKey : currentStatus.downKeys)
 	{
 		if (!Utilities::isIn(inputKeys.begin(), inputKeys.end(), downKey))
 		{
@@ -105,10 +105,6 @@ KeyboardStatus* Keyboard::getStatus()
 		}
 	}
 
-	Keyboard::currentDownKeys.clear();
-	Keyboard::currentDownKeys.insert(Keyboard::currentDownKeys.begin(), down.begin(), down.end());
 
-	KeyboardStatus* status = new KeyboardStatus(pressed, down, released);
-
-	return status;
+	Keyboard::currentStatus = KeyboardStatus(pressed, down, released);
 }

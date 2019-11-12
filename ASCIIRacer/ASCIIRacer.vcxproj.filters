@@ -48,9 +48,6 @@
     <ClCompile Include="src\Core\Rect.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Position.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
     <ClCompile Include="src\GameObjects\LevelObjects\Car.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
@@ -58,6 +55,9 @@
       <Filter>File di origine</Filter>
     </ClCompile>
     <ClCompile Include="src\GameObjects\LevelObjects\PlayerCar.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Point2D.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,12 +92,6 @@
     <ClInclude Include="include\GameObjects\GameObject.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="include\GameObjects\IKeyboard.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameObjects\KeyboardPriority.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
     <ClInclude Include="include\GameObjects\PhysicalObject.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
@@ -110,17 +104,20 @@
     <ClInclude Include="include\Core\Layer.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="include\Core\Position.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
     <ClInclude Include="include\Core\Size.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="include\Engine\GameEngine.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="include\Engine\GameObjectTracker.hpp">
+    <ClInclude Include="include\Core\Typedefs.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+    <ClInclude Include="include\Core\Point2D.hpp">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="sprites\PlayerCar.txt" />
   </ItemGroup>
 </Project>

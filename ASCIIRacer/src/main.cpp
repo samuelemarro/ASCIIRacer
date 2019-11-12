@@ -8,6 +8,7 @@
 #include "Engine/Graphics.hpp"
 #include "Engine/System.hpp"
 #include "GameObjects/LevelObjects/PlayerCar.hpp"
+#include "Engine/GameEngine.hpp"
 
 using namespace std;
 
@@ -28,22 +29,24 @@ void inputTest(bool redraw) {
 	while (true)
 	{
 		sleep_for(milliseconds(1000 / fps));
-		KeyboardStatus* status = Keyboard::getStatus();
-		if (status->isDown(Key::Right))
+		Keyboard::updateStatus();
+		KeyboardStatus status = Keyboard::currentStatus;
+		if (status.isDown(Key::Right))
 		{
 			car.rect.position.x += speed * deltaTime;
 		}
-		else if (status->isDown(Key::Left)) {
+		else if (status.isDown(Key::Left)) {
 			car.rect.position.x -= speed * deltaTime;
 		}
-		else if (status->isDown(Key::Up)) {
+		else if (status.isDown(Key::Up)) {
 			car.rect.position.y -= speed * deltaTime;
 		}
-		else if (status->isDown(Key::Down)) {
+		else if (status.isDown(Key::Down)) {
 			car.rect.position.y += speed * deltaTime;
 		}
 
 		Graphics::clearBuffer();
+
 		Graphics::draw(car);
 		if (redraw) {
 			Graphics::redrawScreen();
@@ -51,10 +54,14 @@ void inputTest(bool redraw) {
 		else {
 			Graphics::updateScreen();
 		}
-		//cout << car.rect.position.x << endl;
-		delete status;
 	}
 }
+
+void engineTest() {
+	PlayerCar car = PlayerCar(Point2D(5, 5));
+}
+
+//TODO: Considerare chiamate Keyboard come normali?
 
 int main()
 {

@@ -3,6 +3,15 @@
 #include "stdlib.h"
 #include "windows.h"
 
+#include <exception>
+#include <fstream>
+
+using std::string;
+using std::vector;
+using std::ifstream;
+using std::getline;
+using std::runtime_error;
+
 HANDLE hStdout, hStdin;
 
 void System::initialise() {
@@ -38,4 +47,31 @@ void System::moveCursor(int x, int y) {
 	windowsCoord.X = x;
 	windowsCoord.Y = y;
 	SetConsoleCursorPosition(hStdout, windowsCoord);
+}
+
+std::string System::getExecutableDirectory()
+{
+	char result[MAX_PATH];
+	return std::string(result, GetModuleFileName(NULL, result, MAX_PATH));
+}
+
+vector<string> System::loadFile(string path) {
+	ifstream file;
+	vector<string> content;
+	
+	file.open(path);
+
+	if (!file.is_open()) {
+		throw runtime_error("Impossibile aprire il file.");
+	}
+
+	string str;
+	while (std::getline(file, str))
+	{
+		content.push_back(str);
+	}
+
+	file.close();
+
+	return content;
 }

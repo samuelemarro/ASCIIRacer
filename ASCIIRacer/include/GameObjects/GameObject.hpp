@@ -2,6 +2,7 @@
 
 #include "Core/Layer.hpp"
 #include "Core/Rect.hpp"
+#include "Core/Typedefs.hpp"
 #include <string>
 
 class GameObject
@@ -12,11 +13,13 @@ private:
 public:
 	Rect rect;
 	Layer layer;
-	char* sprite;
+	Sprite sprite;
+	//Considerare bool started;
 
 	virtual void onStart();
 	virtual void onUpdate();
 
 	GameObject(Rect rect, Layer layer);
-	GameObject(Rect rect, Layer layer, char* sprite);
+	GameObject(Rect rect, Layer layer, Sprite sprite);
+	GameObject();
 };

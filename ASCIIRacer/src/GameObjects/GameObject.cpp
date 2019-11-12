@@ -1,13 +1,19 @@
+#include "Engine/GameEngine.hpp"
 #include "GameObjects/GameObject.hpp"
 #include "Core/Rect.hpp"
 #include "Core/Utilities.hpp"
 
-GameObject::GameObject(Rect rect, Layer layer) : rect(rect), layer(layer) {
-	this->sprite = new char[rect.size.length()];
-	Utilities::fill2D(this->sprite, rect.size, '?');
+GameObject::GameObject() {
+	GameEngine::AddGameObject(*this);
 }
 
-GameObject::GameObject(Rect rect, Layer layer, char* sprite) : rect(rect), layer(layer), sprite(sprite) {
+GameObject::GameObject(Rect rect, Layer layer) : GameObject() {
+	this->rect = rect;
+	this->layer = layer;
+}
+
+GameObject::GameObject(Rect rect, Layer layer, Sprite sprite) : GameObject(rect, layer) {
+	this->sprite = sprite;
 }
 
 void GameObject::onStart(){}

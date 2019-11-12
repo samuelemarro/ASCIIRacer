@@ -6,16 +6,17 @@
 
 class KeyboardStatus
 {
-private:
-    std::vector<Key> pressedKeys_;
-    std::vector<Key> downKeys_;
-    std::vector<Key> releasedKeys_;
-    //Possibile ottimizzazione: pressedKeys_ e stillDownKeys_
-
 public:
+	std::vector<Key> pressedKeys;
+	std::vector<Key> downKeys;
+	std::vector<Key> releasedKeys;
+	//Possibile ottimizzazione: pressedKeys_ e stillDownKeys_
+
+
     bool isPressed(Key key);
     bool isDown(Key key);
     bool isReleased(Key key);
 
+	KeyboardStatus();
     KeyboardStatus(std::vector<Key> pressedKeys, std::vector<Key> downKeys, std::vector<Key> releasedKeys);
 };

@@ -6,4 +6,5 @@ public:
 	float y;
 
 	Point2D(float x, float y);
+	Point2D();
 };

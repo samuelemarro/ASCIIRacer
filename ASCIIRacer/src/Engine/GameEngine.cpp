@@ -5,7 +5,14 @@
 #include "Engine/KeyboardStatus.hpp"
 #include "Engine/Graphics.hpp"
 #include "GameObjects/GameObject.hpp"
-#include "GameObjects/IKeyboard.hpp"
+
+using std::vector;
+
+vector<GameObject> GameEngine::newGameObjects_;
+vector<PhysicalObject> GameEngine::newPhysicalObjects_;
+
+vector<GameObject> GameEngine::gameObjects;
+vector<PhysicalObject> GameEngine::physicalObjects;
 
 void GameEngine::GameLoop()
 {
@@ -13,7 +20,7 @@ void GameEngine::GameLoop()
 	LevelGenerator::UpdateLevel();
 
 	//Keyboard
-	KeyboardStatus* status = Keyboard::getStatus();
+	Keyboard::updateStatus();
 
 	//Fisica
 	//Gioco
@@ -25,7 +32,10 @@ void GameEngine::GameLoop()
 	//Finalizzazione
 }
 
-void GameEngine::AddObject(GameObject gameObject) {
-	//Controlla se supporta la fisica
-	
+void GameEngine::AddGameObject(GameObject gameObject) {
+	GameEngine::newGameObjects_.push_back(gameObject);
+}
+
+void GameEngine::AddPhysicalObject(PhysicalObject physicalObject) {
+	GameEngine::newPhysicalObjects_.push_back(physicalObject);
 }

@@ -1,6 +1,10 @@
 #include "GameObjects/LevelObjects/Car.hpp"
 
-Car::Car(Rect rect, Layer layer, char* sprite) : PhysicalObject(rect, layer, sprite)
+Car::Car() : PhysicalObject() {
+
+}
+
+Car::Car(Rect rect, Layer layer, Sprite sprite) : PhysicalObject(rect, layer, sprite)
 {
 }
 

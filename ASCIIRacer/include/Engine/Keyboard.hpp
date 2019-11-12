@@ -8,8 +8,6 @@
 class Keyboard
 {
 private:
-    static std::vector<Key> currentDownKeys;
-
 	static char readKeyboard();
 	static std::string readAll();
 	static std::vector<Key> parseKeys(std::string input);
@@ -22,6 +20,7 @@ public:
      * Usiamo stringhe perché alcuni tasti (es. frecce)
      * vengono espresse come sequenza di caratteri.
      */
+	static KeyboardStatus currentStatus;
     static std::map<std::string, Key> keyBindings;
-    static KeyboardStatus *getStatus();
+    static void updateStatus();
 };

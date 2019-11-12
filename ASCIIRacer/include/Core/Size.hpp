@@ -7,5 +7,6 @@ public:
 
 	int length();
 
+	Size();
 	Size(int w, int h);
 };

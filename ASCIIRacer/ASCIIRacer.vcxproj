@@ -128,7 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Core\Position.cpp" />
+    <ClCompile Include="src\Core\Point2D.cpp" />
     <ClCompile Include="src\Core\Rect.cpp" />
     <ClCompile Include="src\Core\Size.cpp" />
     <ClCompile Include="src\Engine\GameEngine.cpp" />
@@ -145,12 +145,12 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Core\Typedefs.hpp" />
     <ClInclude Include="include\Engine\GameEngine.hpp" />
     <ClInclude Include="include\Core\Rect.hpp" />
     <ClInclude Include="include\Core\Size.hpp" />
     <ClInclude Include="include\Core\Utilities.hpp" />
-    <ClInclude Include="include\Core\Position.hpp" />
-    <ClInclude Include="include\Engine\GameObjectTracker.hpp" />
+    <ClInclude Include="include\Core\Point2D.hpp" />
     <ClInclude Include="include\Engine\Graphics.hpp" />
     <ClInclude Include="include\Engine\Key.hpp" />
     <ClInclude Include="include\Engine\Keyboard.hpp" />
@@ -159,12 +159,15 @@
     <ClInclude Include="include\Engine\Physics.hpp" />
     <ClInclude Include="include\Engine\System.hpp" />
     <ClInclude Include="include\GameObjects\GameObject.hpp" />
-    <ClInclude Include="include\GameObjects\IKeyboard.hpp" />
-    <ClInclude Include="include\GameObjects\KeyboardPriority.hpp" />
     <ClInclude Include="include\GameObjects\LevelObjects\Car.hpp" />
     <ClInclude Include="include\GameObjects\LevelObjects\PlayerCar.hpp" />
     <ClInclude Include="include\GameObjects\PhysicalObject.hpp" />
     <ClInclude Include="include\Core\Layer.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="sprites\PlayerCar.txt">
+      <DeploymentContent>false</DeploymentContent>
+    </Text>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
