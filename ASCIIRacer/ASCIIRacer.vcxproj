@@ -145,10 +145,6 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".gitignore" />
-    <None Include="README.md" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="include\Engine\GameEngine.hpp" />
     <ClInclude Include="include\Core\Rect.hpp" />
     <ClInclude Include="include\Core\Size.hpp" />

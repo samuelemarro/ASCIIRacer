@@ -62,10 +62,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="README.md" />
-    <None Include=".gitignore" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="include\Core\Rect.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
