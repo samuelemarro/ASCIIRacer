@@ -24,7 +24,7 @@ ScreenBuffer Graphics::oldBuffer;
 Size Graphics::screenSize = Size(0, 0);
 
 const Size Graphics::errorSize = Size(3, 3);
-const Sprite Graphics::errorSprite = Utilities::newMatrix(3, 3, '?');
+const Sprite Graphics::errorSprite = Utilities::newSprite(3, 3, '?');
 
 void Graphics::clearBuffer() {
 	for (int row = 0; row < screenSize.height; row++) {
@@ -38,8 +38,8 @@ void Graphics::clearBuffer() {
 void Graphics::initialise() {
 	screenSize = System::getConsoleSize();
 
-	buffer = Utilities::newMatrix(screenSize.width, screenSize.height, ' ');
-	oldBuffer = Utilities::newMatrix(screenSize.width, screenSize.height, ' ');
+	buffer = Utilities::newSprite(screenSize.width, screenSize.height, ' ');
+	oldBuffer = Utilities::newSprite(screenSize.width, screenSize.height, ' ');
 }
 
 void Graphics::draw(Rect rect, Sprite sprite) {
@@ -62,7 +62,7 @@ void Graphics::draw(Rect rect, Sprite sprite) {
 	for (int y = minSpriteY; y < maxSpriteY; y++) {
 		for (int x = minSpriteX; x < maxSpriteX; x++) {
 			int spritePosition = y * rect.size.width + x;
-			
+
 			int screenX = (int)round(rect.position.x) + x;
 			int screenY = (int)round(rect.position.y) + y;
 
@@ -75,8 +75,8 @@ void Graphics::draw(Rect rect, Sprite sprite) {
 	}
 }
 
-void Graphics::draw(GameObject gameObject) {
-	draw(gameObject.rect, gameObject.sprite);
+void Graphics::draw(ptr_GameObject gameObject) {
+	draw(gameObject->rect, gameObject->sprite);
 }
 
 void Graphics::redrawScreen() {
@@ -117,7 +117,7 @@ void Graphics::updateScreen() {
 
 Sprite Graphics::parseSprite(vector<string> lines, Size& size) {
 	Sprite sprite;
-	
+
 	//Esegui il parsing della prima linea
 	if (lines.size() == 0) {
 		throw runtime_error("File vuoto.");
@@ -157,7 +157,7 @@ Sprite Graphics::loadSpriteFromFile(string path, Size& size) {
 		sprite = Graphics::errorSprite;
 #endif
 
-		 
+
 	}
 
 	return sprite;

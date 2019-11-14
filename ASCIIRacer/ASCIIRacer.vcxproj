@@ -70,10 +70,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)ASCIIRacer\include;$(SolutionDir)ASCIIRacer\include\Core;$(SolutionDir)ASCIIRacer\include\Engine;$(SolutionDir)ASCIIRacer\include\GameObjects;$(SolutionDir)ASCIIRacer\include\GameObjects\LevelObjects;$(SolutionDir)ASCIIRacer\include\GameObjects\UIObjects;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ASCIIRacer\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)ASCIIRacer\include;$(SolutionDir)ASCIIRacer\include\Core;$(SolutionDir)ASCIIRacer\include\Engine;$(SolutionDir)ASCIIRacer\include\GameObjects;$(SolutionDir)ASCIIRacer\include\GameObjects\LevelObjects;$(SolutionDir)ASCIIRacer\include\GameObjects\UIObjects;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ASCIIRacer\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -136,12 +136,12 @@
     <ClCompile Include="src\Engine\Graphics.cpp" />
     <ClCompile Include="src\Engine\Keyboard.cpp" />
     <ClCompile Include="src\Engine\KeyboardStatus.cpp" />
-    <ClCompile Include="src\Engine\LevelGenerator.cpp" />
     <ClCompile Include="src\Engine\System.cpp" />
     <ClCompile Include="src\GameObjects\GameObject.cpp" />
     <ClCompile Include="src\GameObjects\LevelObjects\Car.cpp" />
     <ClCompile Include="src\GameObjects\LevelObjects\PlayerCar.cpp" />
     <ClCompile Include="src\GameObjects\PhysicalObject.cpp" />
+    <ClCompile Include="src\Scenes\GameScene.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -155,14 +155,15 @@
     <ClInclude Include="include\Engine\Key.hpp" />
     <ClInclude Include="include\Engine\Keyboard.hpp" />
     <ClInclude Include="include\Engine\KeyboardStatus.hpp" />
-    <ClInclude Include="include\Engine\LevelGenerator.hpp" />
-    <ClInclude Include="include\Engine\Physics.hpp" />
     <ClInclude Include="include\Engine\System.hpp" />
+    <ClInclude Include="include\Scenes\GameScene.hpp" />
+    <ClInclude Include="include\Scenes\Scene.hpp" />
     <ClInclude Include="include\GameObjects\GameObject.hpp" />
     <ClInclude Include="include\GameObjects\LevelObjects\Car.hpp" />
     <ClInclude Include="include\GameObjects\LevelObjects\PlayerCar.hpp" />
     <ClInclude Include="include\GameObjects\PhysicalObject.hpp" />
     <ClInclude Include="include\Core\Layer.hpp" />
+    <ClInclude Include="include\Core\Color.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="sprites\PlayerCar.txt">

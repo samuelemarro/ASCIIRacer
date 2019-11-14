@@ -4,83 +4,35 @@
 #include "Engine/System.hpp"
 #include "Engine/Key.hpp"
 #include "Engine/Keyboard.hpp"
-#include "KeyboardStatus.hpp"
+#include "Engine/KeyboardStatus.hpp"
 
-#include "Utilities.hpp"
-
+#include <algorithm>
 #include <iostream>
 
 using std::map;
 using std::vector;
 using std::string;
+using std::find;
 
 KeyboardStatus Keyboard::currentStatus = KeyboardStatus();
-map<string, Key> Keyboard::keyBindings = { {"w", Key::Up}, {"a", Key::Left}, {"s", Key::Down}, {"d", Key::Right} };
+map<int, Key> Keyboard::keyBindings = { {'W', Key::Up}, {'A', Key::Left}, {'S', Key::Down}, {'D', Key::Right} };
 
-char Keyboard::readKeyboard()
-{
-	if (System::keyPressed())
-	{
-		return System::getCharacter();
-	}
-	else
-	{
-		return '\0';
-	}
-}
-
-string Keyboard::readAll()
-{
-	string fullString;
-
-	char c;
-	do
-	{
-		c = readKeyboard();
-		if (c != '\0')
-		{
-			fullString.push_back(c);
-		}
-	} while (c != '\0');
-
-	return fullString;
-}
-
-vector<Key> Keyboard::parseKeys(string input)
-{
-	vector<Key> keys;
-	string currentString;
-	while (!input.empty())
-	{
-		char c = input.at(0);
-		input.erase(0);
-
-		currentString.push_back(c);
-
-		map<string, Key>::iterator it = Keyboard::keyBindings.begin();
-
-		bool match = false;
-		while (it != Keyboard::keyBindings.end() && !match)
-		{
-			if (it->first.compare(currentString) == 0)
-			{
-				Key key = Keyboard::keyBindings.at(it->first);
-				keys.push_back(key);
-				currentString.clear();
-
-				match = true;
+vector<Key> Keyboard::getDownKeys() {
+	vector<Key> downKeys;
+	for (auto pair : Keyboard::keyBindings) {
+		if (System::keyIsDown(pair.first)) {
+			if (find(downKeys.begin(), downKeys.end(), pair.second) == downKeys.end()) {
+				downKeys.push_back(pair.second);
 			}
-			it++;
 		}
 	}
 
-	return keys;
+	return downKeys;
 }
 
 void Keyboard::updateStatus()
 {
-	string input = readAll();
-	vector<Key> inputKeys = parseKeys(input);
+	vector<Key> inputKeys = Keyboard::getDownKeys();
 
 	vector<Key> pressed;
 	vector<Key> down;
@@ -99,7 +51,7 @@ void Keyboard::updateStatus()
 	//Identifica i released
 	for (auto downKey : currentStatus.downKeys)
 	{
-		if (!Utilities::isIn(inputKeys.begin(), inputKeys.end(), downKey))
+		if (find(inputKeys.begin(), inputKeys.end(), downKey) == inputKeys.end())
 		{
 			released.push_back(downKey);
 		}

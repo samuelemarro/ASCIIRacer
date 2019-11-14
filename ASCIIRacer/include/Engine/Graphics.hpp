@@ -23,7 +23,7 @@ public:
 	static void initialise();
 	static void clearBuffer();
 	static void draw(Rect rect, Sprite sprite);
-	static void draw(GameObject gameObject);
+	static void draw(ptr_GameObject gameObject);
 	static void redrawScreen();
 
 	static void updateScreen();

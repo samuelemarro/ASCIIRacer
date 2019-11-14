@@ -1,5 +1,4 @@
-#include "System.hpp"
-#include "conio.h"
+#include "Engine/System.hpp"
 #include "stdlib.h"
 #include "windows.h"
 
@@ -19,12 +18,8 @@ void System::initialise() {
 	hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
 }
 
-bool System::keyPressed() {
-	return _kbhit();
-}
-
-char System::getCharacter() {
-	return _getch();
+bool System::keyIsDown(int key) {
+	return GetKeyState(key) & 0x8000;
 }
 
 void System::clearScreen() {
@@ -58,7 +53,7 @@ std::string System::getExecutableDirectory()
 vector<string> System::loadFile(string path) {
 	ifstream file;
 	vector<string> content;
-	
+
 	file.open(path);
 
 	if (!file.is_open()) {

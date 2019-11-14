@@ -1,8 +1,10 @@
-#include "Key.hpp"
-#include "KeyboardStatus.hpp"
-#include "Utilities.hpp"
+#include <algorithm>
+
+#include "Engine/Key.hpp"
+#include "Engine/KeyboardStatus.hpp"
 
 using std::vector;
+using std::find;
 
 KeyboardStatus::KeyboardStatus() : pressedKeys(vector<Key>()), downKeys(vector<Key>()), releasedKeys(vector<Key>()) {
 
@@ -14,14 +16,14 @@ KeyboardStatus::KeyboardStatus(vector<Key> pressedKeys, vector<Key> downKeys, ve
 
 bool KeyboardStatus::isPressed(Key key)
 {
-	return Utilities::isIn(pressedKeys.begin(), pressedKeys.end(), key);
+	return find(pressedKeys.begin(), pressedKeys.end(), key) != pressedKeys.end();
 }
 bool KeyboardStatus::isDown(Key key)
 {
-	return Utilities::isIn(downKeys.begin(), downKeys.end(), key);
+	return find(downKeys.begin(), downKeys.end(), key) != downKeys.end();
 }
 
 bool KeyboardStatus::isReleased(Key key)
 {
-	return Utilities::isIn(releasedKeys.begin(), releasedKeys.end(), key);
+	return find(releasedKeys.begin(), releasedKeys.end(), key) != releasedKeys.end();
 }

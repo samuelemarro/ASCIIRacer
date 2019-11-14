@@ -2,11 +2,10 @@
 
 enum class Layer
 {
-    Menu,
-    Overlay,
-    Foreground_1,
-    Foreground_2,
-    Content,
-    Background_1,
-    Background_2
+    Overlay = 5,
+    Foreground_1 = 4,
+    Foreground_2 = 3,
+    Content = 2,
+    Background_1 = 1,
+    Background_2 = 0
 };

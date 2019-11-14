@@ -8,6 +8,6 @@ Rect::Rect(float positionX, float positionY, int width, int height) : position(P
 
 }
 
-Rect::Rect() : Rect(0, 0, 0, 0) {
+Rect::Rect() {
 
 }

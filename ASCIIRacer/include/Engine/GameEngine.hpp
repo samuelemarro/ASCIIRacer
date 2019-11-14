@@ -1,40 +1,27 @@
 #pragma once
 
 #include <vector>
+#include <chrono>
 
 #include "GameObjects/GameObject.hpp"
 #include "GameObjects/PhysicalObject.hpp"
+#include "Scenes/Scene.hpp"
+
 
 class GameEngine
 {
 private:
 	GameEngine();
-	static std::vector<GameObject> newGameObjects_;
-	static std::vector<PhysicalObject> newPhysicalObjects_;
+	static std::chrono::time_point<std::chrono::steady_clock> lastLoopTime_;
 
 public:
-	static std::vector<GameObject> gameObjects;
-	static std::vector<PhysicalObject> physicalObjects;
+	static ptr_Scene currentScene;
 
 	static int fps;
 
-	static int score;
-	//Eventuali informazioni di gioco
+	static void start(ptr_Scene firstScene);
 
-	//Accetta oggetti o i loro puntatori?
-	static void AddGameObject(GameObject gameObject);
-	static void AddPhysicalObject(PhysicalObject physicalObject);
+	static void loop();
 
-	/**
-	 * @brief Rimuove un oggetto dal motore e lo elimina.
-	 *
-	 * Verrà rimosso solo alla fine del ciclo.
-	 *
-	 * @param object L'oggetto da rimuovere.
-	 */
-	static void DestroyObject(GameObject object);
-
-	static void Start();
-
-	static void GameLoop();
+	static float deltaTime();
 };

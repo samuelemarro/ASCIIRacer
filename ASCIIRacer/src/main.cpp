@@ -9,14 +9,17 @@
 #include "Engine/System.hpp"
 #include "GameObjects/LevelObjects/PlayerCar.hpp"
 #include "Engine/GameEngine.hpp"
+#include "Scenes/GameScene.hpp"
+
+#include "windows.h"
 
 using namespace std;
 
 #include <chrono>
 #include <thread>
 
-using namespace std::this_thread; // sleep_for, sleep_until
-using namespace std::chrono;      // nanoseconds, system_clock, seconds
+using namespace std::this_thread;
+using namespace std::chrono;
 
 void inputTest(bool redraw) {
 	PlayerCar car = PlayerCar(Point2D(5, 5));
@@ -47,7 +50,7 @@ void inputTest(bool redraw) {
 
 		Graphics::clearBuffer();
 
-		Graphics::draw(car);
+		Graphics::draw(&car);
 		if (redraw) {
 			Graphics::redrawScreen();
 		}
@@ -57,18 +60,49 @@ void inputTest(bool redraw) {
 	}
 }
 
-void engineTest() {
+void sceneTest() {
 	PlayerCar car = PlayerCar(Point2D(5, 5));
+
+	GameScene gameScene;
+
+	gameScene.addGameObject(&car);
+
+	GameEngine::start(&gameScene);
+
+	int fps = 60;
+	GameEngine::fps = fps;
+
+	while (true)
+	{
+		//sleep_for(milliseconds(1000 / fps));
+		GameEngine::loop();
+
+	}
+
 }
 
-//TODO: Considerare chiamate Keyboard come normali?
+void colorTest() {
+	HANDLE hConsole;
+	int k;
+
+	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	for (k = 1; k < 5000; k++)
+	{
+		SetConsoleTextAttribute(hConsole, k);
+		cout << k << " Test colori!" << endl;
+	}
+
+	cin.get();
+}
 
 int main()
 {
 	System::initialise();
 	Graphics::initialise();
 
-	inputTest(false);
+	//colorTest();
+	sceneTest();
 
 	return 0;
 }

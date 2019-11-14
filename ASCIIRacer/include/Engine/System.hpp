@@ -10,9 +10,7 @@ private:
 	System();
 public:
 	static void initialise();
-
-	static bool keyPressed();
-	static char getCharacter();
+	static bool keyIsDown(int key);
 	static Size getConsoleSize();
 	static void clearScreen();
 	static void moveCursor(int x, int y);

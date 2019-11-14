@@ -1,6 +1,6 @@
 #pragma once
 #include "Core/Typedefs.hpp"
-#include "PhysicalObject.hpp"
+#include "GameObjects/PhysicalObject.hpp"
 
 class Car : public PhysicalObject
 {

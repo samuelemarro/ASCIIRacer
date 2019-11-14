@@ -13,10 +13,10 @@ public:
 	//Possibile ottimizzazione: pressedKeys_ e stillDownKeys_
 
 
-    bool isPressed(Key key);
-    bool isDown(Key key);
-    bool isReleased(Key key);
+	bool isPressed(Key key);
+	bool isDown(Key key);
+	bool isReleased(Key key);
 
 	KeyboardStatus();
-    KeyboardStatus(std::vector<Key> pressedKeys, std::vector<Key> downKeys, std::vector<Key> releasedKeys);
+	KeyboardStatus(std::vector<Key> pressedKeys, std::vector<Key> downKeys, std::vector<Key> releasedKeys);
 };

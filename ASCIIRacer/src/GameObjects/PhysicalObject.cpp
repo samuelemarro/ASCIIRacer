@@ -3,11 +3,11 @@
 #include "Core/Utilities.hpp"
 
 PhysicalObject::PhysicalObject() : GameObject() {
-	GameEngine::AddPhysicalObject(*this);
+	//TODO: Deve essere "ignora collisioni"
 }
 
 PhysicalObject::PhysicalObject(Rect rect, Layer layer, Sprite sprite) : GameObject(rect, layer, sprite) {
-	GameEngine::AddPhysicalObject(*this);
+	this->collisionLayer = layer;
 }
 
 PhysicalObject::PhysicalObject(Rect rect, Layer layer, Sprite sprite, Layer collisionLayer, Point2D speed, CollisionMask collisionMask) : PhysicalObject(rect, layer, sprite) {

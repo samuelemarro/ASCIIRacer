@@ -30,9 +30,6 @@
     <ClCompile Include="src\Engine\KeyboardStatus.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine\LevelGenerator.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
     <ClCompile Include="src\Engine\System.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
@@ -60,6 +57,9 @@
     <ClCompile Include="src\Core\Point2D.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
+    <ClCompile Include="src\Scenes\GameScene.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Core\Rect.hpp">
@@ -77,13 +77,7 @@
     <ClInclude Include="include\Engine\Keyboard.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="include\Engine\LevelGenerator.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
     <ClInclude Include="include\Engine\KeyboardStatus.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Engine\Physics.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="include\Engine\System.hpp">
@@ -114,6 +108,15 @@
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="include\Core\Point2D.hpp">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Scenes\Scene.hpp">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Scenes\GameScene.hpp">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Core\Color.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
   </ItemGroup>

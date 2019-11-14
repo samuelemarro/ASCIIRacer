@@ -8,18 +8,22 @@
 class GameObject
 {
 private:
-	void loadSprite(std::string path);
 
 public:
 	Rect rect;
 	Layer layer;
 	Sprite sprite;
-	//Considerare bool started;
+	bool initialised = false;
+	bool toBeDestroyed = false;
 
 	virtual void onStart();
 	virtual void onUpdate();
+
+	void destroy();
 
 	GameObject(Rect rect, Layer layer);
 	GameObject(Rect rect, Layer layer, Sprite sprite);
 	GameObject();
 };
+
+typedef GameObject* ptr_GameObject;
