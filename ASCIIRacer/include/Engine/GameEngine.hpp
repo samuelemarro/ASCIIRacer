@@ -14,12 +14,16 @@ private:
 	GameEngine();
 	static std::chrono::time_point<std::chrono::steady_clock> lastLoopTime_;
 
+	static ptr_Scene nextScene;
+
 public:
 	static ptr_Scene currentScene;
 
 	static int fps;
 
 	static void start(ptr_Scene firstScene);
+
+	static void changeScene(ptr_Scene newScene);
 
 	static void loop();
 

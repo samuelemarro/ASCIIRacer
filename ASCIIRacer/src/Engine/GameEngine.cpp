@@ -15,16 +15,28 @@ using std::this_thread::sleep_for;
 std::chrono::time_point<std::chrono::steady_clock> GameEngine::lastLoopTime_;
 int GameEngine::fps;
 ptr_Scene GameEngine::currentScene;
+ptr_Scene GameEngine::nextScene;
 
 void GameEngine::start(ptr_Scene firstScene) {
 	//Qui va il codice di inizio gioco
 	GameEngine::lastLoopTime_ = high_resolution_clock::now();
 	GameEngine::currentScene = firstScene;
-	GameEngine::currentScene->onStart();
+	GameEngine::nextScene = NULL;
+}
+
+void GameEngine::changeScene(ptr_Scene newScene)
+{
+	GameEngine::nextScene = newScene;
 }
 
 void GameEngine::loop()
 {
+	//Cambio di scena (se necessario)
+	if (GameEngine::nextScene != NULL) {
+		GameEngine::currentScene = GameEngine::nextScene;
+		GameEngine::nextScene = NULL;
+	}
+
 	//Inizializzazione della scena
 	if (GameEngine::currentScene != NULL && !GameEngine::currentScene->initialised) {
 		GameEngine::currentScene->onStart();
