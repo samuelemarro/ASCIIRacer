@@ -47,7 +47,8 @@ void System::moveCursor(int x, int y) {
 std::string System::getExecutableDirectory()
 {
 	char result[MAX_PATH];
-	return std::string(result, GetModuleFileName(NULL, result, MAX_PATH));
+	string executablePath = std::string(result, GetModuleFileName(NULL, result, MAX_PATH));
+	return executablePath.substr(0, executablePath.find_last_of("\\/"));
 }
 
 vector<string> System::loadFile(string path) {

@@ -13,7 +13,7 @@ PlayerCar::PlayerCar(Point2D position) {
 	this->speed = Point2D(0, 0);
 	Size size;
 	std::string directory = System::getExecutableDirectory();
-	this->sprite = Graphics::loadSpriteFromFile("sprites/PlayerCar.txt", size);
+	this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/PlayerCar.txt", size);
 	this->rect = Rect(position, size);
 }
 

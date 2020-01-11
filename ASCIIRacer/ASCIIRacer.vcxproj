@@ -85,6 +85,9 @@
     <Link>
       <SubSystem>Console</SubSystem>
     </Link>
+    <PostBuildEvent>
+      <Command>(robocopy /s $(ProjectDir)sprites/ $(OutDir)sprites) ^&amp; IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -112,6 +115,9 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <PostBuildEvent>
+      <Command>(robocopy /s $(ProjectDir)sprites/ $(OutDir)sprites) ^&amp; IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -171,6 +177,8 @@
   <ItemGroup>
     <Text Include="sprites\PlayerCar.txt">
       <DeploymentContent>false</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
     </Text>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

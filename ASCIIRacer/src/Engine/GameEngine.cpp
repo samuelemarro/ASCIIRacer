@@ -45,7 +45,7 @@ void GameEngine::loop()
 	if (GameEngine::currentScene != NULL) {
 		GameEngine::currentScene->onGraphics();
 	}
-
+	
 	Graphics::updateScreen();
 
 	if (GameEngine::currentScene != NULL) {

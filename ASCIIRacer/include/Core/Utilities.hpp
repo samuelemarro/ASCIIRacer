@@ -5,6 +5,7 @@
 #include "Core/Typedefs.hpp"
 
 using std::find;
+using std::string;
 using std::vector;
 
 class Utilities
@@ -20,10 +21,10 @@ public:
 	}
 
 	static Sprite newSprite(int width, int height, char defaultValue) {
-		vector<vector<char>> matrix;
+		vector<string> matrix;
 		matrix.reserve(height);
 		for (int y = 0; y < height; y++) {
-			vector<char> row;
+			string row;
 			row.reserve(width);
 			for (int x = 0; x < width; x++) {
 				row.push_back(defaultValue);
