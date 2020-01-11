@@ -19,11 +19,11 @@ const int distanceY = 2;
 int cursor = 0;
 KeyboardStatus status;
 
-void addOption(string name, ptr_Scene s) {
+void MenuScene::addOption(string name, ptr_Scene s) {
 	options.push_back(pss(name, s));
 }
 
-void fetchOptions() {
+void MenuScene::fetchOptions() {
 	GameScene play;
 	addOption("PLAY", &play);
 	addOption("OPTIONS", NULL);
@@ -31,7 +31,7 @@ void fetchOptions() {
 	addOption("EXIT", NULL);
 }
 
-void drawMenu() {
+void MenuScene::drawMenu() {
 	System::moveCursor(marginX, marginY);
 	cout << "ASCIIRacer";
 	for (int i = 0; i < options.size(); i++) {
@@ -40,7 +40,7 @@ void drawMenu() {
 	}
 }
 
-void moveCursor(bool down) {
+void MenuScene::moveCursor(bool down) {
 	System::moveCursor(marginX - 1, marginY + (cursor + 1) * distanceY);
 	cout << ' ';
 	if (down && (cursor+1)<options.size()) cursor++;
