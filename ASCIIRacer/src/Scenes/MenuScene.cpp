@@ -17,7 +17,7 @@ const int marginY = 2;
 const int marginX = 30;
 const int distanceY = 2;
 int cursor = 0;
-//Keyboard status;
+KeyboardStatus status;
 
 void addOption(string name, ptr_Scene s) {
 	options.push_back(pss(name, s));
@@ -40,13 +40,29 @@ void drawMenu() {
 	}
 }
 
+void moveCursor(bool down) {
+	System::moveCursor(marginX - 1, marginY + (cursor + 1) * distanceY);
+	cout << ' ';
+	if (down && (cursor+1)<options.size()) cursor++;
+	else if(!down && cursor>0) cursor--;
+	System::moveCursor(marginX - 1, marginY + (cursor + 1) * distanceY);
+	cout << '>';
+}
+
 void MenuScene::onStart(){
 	fetchOptions();
 	drawMenu();
+	System::moveCursor(marginX - 1, marginY+distanceY);
+	cout << '>';
 }
 
 void MenuScene::onLoop() {
-
+	status = Keyboard::currentStatus;
+	ptr_Scene option_selected = NULL;
+	if (status.isPressed(Key::Down)) moveCursor(true);
+	else if (status.isPressed(Key::Up)) moveCursor(false);
+	if (status.isPressed(Key::Confirm)) option_selected = options[cursor].second;
+	if (option_selected) {System::moveCursor(0, 0); cout << "Cambia la scene."; } //questo e' da modificare
 }
 
 void MenuScene::onGraphics() {
