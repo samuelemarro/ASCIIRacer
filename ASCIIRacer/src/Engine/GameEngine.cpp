@@ -21,6 +21,7 @@ void GameEngine::start(ptr_Scene firstScene) {
 	GameEngine::lastLoopTime_ = high_resolution_clock::now();
 	GameEngine::currentScene = firstScene;
 	GameEngine::currentScene->onStart();
+	currentScene->initialised = true;
 }
 
 void GameEngine::loop()
