@@ -10,6 +10,7 @@
 #include "GameObjects/LevelObjects/PlayerCar.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Scenes/GameScene.hpp"
+#include "Scenes/MenuScene.hpp"
 
 #include "windows.h"
 
@@ -64,10 +65,11 @@ void sceneTest() {
 	PlayerCar car = PlayerCar(Point2D(5, 5));
 
 	GameScene gameScene;
+	MenuScene menuScene;
 
-	gameScene.addGameObject(&car);
+	//gameScene.addGameObject(&car);
 
-	GameEngine::start(&gameScene);
+	GameEngine::start(&menuScene);
 
 	int fps = 60;
 	GameEngine::fps = fps;

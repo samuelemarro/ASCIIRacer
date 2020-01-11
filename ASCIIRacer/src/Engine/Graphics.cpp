@@ -150,8 +150,8 @@ Sprite Graphics::loadSpriteFromFile(string path, Size& size) {
 	}
 	catch (exception e) {
 #ifdef _DEBUG
-		throw;
-#else
+		cout << e.what();
+#else 
 		//Non interrompere l'esecuzione del codice, usa lo sprite di errore
 		size = errorSize;
 		sprite = Graphics::errorSprite;
