@@ -79,6 +79,14 @@ void Graphics::draw(ptr_GameObject gameObject) {
 	draw(gameObject->rect, gameObject->sprite);
 }
 
+void Graphics::write(float x, float y, std::string text)
+{
+	Sprite s = Sprite();
+	s.push_back(text);
+	Rect rect = Rect(x, y, text.length(), 1);
+	Graphics::draw(rect, s);
+}
+
 void Graphics::redrawScreen() {
 	System::clearScreen();
 	for (int y = 0; y < screenSize.height; y++) {

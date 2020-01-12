@@ -3,12 +3,15 @@
 #include "Scenes/GameScene.hpp"
 #include "Engine/Graphics.hpp"
 #include "Core/Utilities.hpp"
+#include "GameObjects/LevelObjects/PlayerCar.hpp"
 
 using std::vector;
 using std::sort;
 
 void GameScene::onStart()
 {
+	PlayerCar* p = new PlayerCar(Point2D(10, 10));
+	GameScene::addGameObject(p);
 }
 
 void GameScene::onLoop() {

@@ -27,6 +27,7 @@ void GameEngine::start(ptr_Scene firstScene) {
 void GameEngine::changeScene(ptr_Scene newScene)
 {
 	GameEngine::nextScene = newScene;
+	Graphics::clearBuffer();
 }
 
 void GameEngine::loop()

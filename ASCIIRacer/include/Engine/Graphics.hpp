@@ -24,6 +24,7 @@ public:
 	static void clearBuffer();
 	static void draw(Rect rect, Sprite sprite);
 	static void draw(ptr_GameObject gameObject);
+	static void write(float x, float y, std::string text);
 	static void redrawScreen();
 
 	static void updateScreen();
