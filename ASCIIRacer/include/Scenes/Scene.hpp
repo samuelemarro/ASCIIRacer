@@ -1,8 +1,10 @@
 #pragma once
+#include <iostream>
 
 class Scene {
 public:
 	bool initialised = false;
+	Scene* nextScene = NULL;
 
 	virtual void onStart() = 0;
 

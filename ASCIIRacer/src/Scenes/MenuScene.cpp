@@ -3,6 +3,7 @@
 #include "Engine/System.hpp"
 #include "Scenes/Scene.hpp"
 #include "Scenes/GameScene.hpp"
+#include "Engine/GameEngine.hpp"
 
 #include "windows.h"
 #include <utility>
@@ -24,8 +25,9 @@ void MenuScene::addOption(string name, ptr_Scene s) {
 }
 
 void MenuScene::fetchOptions() {
-	GameScene play;
-	addOption("PLAY", &play);
+	ptr_Scene adder = new GameScene;
+	addOption("PLAY", adder);
+	//se voglio aggiungere altra scene faccio adder = new nomeScene; e poi addOption("option name", adder);
 	addOption("OPTIONS", NULL);
 	addOption("CREDITS", NULL);
 	addOption("EXIT", NULL);
@@ -42,7 +44,7 @@ void MenuScene::drawMenu() {
 
 void MenuScene::moveCursor(bool down) {
 	System::moveCursor(marginX - 1, marginY + (cursor + 1) * distanceY);
-	cout << ' ';
+	printf("%c", ' ');
 	if (down && (cursor+1)<options.size()) cursor++;
 	else if(!down && cursor>0) cursor--;
 	System::moveCursor(marginX - 1, marginY + (cursor + 1) * distanceY);
@@ -62,7 +64,7 @@ void MenuScene::onLoop() {
 	if (status.isPressed(Key::Down)) moveCursor(true);
 	else if (status.isPressed(Key::Up)) moveCursor(false);
 	if (status.isPressed(Key::Confirm)) option_selected = options[cursor].second;
-	if (option_selected) {System::moveCursor(0, 0); cout << "Cambia la scene."; } //questo e' da modificare
+	if (option_selected) GameEngine::changeScene(option_selected); //<-------questo e' da modificare
 }
 
 void MenuScene::onGraphics() {

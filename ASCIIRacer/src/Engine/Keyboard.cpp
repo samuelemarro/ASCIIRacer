@@ -15,7 +15,7 @@ using std::string;
 using std::find;
 
 KeyboardStatus Keyboard::currentStatus = KeyboardStatus();
-map<int, Key> Keyboard::keyBindings = { {'W', Key::Up}, {'A', Key::Left}, {'S', Key::Down}, {'D', Key::Right} };
+map<int, Key> Keyboard::keyBindings = { {'W', Key::Up}, {'A', Key::Left}, {'S', Key::Down}, {'D', Key::Right}, {13, Key::Confirm} };
 
 vector<Key> Keyboard::getDownKeys() {
 	vector<Key> downKeys;
