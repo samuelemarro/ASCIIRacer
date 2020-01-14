@@ -145,6 +145,7 @@
     <ClCompile Include="src\Engine\KeyboardStatus.cpp" />
     <ClCompile Include="src\Engine\System.cpp" />
     <ClCompile Include="src\GameObjects\GameObject.cpp" />
+    <ClCompile Include="src\GameObjects\LevelObjects\AICar.cpp" />
     <ClCompile Include="src\GameObjects\LevelObjects\Car.cpp" />
     <ClCompile Include="src\GameObjects\LevelObjects\PlayerCar.cpp" />
     <ClCompile Include="src\GameObjects\PhysicalObject.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="include\Engine\Keyboard.hpp" />
     <ClInclude Include="include\Engine\KeyboardStatus.hpp" />
     <ClInclude Include="include\Engine\System.hpp" />
+    <ClInclude Include="include\GameObjects\LevelObjects\AICar.hpp" />
     <ClInclude Include="include\Scenes\GameScene.hpp" />
     <ClInclude Include="include\Scenes\MenuScene.hpp" />
     <ClInclude Include="include\Scenes\Scene.hpp" />
@@ -175,6 +177,7 @@
     <ClInclude Include="include\Core\Color.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="sprites\AICar.txt" />
     <Text Include="sprites\PlayerCar.txt">
       <DeploymentContent>false</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>

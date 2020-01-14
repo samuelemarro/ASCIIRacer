@@ -9,6 +9,8 @@ private:
 	std::vector<ptr_PhysicalObject> physicalObjects_;
 	std::vector<Layer> getLayers();
 	void removeToBeDestroyed();
+	double gameSpeed=0;
+
 public:
 
 	void onStart() override;

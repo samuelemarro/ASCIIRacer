@@ -5,17 +5,26 @@
 #include "Engine/Graphics.hpp"
 #include "Core/Utilities.hpp"
 #include "GameObjects/LevelObjects/PlayerCar.hpp"
+#include "GameObjects/LevelObjects/AICar.hpp"
 
 using std::vector;
 using std::sort;
+PlayerCar* player;
 
 void GameScene::onStart()
 {
-	PlayerCar* p = new PlayerCar(Point2D(1, 27));
-	GameScene::addGameObject(p);
+	this->gameSpeed = 1;
+	PlayerCar* p1 = new PlayerCar(Point2D(1, 27));
+	player = p1;
+	AICar* p2 = new AICar(Point2D(1, 0));
+	GameScene::addGameObject(p1);
+	GameScene::addGameObject(p2);
 }
 
 void GameScene::onLoop() {
+	
+	this->gameSpeed = pow(1.2, player->level);
+
 	//Inizializzazione dei gameObject
 	for (auto gameObject : gameObjects_) {
 		if (!gameObject->initialised) {
@@ -25,6 +34,7 @@ void GameScene::onLoop() {
 	}
 
 	for (auto gameObject : gameObjects_) {
+		gameObject->gameSpeed = this->gameSpeed;
 		gameObject->onUpdate();
 	}
 

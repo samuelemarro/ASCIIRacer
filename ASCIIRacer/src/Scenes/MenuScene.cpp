@@ -38,12 +38,12 @@ void MenuScene::fetchOptions() {
 void MenuScene::drawMenu() {
 	Graphics::write(marginX, marginY, "ASCIIRacer");
 	for (int i = 0; i < options.size(); i++) {
-		Graphics::write(marginX, marginY + (i + 1) * distanceY, options[i].first);
+		Graphics::write((float)marginX, (float)marginY + (i + 1) * (float)distanceY, options[i].first);
 	}
 }
 
 void MenuScene::moveCursor(bool down) {
-	if (down && (cursor+1)<options.size()) cursor++;
+	if (down && (cursor<options.size()-1)) cursor++;
 	else if(!down && cursor>0) cursor--;
 }
 
@@ -64,8 +64,8 @@ void MenuScene::onLoop() {
 
 void MenuScene::onGraphics() {
 	drawMenu();
-	Graphics::write(marginX - 1, marginY + (cursor + 1) * distanceY, " ");
-	Graphics::write(marginX - 1, marginY + (cursor + 1) * distanceY, ">");
+	Graphics::write((float)marginX - 1, (float)marginY + (cursor + 1) * (float)distanceY, " ");
+	Graphics::write((float)marginX - 1, (float)marginY + (cursor + 1) * (float)distanceY, ">");
 }
 
 void MenuScene::onEndLoop() {

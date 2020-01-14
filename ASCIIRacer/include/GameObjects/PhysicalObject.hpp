@@ -9,8 +9,6 @@ public:
 	Layer collisionLayer;
 	CollisionMask collisionMask;
 
-	Point2D velocity;
-
 	virtual void onStart() override;
 	virtual void onUpdate() override;
 	virtual void onCollision(PhysicalObject collider);
