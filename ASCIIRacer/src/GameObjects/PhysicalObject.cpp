@@ -12,7 +12,7 @@ PhysicalObject::PhysicalObject(Rect rect, Layer layer, Sprite sprite) : GameObje
 
 PhysicalObject::PhysicalObject(Rect rect, Layer layer, Sprite sprite, Layer collisionLayer, Point2D speed, CollisionMask collisionMask) : PhysicalObject(rect, layer, sprite) {
 	this->collisionLayer = collisionLayer;
-	this->speed = speed;
+	this->velocity = speed;
 	this->collisionMask = collisionMask;
 }
 

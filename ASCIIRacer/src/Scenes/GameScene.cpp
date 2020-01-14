@@ -1,6 +1,7 @@
 #include <algorithm>
 
 #include "Scenes/GameScene.hpp"
+#include "Engine/GameEngine.hpp"
 #include "Engine/Graphics.hpp"
 #include "Core/Utilities.hpp"
 #include "GameObjects/LevelObjects/PlayerCar.hpp"
@@ -25,6 +26,12 @@ void GameScene::onLoop() {
 
 	for (auto gameObject : gameObjects_) {
 		gameObject->onUpdate();
+	}
+
+	for (auto physicalObject : physicalObjects_) {
+		//TODO: Controllo collisioni
+		physicalObject->rect.position.x += physicalObject->velocity.x * GameEngine::deltaTime();
+		physicalObject->rect.position.y += physicalObject->velocity.y * GameEngine::deltaTime();
 	}
 }
 

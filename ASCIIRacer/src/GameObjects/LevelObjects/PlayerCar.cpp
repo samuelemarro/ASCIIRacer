@@ -10,7 +10,7 @@ PlayerCar::PlayerCar(Point2D position) {
 	//this->sprite = Graphics::loadSpriteFromFile
 	this->collisionLayer = Layer::Content;
 	this->layer = Layer::Content;
-	this->speed = Point2D(0, 0);
+	this->velocity = Point2D(0, 0);
 	Size size;
 	std::string directory = System::getExecutableDirectory();
 	this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/PlayerCar.txt", size);
@@ -19,21 +19,28 @@ PlayerCar::PlayerCar(Point2D position) {
 
 void PlayerCar::onStart() {}
 void PlayerCar::onUpdate() {
-	float deltaTime = GameEngine::deltaTime();
-	float speed = 100;
+	float speedX = 100;
+	float speedY = 50;
 	KeyboardStatus status = Keyboard::currentStatus;
 	if (status.isDown(Key::Right))
 	{
-		rect.position.x += speed * deltaTime;
+		velocity.x = speedX;
 	}
 	else if (status.isDown(Key::Left)) {
-		rect.position.x -= speed * deltaTime;
+		velocity.x = -speedX;
 	}
-	else if (status.isDown(Key::Up)) {
-		rect.position.y -= speed * deltaTime;
+	else {
+		velocity.x = 0;
+	}
+
+	if (status.isDown(Key::Up)) {
+		velocity.y = -speedY;
 	}
 	else if (status.isDown(Key::Down)) {
-		rect.position.y += speed * deltaTime;
+		velocity.y = speedY;
+	}
+	else {
+		velocity.y = 0;
 	}
 }
 void PlayerCar::onCollision(PhysicalObject collider) {}

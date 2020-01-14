@@ -9,8 +9,7 @@ public:
 	Layer collisionLayer;
 	CollisionMask collisionMask;
 
-	//Rimuovere speed e rinominare Point2D->Position?
-	Point2D speed;
+	Point2D velocity;
 
 	virtual void onStart() override;
 	virtual void onUpdate() override;
