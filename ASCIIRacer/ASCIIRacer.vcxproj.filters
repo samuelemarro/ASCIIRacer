@@ -45,9 +45,6 @@
     <ClCompile Include="src\Core\Rect.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObjects\LevelObjects\Car.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
     <ClCompile Include="src\GameObjects\PhysicalObject.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
@@ -61,6 +58,9 @@
       <Filter>File di origine</Filter>
     </ClCompile>
     <ClCompile Include="src\Scenes\MenuScene.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObjects\LevelObjects\WeirdWall.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -90,9 +90,6 @@
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="include\GameObjects\PhysicalObject.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameObjects\LevelObjects\Car.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="include\GameObjects\LevelObjects\PlayerCar.hpp">
@@ -125,8 +122,12 @@
     <ClInclude Include="include\Scenes\MenuScene.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+    <ClInclude Include="include\GameObjects\LevelObjects\WeirdWall.hpp">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="sprites\WeirdWall.txt" />
     <Text Include="sprites\PlayerCar.txt" />
   </ItemGroup>
 </Project>

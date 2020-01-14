@@ -8,7 +8,9 @@ private:
 	std::vector<ptr_GameObject> gameObjects_;
 	std::vector<ptr_PhysicalObject> physicalObjects_;
 	std::vector<Layer> getLayers();
+	std::vector<Layer> getCollisionLayers();
 	void removeToBeDestroyed();
+	void checkCollisions();
 public:
 
 	void onStart() override;

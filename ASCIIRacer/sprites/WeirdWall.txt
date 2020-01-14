@@ -1,0 +1,12 @@
+5;5
+  X  
+  X  
+XXXXX
+  X  
+  X  
+MASK
+  X  
+  X  
+XXXXX
+  X  
+  X  

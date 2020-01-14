@@ -24,7 +24,7 @@ ScreenBuffer Graphics::oldBuffer;
 Size Graphics::screenSize = Size(0, 0);
 
 const Size Graphics::errorSize = Size(3, 3);
-const Sprite Graphics::errorSprite = Utilities::newSprite(3, 3, '?');
+const Sprite Graphics::errorSprite = Graphics::newSprite(3, 3, '?');
 
 void Graphics::clearBuffer() {
 	for (int row = 0; row < screenSize.height; row++) {
@@ -38,14 +38,15 @@ void Graphics::clearBuffer() {
 void Graphics::initialise() {
 	screenSize = System::getConsoleSize();
 
-	buffer = Utilities::newSprite(screenSize.width, screenSize.height, ' ');
-	oldBuffer = Utilities::newSprite(screenSize.width, screenSize.height, ' ');
+	buffer = Graphics::newSprite(screenSize.width, screenSize.height, ' ');
+	oldBuffer = Graphics::newSprite(screenSize.width, screenSize.height, ' ');
 }
 
 void Graphics::draw(Rect rect, Sprite sprite) {
 	//Se x è -20, ignorerà le prime 20 colonne dello sprite
-	int minSpriteX = max(0, -(int)round(rect.position.x));
-	int minSpriteY = max(0, -(int)round(rect.position.y));
+
+	int minSpriteX = max(0, (int)round(-rect.position.x));
+	int minSpriteY = max(0, (int)round(-rect.position.y));
 
 	//Le ultime coordinate (escluse)
 	int lastX = (int)round(rect.position.x) + rect.size.width;
@@ -68,7 +69,7 @@ void Graphics::draw(Rect rect, Sprite sprite) {
 
 			int screenPosition = screenY * screenSize.width + screenX;
 
-			if (sprite[y][x] != ' ') {
+			if (sprite[y][x] != IGNORE_CHAR) {
 				buffer[screenY][screenX] = sprite[y][x];
 			}
 		}
@@ -78,6 +79,7 @@ void Graphics::draw(Rect rect, Sprite sprite) {
 void Graphics::draw(ptr_GameObject gameObject) {
 	draw(gameObject->rect, gameObject->sprite);
 }
+
 
 void Graphics::write(float x, float y, std::string text)
 {
@@ -123,7 +125,22 @@ void Graphics::updateScreen() {
 	System::moveCursor(screenSize.width - 1, screenSize.height - 1);
 }
 
-Sprite Graphics::parseSprite(vector<string> lines, Size& size) {
+Sprite Graphics::newSprite(int width, int height, char defaultValue) {
+	vector<string> matrix;
+	matrix.reserve(height);
+	for (int y = 0; y < height; y++) {
+		string row;
+		row.reserve(width);
+		for (int x = 0; x < width; x++) {
+			row.push_back(defaultValue);
+		}
+		matrix.push_back(row);
+	}
+
+	return matrix;
+}
+
+Sprite Graphics::parseSprite(vector<string> lines, Size& size, ptr_CollisionMask collisionMask) {
 	Sprite sprite;
 
 	//Esegui il parsing della prima linea
@@ -133,28 +150,52 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size) {
 
 	int width;
 	int height;
-	sscanf_s(lines[0].c_str(), "%d;%d", &width, &height);
+	int nvars = sscanf_s(lines[0].c_str(), "%d;%d", &width, &height);
 
 	size = Size(width, height);
 
+	int y;
+
 	//Salta la prima riga
-	for (int y = 1; y < height + 1; y++) {
+	for (y = 1; y < height + 1; y++) {
 		string row;
 		for (int x = 0; x < width; x++) {
-			row.push_back(lines[y][x]);
+			if (lines[y][x] == IGNORE_CHAR_FILE) {
+				row.push_back(IGNORE_CHAR);
+			}
+			else {
+				row.push_back(lines[y][x]);
+			}
 		}
 		sprite.push_back(row);
+	}
+
+	while (y < lines.size()) {
+		if (lines[y].find("MASK") != string::npos && collisionMask != NULL) {
+			*collisionMask = *(new vector<vector<bool>>());
+			int lastLine = y + height;
+			for (y = y + 1; y <= lastLine; y++) {
+				vector<bool> row;
+				for (int x = 0; x < width; x++) {
+					row.push_back(lines[y][x] != ' ');
+				}
+				collisionMask->push_back(row);
+			}
+		}
+		else {
+			y++;
+		}
 	}
 
 	return sprite;
 }
 
-Sprite Graphics::loadSpriteFromFile(string path, Size& size) {
+Sprite Graphics::loadSpriteFromFile(string path, Size& size, ptr_CollisionMask collisionMask) {
 	Sprite sprite;
 
 	try {
 		vector<string> fileContents = System::loadFile(path);
-		sprite = Graphics::parseSprite(fileContents, size);
+		sprite = Graphics::parseSprite(fileContents, size, collisionMask);
 	}
 	catch (exception e) {
 #ifdef _DEBUG

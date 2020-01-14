@@ -2,3 +2,7 @@
 /-\
 |O|
 \-/
+MASK
+XXX
+XXX
+XXX
