@@ -12,7 +12,6 @@ public:
 	Rect rect;
 	Layer layer;
 	Sprite sprite;
-	double gameSpeed = 1;
 	bool initialised = false;
 	bool toBeDestroyed = false;
 

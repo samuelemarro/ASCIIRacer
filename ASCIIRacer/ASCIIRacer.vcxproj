@@ -145,6 +145,7 @@
     <ClCompile Include="src\Engine\KeyboardStatus.cpp" />
     <ClCompile Include="src\Engine\System.cpp" />
     <ClCompile Include="src\GameObjects\GameObject.cpp" />
+    <ClCompile Include="src\GameObjects\LevelObjects\AICar.cpp" />
     <ClCompile Include="src\GameObjects\LevelObjects\PlayerCar.cpp" />
     <ClCompile Include="src\GameObjects\LevelObjects\WeirdWall.cpp" />
     <ClCompile Include="src\GameObjects\PhysicalObject.cpp" />

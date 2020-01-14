@@ -25,8 +25,6 @@ void GameScene::onStart()
 	AICar* p2 = new AICar(Point2D(1, 0));
 	GameScene::addGameObject(p1);
 	GameScene::addGameObject(p2);
-	PlayerCar* p = new PlayerCar(Point2D(1, 27));
-	GameScene::addGameObject(p);
 	WeirdWall* w = new WeirdWall(Point2D(15, 15), 5);
 	GameScene::addGameObject(w);
 }
@@ -44,7 +42,7 @@ void GameScene::onLoop() {
 	}
 
 	for (auto gameObject : gameObjects_) {
-		gameObject->gameSpeed = this->gameSpeed;
+		//gameObject->gameSpeed = this->gameSpeed;
 		gameObject->onUpdate();
 	}
 
