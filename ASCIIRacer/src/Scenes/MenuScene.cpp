@@ -31,6 +31,7 @@ void MenuScene::fetchOptions() {
 	//se voglio aggiungere altra scene faccio adder = new nomeScene; e poi addOption("option name", adder);
 	addOption("OPTIONS", NULL);
 	addOption("CREDITS", NULL);
+	//EXIT opzione deve essere ultima aggiunta
 	addOption("EXIT", NULL);
 }
 
@@ -55,9 +56,10 @@ void MenuScene::onLoop() {
 	else if (status.isPressed(Key::Up)) moveCursor(false);
 
 	status = Keyboard::currentStatus;
-	ptr_Scene option_selected = NULL;
-	if (status.isPressed(Key::Confirm)) option_selected = options[cursor].second;
-	if (option_selected) GameEngine::changeScene(option_selected); //<-------questo e' da modificare
+	bool change = false;
+	if (status.isPressed(Key::Confirm)) change = true;
+	if (options[cursor].second != NULL && change) GameEngine::changeScene(options[cursor].second);
+	else if (cursor == options.size() - 1 && change) exit(EXIT_SUCCESS);
 }
 
 void MenuScene::onGraphics() {

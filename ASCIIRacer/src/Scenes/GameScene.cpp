@@ -11,7 +11,7 @@ using std::sort;
 
 void GameScene::onStart()
 {
-	PlayerCar* p = new PlayerCar(Point2D(10, 10));
+	PlayerCar* p = new PlayerCar(Point2D(1, 27));
 	GameScene::addGameObject(p);
 }
 

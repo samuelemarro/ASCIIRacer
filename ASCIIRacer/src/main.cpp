@@ -63,24 +63,16 @@ void inputTest(bool redraw) {
 
 void sceneTest() {
 	PlayerCar car = PlayerCar(Point2D(5, 5));
-
-	GameScene gameScene;
 	MenuScene menuScene;
-
-	//gameScene.addGameObject(&car);
-
 	GameEngine::start(&menuScene);
-
 	int fps = 60;
 	GameEngine::fps = fps;
-
 	while (true)
 	{
 		//sleep_for(milliseconds(1000 / fps));
 		GameEngine::loop();
 
 	}
-
 }
 
 void colorTest() {
