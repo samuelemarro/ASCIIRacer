@@ -10,6 +10,8 @@ private:
 	std::vector<Layer> getLayers();
 	std::vector<Layer> getCollisionLayers();
 	void removeToBeDestroyed();
+	double gameSpeed=0;
+
 	void checkCollisions();
 public:
 

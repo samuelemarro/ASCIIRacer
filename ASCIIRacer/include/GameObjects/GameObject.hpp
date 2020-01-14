@@ -8,11 +8,11 @@
 class GameObject
 {
 private:
-
 public:
 	Rect rect;
 	Layer layer;
 	Sprite sprite;
+	double gameSpeed = 1;
 	bool initialised = false;
 	bool toBeDestroyed = false;
 
@@ -20,6 +20,8 @@ public:
 	virtual void onUpdate();
 
 	void destroy();
+
+	Point2D velocity;
 
 	GameObject(Rect rect, Layer layer);
 	GameObject(Rect rect, Layer layer, Sprite sprite);

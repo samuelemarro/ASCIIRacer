@@ -60,6 +60,9 @@
     <ClCompile Include="src\Scenes\MenuScene.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameObjects\LevelObjects\AICar.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
     <ClCompile Include="src\GameObjects\LevelObjects\WeirdWall.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
@@ -125,9 +128,13 @@
     <ClInclude Include="include\GameObjects\LevelObjects\WeirdWall.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+    <ClInclude Include="include\GameObjects\LevelObjects\AICar.hpp">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="sprites\WeirdWall.txt" />
     <Text Include="sprites\PlayerCar.txt" />
+    <Text Include="sprites\AICar.txt" />
   </ItemGroup>
 </Project>
