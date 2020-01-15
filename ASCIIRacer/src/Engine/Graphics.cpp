@@ -231,7 +231,7 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size) {
 
 	//Salta la prima riga
 	for (y = 1; y < height + 1; y++) {
-		string row;
+		vector<Cell> row = vector<Cell>();
 		for (int x = 0; x < width; x++) {
 			if (lines[y][x] == IGNORE_CHAR_FILE) {
 				row.push_back(IGNORE_CHAR);
