@@ -66,6 +66,9 @@
     <ClCompile Include="src\GameObjects\LevelObjects\AICar.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\Cell.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Core\Rect.hpp">
@@ -129,6 +132,9 @@
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="include\GameObjects\LevelObjects\AICar.hpp">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Core\Cell.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
   </ItemGroup>

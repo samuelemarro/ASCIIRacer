@@ -1,6 +1,7 @@
 #pragma once
 
 enum class Color {
+	No_Color = -1,
 	Black = 0,
 	Blue = 1,
 	Green = 2,

@@ -19,4 +19,6 @@ public:
 	{
 		return (find(first, last, val) != last);
 	}
+
+	static int hexToNumber(char value);
 };

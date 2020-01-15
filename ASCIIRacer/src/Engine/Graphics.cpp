@@ -84,7 +84,10 @@ void Graphics::draw(ptr_GameObject gameObject) {
 void Graphics::write(float x, float y, std::string text)
 {
 	Sprite s = Sprite();
-	s.push_back(text);
+	s.push_back(vector<Cell>());
+	for (int i = 0; i < text.length(); i++) {
+		s[0].push_back(Cell(text[i]));
+	}
 	Rect rect = Rect(x, y, text.length(), 1);
 	Graphics::draw(rect, s);
 }
@@ -93,7 +96,8 @@ void Graphics::redrawScreen() {
 	System::clearScreen();
 	for (int y = 0; y < screenSize.height; y++) {
 		for (int x = 0; x < screenSize.width; x++) {
-			cout << buffer[y][x];
+			System::setTextColor(buffer[y][x].foreground, buffer[y][x].background);
+			cout << buffer[y][x].character;
 		}
 		if (y != screenSize.height) {
 			cout << endl;
@@ -116,7 +120,8 @@ void Graphics::updateScreen() {
 				}
 				redraw = true;
 
-				cout << buffer[y][x];
+				System::setTextColor(buffer[y][x].foreground, buffer[y][x].background);
+				cout << buffer[y][x].character;
 			}
 		}
 	}
@@ -126,18 +131,18 @@ void Graphics::updateScreen() {
 }
 
 Sprite Graphics::newSprite(int width, int height, char defaultValue) {
-	vector<string> matrix;
-	matrix.reserve(height);
+	Sprite sprite;
+	sprite.reserve(height);
 	for (int y = 0; y < height; y++) {
-		string row;
+		vector<Cell> row = vector<Cell>();
 		row.reserve(width);
 		for (int x = 0; x < width; x++) {
-			row.push_back(defaultValue);
+			row.push_back(Cell(defaultValue));
 		}
-		matrix.push_back(row);
+		sprite.push_back(row);
 	}
 
-	return matrix;
+	return sprite;
 }
 
 Sprite Graphics::parseSprite(vector<string> lines, Size& size, ptr_CollisionMask collisionMask) {
@@ -154,36 +159,54 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size, ptr_CollisionMask
 
 	size = Size(width, height);
 
-	int y;
+	int currentLine;
 
 	//Salta la prima riga
-	for (y = 1; y < height + 1; y++) {
-		string row;
+	for (currentLine = 1; currentLine < height + 1; currentLine++) {
+		vector<Cell> row = vector<Cell>();
 		for (int x = 0; x < width; x++) {
-			if (lines[y][x] == IGNORE_CHAR_FILE) {
+			if (lines[currentLine][x] == IGNORE_CHAR_FILE) {
 				row.push_back(IGNORE_CHAR);
 			}
 			else {
-				row.push_back(lines[y][x]);
+				row.push_back(lines[currentLine][x]);
 			}
 		}
 		sprite.push_back(row);
 	}
 
-	while (y < lines.size()) {
-		if (lines[y].find("MASK") != string::npos && collisionMask != NULL) {
+	while (currentLine < lines.size()) {
+		if (lines[currentLine].find("MASK") != string::npos && collisionMask != NULL) {
 			*collisionMask = *(new vector<vector<bool>>());
-			int lastLine = y + height;
-			for (y = y + 1; y <= lastLine; y++) {
+			int lastLine = currentLine + height;
+			for (currentLine = currentLine + 1; currentLine <= lastLine; currentLine++) {
 				vector<bool> row;
 				for (int x = 0; x < width; x++) {
-					row.push_back(lines[y][x] != ' ');
+					row.push_back(lines[currentLine][x] != ' ');
 				}
 				collisionMask->push_back(row);
 			}
 		}
+		else if (lines[currentLine].find("FOREGROUND") != string::npos) {
+			int startingPoint = currentLine + 1;
+			for (int i = 0; i < height; i++) {
+				for (int j = 0; j < width; j++) {
+					sprite[i][j].foreground = (Color)Utilities::hexToNumber(lines[i + startingPoint][j]);
+				}
+			}
+			currentLine = startingPoint + height;
+		}
+		else if (lines[currentLine].find("BACKGROUND") != string::npos) {
+			int startingPoint = currentLine + 1;
+			for (int i = 0; i < height; i++) {
+				for (int j = 0; j < width; j++) {
+					sprite[i][j].background = (Color)Utilities::hexToNumber(lines[i + startingPoint][j]);
+				}
+			}
+			currentLine = startingPoint + height;
+		}
 		else {
-			y++;
+			currentLine++;
 		}
 	}
 

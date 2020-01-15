@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\Cell.cpp" />
     <ClCompile Include="src\Core\Point2D.cpp" />
     <ClCompile Include="src\Core\Rect.cpp" />
     <ClCompile Include="src\Core\Size.cpp" />
@@ -154,6 +155,7 @@
     <ClCompile Include="src\Scenes\MenuScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Core\Cell.hpp" />
     <ClInclude Include="include\Core\Typedefs.hpp" />
     <ClInclude Include="include\Engine\GameEngine.hpp" />
     <ClInclude Include="include\Core\Rect.hpp" />

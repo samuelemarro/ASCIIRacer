@@ -3,8 +3,10 @@
 #include <vector>
 #include <string>
 
-typedef std::vector<std::string> Sprite;
-typedef std::vector<std::string> ScreenBuffer;
+#include "Core/Cell.hpp"
+
+typedef std::vector<std::vector<Cell>> Sprite;
+typedef std::vector<std::vector<Cell>> ScreenBuffer;
 typedef ScreenBuffer* ptr_ScreenBuffer;
 typedef std::vector<std::vector<bool>> CollisionMask;
 typedef CollisionMask* ptr_CollisionMask;

@@ -44,6 +44,27 @@ void System::moveCursor(int x, int y) {
 	SetConsoleCursorPosition(hStdout, windowsCoord);
 }
 
+void System::setTextColor(Color foreground, Color background)
+{
+	Color trueForeground, trueBackground;
+	if (foreground == Color::No_Color) {
+		trueForeground = Color::White;
+	}
+	else {
+		trueForeground = foreground;
+	}
+
+	if (background == Color::No_Color) {
+		trueBackground = Color::Black;
+	}
+	else {
+		trueBackground = background;
+	}
+
+	SetConsoleTextAttribute(hStdout, (int)trueForeground + 16 * (int)trueBackground);
+	return;
+}
+
 std::string System::getExecutableDirectory()
 {
 	char result[MAX_PATH];
