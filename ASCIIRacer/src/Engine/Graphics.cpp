@@ -69,8 +69,16 @@ void Graphics::draw(Rect rect, Sprite sprite) {
 
 			int screenPosition = screenY * screenSize.width + screenX;
 
-			if (sprite[y][x] != IGNORE_CHAR) {
-				buffer[screenY][screenX] = sprite[y][x];
+			if (sprite[y][x].character != IGNORE_CHAR) {
+				buffer[screenY][screenX].character = sprite[y][x].character;
+			}
+
+			if (sprite[y][x].foreground != Color::No_Color) {
+				buffer[screenY][screenX].foreground = sprite[y][x].foreground;
+			}
+			
+			if (sprite[y][x].background != Color::No_Color) {
+				buffer[screenY][screenX].background = sprite[y][x].background;
 			}
 		}
 	}
@@ -83,11 +91,15 @@ void Graphics::draw(ptr_GameObject gameObject) {
 
 void Graphics::write(float x, float y, std::string text)
 {
+	//Crea uno sprite di larghezza text.length() e altezza 1
+	//contenente il testo
 	Sprite s = Sprite();
 	s.push_back(vector<Cell>());
 	for (int i = 0; i < text.length(); i++) {
 		s[0].push_back(Cell(text[i]));
 	}
+
+
 	Rect rect = Rect(x, y, text.length(), 1);
 	Graphics::draw(rect, s);
 }
@@ -176,13 +188,14 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size, ptr_CollisionMask
 	}
 
 	while (currentLine < lines.size()) {
+		//Mask: conta come collisione se il carattere non è IGNORE_CHAR_FILE
 		if (lines[currentLine].find("MASK") != string::npos && collisionMask != NULL) {
 			*collisionMask = *(new vector<vector<bool>>());
 			int lastLine = currentLine + height;
 			for (currentLine = currentLine + 1; currentLine <= lastLine; currentLine++) {
 				vector<bool> row;
 				for (int x = 0; x < width; x++) {
-					row.push_back(lines[currentLine][x] != ' ');
+					row.push_back(lines[currentLine][x] != IGNORE_CHAR_FILE);
 				}
 				collisionMask->push_back(row);
 			}
@@ -191,7 +204,9 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size, ptr_CollisionMask
 			int startingPoint = currentLine + 1;
 			for (int i = 0; i < height; i++) {
 				for (int j = 0; j < width; j++) {
-					sprite[i][j].foreground = (Color)Utilities::hexToNumber(lines[i + startingPoint][j]);
+					if (lines[i + startingPoint][j] != IGNORE_CHAR_FILE) {
+						sprite[i][j].foreground = (Color)Utilities::hexToNumber(lines[i + startingPoint][j]);
+					}
 				}
 			}
 			currentLine = startingPoint + height;
@@ -200,7 +215,9 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size, ptr_CollisionMask
 			int startingPoint = currentLine + 1;
 			for (int i = 0; i < height; i++) {
 				for (int j = 0; j < width; j++) {
-					sprite[i][j].background = (Color)Utilities::hexToNumber(lines[i + startingPoint][j]);
+					if (lines[i + startingPoint][j] != IGNORE_CHAR_FILE) {
+						sprite[i][j].background = (Color)Utilities::hexToNumber(lines[i + startingPoint][j]);
+					}
 				}
 			}
 			currentLine = startingPoint + height;

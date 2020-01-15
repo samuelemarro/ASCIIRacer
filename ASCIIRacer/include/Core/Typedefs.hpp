@@ -11,5 +11,7 @@ typedef ScreenBuffer* ptr_ScreenBuffer;
 typedef std::vector<std::vector<bool>> CollisionMask;
 typedef CollisionMask* ptr_CollisionMask;
 
+//Il carattere usato dal motore per indicare "nessun carattere"
 const char IGNORE_CHAR = 1;
+//Il carattere usato nei file per indicare "nessun carattere"
 const char IGNORE_CHAR_FILE = ' ';
