@@ -9,6 +9,7 @@
 #include "GameObjects/LevelObjects/PlayerCar.hpp"
 #include "GameObjects/LevelObjects/AICar.hpp"
 #include "GameObjects/LevelObjects/WeirdWall.hpp"
+#include "GameObjects/LevelObjects/RoadLine.hpp"
 
 using std::max;
 using std::min;
@@ -20,13 +21,18 @@ PlayerCar* player;
 void GameScene::onStart()
 {
 	this->gameSpeed = 1;
-	PlayerCar* p1 = new PlayerCar(Point2D(1, 27));
+	PlayerCar* p1 = new PlayerCar(Point2D(2, 27));
 	player = p1;
-	AICar* p2 = new AICar(Point2D(1, 0));
+	AICar* p2 = new AICar(Point2D(2, 0));
+	RoadLine* rl[5];
+	for (int i = 0; i < 5; i++) {
+		rl[i] = new RoadLine(Point2D(i*7, 0));
+		GameScene::addGameObject(rl[i]);
+	}
 	GameScene::addGameObject(p1);
 	GameScene::addGameObject(p2);
-	WeirdWall* w = new WeirdWall(Point2D(15, 15), 5);
-	GameScene::addGameObject(w);
+	//WeirdWall* w = new WeirdWall(Point2D(15, 15), 5);
+	//GameScene::addGameObject(w);
 }
 
 void GameScene::onLoop() {
@@ -55,6 +61,8 @@ void GameScene::onLoop() {
 
 void GameScene::onGraphics()
 {
+	Graphics::write(35, 10, "LEVEL:" + std::to_string(player->level));
+	Graphics::write(35, 11, "POINTS:" + std::to_string(player->points));
 	for (Layer layer : getLayers()) {
 		for (auto gameObject : gameObjects_) {
 			if (gameObject->layer == layer) {

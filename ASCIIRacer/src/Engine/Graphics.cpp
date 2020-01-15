@@ -190,12 +190,66 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size, ptr_CollisionMask
 	return sprite;
 }
 
+Sprite Graphics::parseSprite(vector<string> lines, Size& size) {
+	Sprite sprite;
+
+	//Esegui il parsing della prima linea
+	if (lines.size() == 0) {
+		throw runtime_error("File vuoto.");
+	}
+
+	int width;
+	int height;
+	int nvars = sscanf_s(lines[0].c_str(), "%d;%d", &width, &height);
+
+	size = Size(width, height);
+
+	int y;
+
+	//Salta la prima riga
+	for (y = 1; y < height + 1; y++) {
+		string row;
+		for (int x = 0; x < width; x++) {
+			if (lines[y][x] == IGNORE_CHAR_FILE) {
+				row.push_back(IGNORE_CHAR);
+			}
+			else {
+				row.push_back(lines[y][x]);
+			}
+		}
+		sprite.push_back(row);
+	}
+	return sprite;
+}
+
 Sprite Graphics::loadSpriteFromFile(string path, Size& size, ptr_CollisionMask collisionMask) {
 	Sprite sprite;
 
 	try {
 		vector<string> fileContents = System::loadFile(path);
 		sprite = Graphics::parseSprite(fileContents, size, collisionMask);
+	}
+	catch (exception e) {
+#ifdef _DEBUG
+		cout << e.what();
+#else 
+		//Non interrompere l'esecuzione del codice, usa lo sprite di errore
+		size = errorSize;
+		sprite = Graphics::errorSprite;
+#endif
+
+
+	}
+
+	return sprite;
+}
+
+Sprite Graphics::loadSpriteFromFile(string path, Size& size) {
+	Sprite sprite;
+
+	try {
+		vector<string> fileContents = System::loadFile(path);
+		sprite = Graphics::parseSprite(fileContents, size);
 	}
 	catch (exception e) {
 #ifdef _DEBUG
