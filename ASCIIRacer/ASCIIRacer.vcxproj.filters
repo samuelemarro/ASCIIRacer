@@ -66,10 +66,12 @@
     <ClCompile Include="src\GameObjects\LevelObjects\AICar.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Cell.cpp">
+	<ClCompile Include="src\Core\Cell.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-  </ItemGroup>
+    <ClCompile Include="src\GameObjects\LevelObjects\RoadLine.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Core\Rect.hpp">
       <Filter>File di intestazione</Filter>
@@ -134,13 +136,16 @@
     <ClInclude Include="include\GameObjects\LevelObjects\AICar.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="include\Core\Cell.hpp">
+    <ClInclude Include="include\GameObjects\LevelObjects\RoadLine.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-  </ItemGroup>
+    <ClInclude Include="include\Core\Cell.hpp">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>  </ItemGroup>
   <ItemGroup>
     <Text Include="sprites\WeirdWall.txt" />
     <Text Include="sprites\PlayerCar.txt" />
     <Text Include="sprites\AICar.txt" />
+    <Text Include="sprites\RoadLine.txt" />
   </ItemGroup>
 </Project>
