@@ -2,3 +2,5 @@
 || ||
 MASK
 .....
+FOREGROUND
+fe0ef

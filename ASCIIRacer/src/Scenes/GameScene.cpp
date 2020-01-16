@@ -28,23 +28,34 @@ int roadX = 10;
 
 void GameScene::onStart()
 {
-	srand(time(NULL));
+	ptr_Level l = new Level(100, -1, 3, 1, 70, 5);  //random level with difficulty 1
+	this->currentLevel = l;
+	this->nextLevel = NULL;
+
+	this->gameSpeed = 1;
+	//srand(time(NULL));
 	PlayerCar* p1 = new PlayerCar(Point2D(30, 27));
 	player = p1;
-	/*AICar* p2 = new AICar(Point2D(2, 0));
-	GameScene::addGameObject(p1);
-	GameScene::addGameObject(p2);*/
+	AICar* p2 = new AICar(Point2D(2, 0));
 	//WeirdWall* w = new WeirdWall(Point2D(15, 15), 5);
 	//GameScene::addGameObject(w);
 	
 	GameScene::addGameObject(p1);
-	for (int i = 0; i < 30; i++) {
+	/*for (int i = 0; i < 30; i++) {
 		RoadLine* rl = new RoadLine(Point2D(roadX, i), 'n');
 		GameScene::addGameObject(rl);
+	GameScene::addGameObject(p2);*/
+
+	//Aggiungi la mappa (ora solo bordi della strada)
+	for(int y = 0; y < 30; ++y) {
+		Border* border_sx = new Border(Point2D(currentLevel->road_leftposition, y));
+		Border* border_dx = new Border(Point2D(currentLevel->road_leftposition + currentLevel->roadWidth, y));
+		GameScene::addGameObject(border_sx);
+		GameScene::addGameObject(border_dx);
 	}
-	ptr_Level l = new Level(100, -1, 3, 1);  //random level with difficulty 1
-	this->currentLevel = l;
-	this->nextLevel = NULL;
+
+	Upgrade* upgrade = new Upgrade(Point2D(25, -10), 250);  //random upgrade with 250 points as bonus
+	GameScene::addGameObject(upgrade);
 
 	this->gameSpeed = currentLevel->speed;
 
@@ -64,7 +75,7 @@ void GameScene::onStart()
 }
 
 void GameScene::onLoop() {
-
+	/*
 	if (Graphics::buffer[0][roadX] == ' ') {
 		int k = rand() % 3;
 		char c='d';
@@ -74,11 +85,15 @@ void GameScene::onLoop() {
 		RoadLine* rl = new RoadLine(Point2D(roadX, 0), c);
 		GameScene::addGameObject(rl);
 		if (roadX < 40 && c=='d') roadX++;
-	}
+	}*/
 
 	if (currentLevel->changeLevel(player->points)) {
-		this->currentLevel = currentLevel->NextLevel();
+		this->currentLevel = currentLevel->NextLevel(player->points);
 	}
+
+	pair<Border*, Border*> borders = currentLevel->generateRoad();
+	GameScene::addGameObject(borders.first);
+	GameScene::addGameObject(borders.second);
 
 	//Inizializzazione dei gameObject
 	for (auto gameObject : gameObjects_) {
@@ -102,8 +117,8 @@ void GameScene::onLoop() {
 
 void GameScene::onGraphics()
 {
-	Graphics::write(80, 10, "LEVEL: " + std::to_string(currentLevel->difficulty));
-	Graphics::write(80, 12, "SCORE: " + std::to_string(player->points));
+	Graphics::write(100, 5, "LEVEL: " + std::to_string(currentLevel->difficulty));
+	Graphics::write(100, 7, "SCORE: " + std::to_string(player->points));
 	for (Layer layer : getLayers()) {
 		for (auto gameObject : gameObjects_) {
 			if (gameObject->layer == layer) {

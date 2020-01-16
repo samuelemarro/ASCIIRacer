@@ -3,8 +3,7 @@
 #include "Engine/Graphics.hpp"
 #include "Engine/System.hpp"
 
-Border::Border(Point2D position, int rw) {
-	this->roadWidth = rw;
+Border::Border(Point2D position) {
 	this->layer = Layer::Content;
 	this->velocity = Point2D(0, 3);
 	this->immovable = true;

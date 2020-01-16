@@ -7,7 +7,6 @@
 
 class GameObject
 {
-private:
 public:
 	Rect rect;
 	Layer layer;

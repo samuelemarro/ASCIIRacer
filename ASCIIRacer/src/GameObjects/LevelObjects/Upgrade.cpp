@@ -6,7 +6,7 @@
 Upgrade::Upgrade(Point2D position, int b) {
 	this->bonus = b;
 	this->layer = Layer::Content;
-	this->velocity = Point2D(0, 1);
+	this->velocity = Point2D(0, 3);
 	Size size;
 	std::string directory = System::getExecutableDirectory();
 	this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/Upgrade.txt", size, this->collisionMask);
