@@ -1,176 +1,68 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="File di origine">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="File di intestazione">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="File di risorse">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="src\Core\Cell.cpp" />
+    <ClCompile Include="src\Core\Point2D.cpp" />
+    <ClCompile Include="src\Core\Rect.cpp" />
+    <ClCompile Include="src\Core\Size.cpp" />
+    <ClCompile Include="src\Engine\GameEngine.cpp" />
+    <ClCompile Include="src\Core\Utilities.cpp" />
+    <ClCompile Include="src\Engine\Graphics.cpp" />
+    <ClCompile Include="src\Engine\Keyboard.cpp" />
+    <ClCompile Include="src\Engine\KeyboardStatus.cpp" />
+    <ClCompile Include="src\Engine\System.cpp" />
+    <ClCompile Include="src\GameObjects\GameObject.cpp" />
+    <ClCompile Include="src\GameObjects\LevelObjects\AICar.cpp" />
+    <ClCompile Include="src\GameObjects\LevelObjects\Border.cpp" />
+    <ClCompile Include="src\GameObjects\LevelObjects\Obstacle.cpp" />
+    <ClCompile Include="src\GameObjects\LevelObjects\PlayerCar.cpp" />
+    <ClCompile Include="src\GameObjects\LevelObjects\RoadLine.cpp" />
+    <ClCompile Include="src\GameObjects\LevelObjects\Upgrade.cpp" />
+    <ClCompile Include="src\GameObjects\LevelObjects\WeirdWall.cpp" />
+    <ClCompile Include="src\GameObjects\PhysicalObject.cpp" />
+    <ClCompile Include="src\Levels\Level.cpp" />
+    <ClCompile Include="src\Scenes\GameScene.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Scenes\MenuScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Core\Utilities.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\main.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\Graphics.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\Keyboard.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\KeyboardStatus.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\System.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\GameEngine.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Size.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObjects\GameObject.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Rect.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObjects\PhysicalObject.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObjects\LevelObjects\PlayerCar.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Point2D.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scenes\GameScene.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scenes\MenuScene.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObjects\LevelObjects\WeirdWall.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObjects\LevelObjects\AICar.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-	<ClCompile Include="src\Core\Cell.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Levels\Level.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObjects\LevelObjects\Border.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObjects\LevelObjects\Obstacle.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObjects\LevelObjects\Upgrade.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
+    <ClInclude Include="include\Core\Cell.hpp" />
+    <ClInclude Include="include\Core\Typedefs.hpp" />
+    <ClInclude Include="include\Engine\GameEngine.hpp" />
+    <ClInclude Include="include\Core\Rect.hpp" />
+    <ClInclude Include="include\Core\Size.hpp" />
+    <ClInclude Include="include\Core\Utilities.hpp" />
+    <ClInclude Include="include\Core\Point2D.hpp" />
+    <ClInclude Include="include\Engine\Graphics.hpp" />
+    <ClInclude Include="include\Engine\Key.hpp" />
+    <ClInclude Include="include\Engine\Keyboard.hpp" />
+    <ClInclude Include="include\Engine\KeyboardStatus.hpp" />
+    <ClInclude Include="include\Engine\System.hpp" />
+    <ClInclude Include="include\GameObjects\LevelObjects\Border.hpp" />
+    <ClInclude Include="include\GameObjects\LevelObjects\Obstacle.hpp" />
+    <ClInclude Include="include\GameObjects\LevelObjects\RoadLine.hpp" />
+    <ClInclude Include="include\GameObjects\LevelObjects\Upgrade.hpp" />
+    <ClInclude Include="include\GameObjects\LevelObjects\WeirdWall.hpp" />
+    <ClInclude Include="include\GameObjects\LevelObjects\AICar.hpp" />
+    <ClInclude Include="include\Levels\Level.hpp" />
+    <ClInclude Include="include\Scenes\GameScene.hpp" />
+    <ClInclude Include="include\Scenes\MenuScene.hpp" />
+    <ClInclude Include="include\Scenes\Scene.hpp" />
+    <ClInclude Include="include\GameObjects\GameObject.hpp" />
+    <ClInclude Include="include\GameObjects\LevelObjects\PlayerCar.hpp" />
+    <ClInclude Include="include\GameObjects\PhysicalObject.hpp" />
+    <ClInclude Include="include\Core\Layer.hpp" />
+    <ClInclude Include="include\Core\Color.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Core\Rect.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Core\Utilities.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Engine\Graphics.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Engine\Key.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Engine\Keyboard.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Engine\KeyboardStatus.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Engine\System.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameObjects\GameObject.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameObjects\PhysicalObject.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameObjects\LevelObjects\PlayerCar.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Core\Layer.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Core\Size.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Engine\GameEngine.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Core\Typedefs.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Core\Point2D.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Scenes\Scene.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Scenes\GameScene.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Core\Color.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Scenes\MenuScene.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameObjects\LevelObjects\RoadLine.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameObjects\LevelObjects\WeirdWall.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameObjects\LevelObjects\AICar.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Levels\Level.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameObjects\LevelObjects\Border.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameObjects\LevelObjects\Obstacle.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameObjects\LevelObjects\Upgrade.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Core\Cell.hpp">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>  </ItemGroup>
-  <ItemGroup>
-    <Text Include="sprites\WeirdWall.txt" />
-    <Text Include="sprites\PlayerCar.txt" />
     <Text Include="sprites\AICar.txt" />
+    <Text Include="sprites\Border.txt" />
+    <Text Include="sprites\Obstacle.txt" />
+    <Text Include="sprites\PlayerCar.txt" />
     <Text Include="sprites\RoadLine.txt" />
     <Text Include="sprites\Upgrade.txt" />
-    <Text Include="sprites\Obstacle.txt" />
-    <Text Include="sprites\Border.txt" />
+    <Text Include="sprites\WeirdWall.txt" />
+    <Text Include="sprites\RoadLineRight.txt" />
+    <Text Include="sprites\RoadLineLeft.txt" />
   </ItemGroup>
 </Project>

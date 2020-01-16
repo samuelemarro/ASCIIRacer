@@ -8,7 +8,6 @@
 class Graphics {
 private:
 	Graphics();
-	static ScreenBuffer buffer;
 	static ScreenBuffer oldBuffer;
 
 	static Sprite parseSprite(std::vector<std::string> lines, Size& size, ptr_CollisionMask);
@@ -17,6 +16,7 @@ private:
 	static const Size errorSize;
 	static const Sprite errorSprite;
 public:
+	static ScreenBuffer buffer;
 	static Size screenSize;
 
 	static Sprite loadSpriteFromFile(std::string path, Size& size, ptr_CollisionMask collisionMask);
