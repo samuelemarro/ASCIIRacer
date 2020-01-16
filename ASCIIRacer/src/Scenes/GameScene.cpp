@@ -10,6 +10,10 @@
 #include "GameObjects/LevelObjects/AICar.hpp"
 #include "GameObjects/LevelObjects/WeirdWall.hpp"
 #include "GameObjects/LevelObjects/RoadLine.hpp"
+#include "GameObjects/LevelObjects/Border.hpp"
+#include "GameObjects/LevelObjects/Obstacle.hpp"
+#include "GameObjects/LevelObjects/Upgrade.hpp"
+#include "Levels/Level.hpp"
 
 using std::max;
 using std::min;
@@ -21,23 +25,43 @@ PlayerCar* player;
 void GameScene::onStart()
 {
 	this->gameSpeed = 1;
-	PlayerCar* p1 = new PlayerCar(Point2D(2, 27));
+	PlayerCar* p1 = new PlayerCar(Point2D(30, 27));
 	player = p1;
-	AICar* p2 = new AICar(Point2D(2, 0));
+	/*AICar* p2 = new AICar(Point2D(2, 0));
 	RoadLine* rl[5];
 	for (int i = 0; i < 5; i++) {
 		rl[i] = new RoadLine(Point2D(i*7, 0));
 		GameScene::addGameObject(rl[i]);
 	}
 	GameScene::addGameObject(p1);
-	GameScene::addGameObject(p2);
+	GameScene::addGameObject(p2);*/
 	//WeirdWall* w = new WeirdWall(Point2D(15, 15), 5);
 	//GameScene::addGameObject(w);
+	
+	GameScene::addGameObject(p1);
+	
+	//Aggiungi la mappa (ora solo bordi della strada)
+	for(int y = -100; y < 20; ++y) {
+		Border* border_sx = new Border(Point2D(5, y), 67);
+		Border* border_dx = new Border(Point2D(5 + border_sx->roadWidth, y), 23);
+		GameScene::addGameObject(border_sx);
+		GameScene::addGameObject(border_dx);
+	}
+
+
+
+	ptr_Level l = new Level(100, -1, 3, 1);  //random level with difficulty 1
+	this->currentLevel = l;
+	this->nextLevel = NULL;
+
+	this->gameSpeed = currentLevel->speed;
 }
 
 void GameScene::onLoop() {
-	
-	this->gameSpeed = pow(1.2, player->level);
+
+	if (currentLevel->changeLevel(player->points)) {
+		this->currentLevel = currentLevel->NextLevel();
+	}
 
 	//Inizializzazione dei gameObject
 	for (auto gameObject : gameObjects_) {
@@ -53,7 +77,7 @@ void GameScene::onLoop() {
 	}
 
 	for (auto physicalObject : physicalObjects_) {
-		checkCollisions();
+		//checkCollisions();
 		physicalObject->rect.position.x += physicalObject->velocity.x * GameEngine::deltaTime();
 		physicalObject->rect.position.y += physicalObject->velocity.y * GameEngine::deltaTime();
 	}
@@ -61,8 +85,8 @@ void GameScene::onLoop() {
 
 void GameScene::onGraphics()
 {
-	Graphics::write(35, 10, "LEVEL:" + std::to_string(player->level));
-	Graphics::write(35, 11, "POINTS:" + std::to_string(player->points));
+	Graphics::write(80, 10, "LEVEL: " + std::to_string(currentLevel->difficulty));
+	Graphics::write(80, 12, "SCORE: " + std::to_string(player->points));
 	for (Layer layer : getLayers()) {
 		for (auto gameObject : gameObjects_) {
 			if (gameObject->layer == layer) {
