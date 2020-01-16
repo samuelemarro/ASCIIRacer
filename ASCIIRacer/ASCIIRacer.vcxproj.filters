@@ -69,9 +69,19 @@
 	<ClCompile Include="src\Core\Cell.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObjects\LevelObjects\RoadLine.cpp">
+    <ClCompile Include="src\Levels\Level.cpp">
       <Filter>File di origine</Filter>
-    </ClCompile>  </ItemGroup>
+    </ClCompile>
+    <ClCompile Include="src\GameObjects\LevelObjects\Border.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObjects\LevelObjects\Obstacle.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObjects\LevelObjects\Upgrade.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Core\Rect.hpp">
       <Filter>File di intestazione</Filter>
@@ -130,13 +140,25 @@
     <ClInclude Include="include\Scenes\MenuScene.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+    <ClInclude Include="include\GameObjects\LevelObjects\RoadLine.hpp">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
     <ClInclude Include="include\GameObjects\LevelObjects\WeirdWall.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="include\GameObjects\LevelObjects\AICar.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="include\GameObjects\LevelObjects\RoadLine.hpp">
+    <ClInclude Include="include\Levels\Level.hpp">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameObjects\LevelObjects\Border.hpp">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameObjects\LevelObjects\Obstacle.hpp">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameObjects\LevelObjects\Upgrade.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="include\Core\Cell.hpp">
@@ -147,5 +169,8 @@
     <Text Include="sprites\PlayerCar.txt" />
     <Text Include="sprites\AICar.txt" />
     <Text Include="sprites\RoadLine.txt" />
+    <Text Include="sprites\Upgrade.txt" />
+    <Text Include="sprites\Obstacle.txt" />
+    <Text Include="sprites\Border.txt" />
   </ItemGroup>
 </Project>

@@ -22,7 +22,7 @@ void PlayerCar::onUpdate() {
 	float speedX = 100;
 	float speedY = 50;
 	KeyboardStatus status = Keyboard::currentStatus;
-	if (status.isPressed(Key::Right) && rect.position.x < 21)
+	/*if (status.isPressed(Key::Right) && rect.position.x < 21)
 	{
 		rect.position.x += 7;
 	}
@@ -31,8 +31,18 @@ void PlayerCar::onUpdate() {
 	}
 	else {
 		velocity.x = 0;
+	}*/
+	
+	if (status.isDown(Key::Right)) {
+		velocity.x = speedX;
 	}
-	/*
+	else if (status.isDown(Key::Left)) {
+		velocity.x = -speedX;
+	}
+	else {
+		velocity.x = 0;
+	}
+
 	if (status.isDown(Key::Up)) {
 		velocity.y = -speedY;
 	}
@@ -42,6 +52,6 @@ void PlayerCar::onUpdate() {
 	else {
 		velocity.y = 0;
 	}
-	*/
+	
 }
 void PlayerCar::onCollision(ptr_PhysicalObject collider) {}

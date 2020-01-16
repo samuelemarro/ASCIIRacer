@@ -2,6 +2,7 @@
 #include "GameObjects/GameObject.hpp"
 #include "GameObjects/PhysicalObject.hpp"
 #include "Scenes/Scene.hpp"
+#include "Levels/Level.hpp"
 
 class GameScene : public Scene {
 private:
@@ -9,11 +10,16 @@ private:
 	std::vector<ptr_PhysicalObject> physicalObjects_;
 	std::vector<Layer> getLayers();
 	std::vector<Layer> getCollisionLayers();
+	
+	ptr_Level nextLevel;
+
 	void removeToBeDestroyed();
-	double gameSpeed=0;
+	double gameSpeed = 0;
 
 	void checkCollisions();
 public:
+
+	ptr_Level currentLevel;
 
 	void onStart() override;
 	void onLoop() override;
