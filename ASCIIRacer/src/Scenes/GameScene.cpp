@@ -159,8 +159,6 @@ void GameScene::checkCollisions()
 			continue;
 		}
 
-		bool happenedCollision = false;
-
 		for (int x = 0; x < rect.size.width; x++) {
 			for (int y = 0; y < rect.size.height; y++) {
 				if (gameObjects_[i]->collisionMask[y][x]) {
@@ -171,7 +169,6 @@ void GameScene::checkCollisions()
 					if (screenRect.containsPoint(cellX, cellY, true)) {
 						if (!collisionBuffer[cellY][cellX].empty()) {
 							//Collisione
-							happenedCollision = true;
 							for (int other : collisionBuffer[cellY][cellX]) {
 								int first = min(i, other);
 								int second = max(i, other);

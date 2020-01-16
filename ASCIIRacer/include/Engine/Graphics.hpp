@@ -10,8 +10,7 @@ private:
 	Graphics();
 	static ScreenBuffer oldBuffer;
 
-	static Sprite parseSprite(std::vector<std::string> lines, Size& size, ptr_CollisionMask);
-	static Sprite parseSprite(std::vector<std::string> lines, Size& size);
+	static Sprite parseSprite(std::vector<std::string> lines, Size& size, CollisionMask& collisionMask);
 
 public:
 	static ScreenBuffer buffer;
@@ -19,8 +18,7 @@ public:
 	static const Size errorSize;
 	static const Sprite errorSprite;
 
-	static Sprite loadSpriteFromFile(std::string path, Size& size, ptr_CollisionMask collisionMask);
-	static Sprite loadSpriteFromFile(std::string path, Size& size);
+	static Sprite loadSpriteFromFile(std::string path, Size& size, CollisionMask& collisionMask);
 	static Sprite newSprite(int width, int height, char defaultValue);
 
 	static void initialise();

@@ -157,7 +157,7 @@ Sprite Graphics::newSprite(int width, int height, char defaultValue) {
 	return sprite;
 }
 
-Sprite Graphics::parseSprite(vector<string> lines, Size& size, ptr_CollisionMask collisionMask) {
+Sprite Graphics::parseSprite(vector<string> lines, Size& size, CollisionMask& collisionMask) {
 	Sprite sprite;
 
 	//Esegui il parsing della prima linea
@@ -189,18 +189,18 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size, ptr_CollisionMask
 
 	while (currentLine < lines.size()) {
 		//Mask: conta come collisione se il carattere non è IGNORE_CHAR_FILE
-		if (lines[currentLine].find("MASK") != string::npos && collisionMask != NULL) {
-			*collisionMask = *(new vector<vector<bool>>());
+		if (lines[currentLine].find("MASK") != string::npos) {
+			collisionMask = vector<vector<bool>>();
 			int lastLine = currentLine + height;
 			for (currentLine = currentLine + 1; currentLine <= lastLine; currentLine++) {
 				vector<bool> row;
 				for (int x = 0; x < width; x++) {
 					row.push_back(lines[currentLine][x] != IGNORE_CHAR_FILE);
 				}
-				collisionMask->push_back(row);
+				collisionMask.push_back(row);
 			}
 		}
-		else if (lines[currentLine].find("FOREGround") != string::npos) {
+		else if (lines[currentLine].find("FOREGROUND") != string::npos) {
 			int startingPoint = currentLine + 1;
 			for (int i = 0; i < height; i++) {
 				for (int j = 0; j < width; j++) {
@@ -211,7 +211,7 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size, ptr_CollisionMask
 			}
 			currentLine = startingPoint + height;
 		}
-		else if (lines[currentLine].find("BACKGround") != string::npos) {
+		else if (lines[currentLine].find("BACKGROUND") != string::npos) {
 			int startingPoint = currentLine + 1;
 			for (int i = 0; i < height; i++) {
 				for (int j = 0; j < width; j++) {
@@ -230,66 +230,12 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size, ptr_CollisionMask
 	return sprite;
 }
 
-Sprite Graphics::parseSprite(vector<string> lines, Size& size) {
-	Sprite sprite;
-
-	//Esegui il parsing della prima linea
-	if (lines.size() == 0) {
-		throw runtime_error("File vuoto.");
-	}
-
-	int width;
-	int height;
-	int nvars = sscanf_s(lines[0].c_str(), "%d;%d", &width, &height);
-
-	size = Size(width, height);
-
-	int y;
-
-	//Salta la prima riga
-	for (y = 1; y < height + 1; y++) {
-		vector<Cell> row = vector<Cell>();
-		for (int x = 0; x < width; x++) {
-			if (lines[y][x] == IGNORE_CHAR_FILE) {
-				row.push_back(IGNORE_CHAR);
-			}
-			else {
-				row.push_back(lines[y][x]);
-			}
-		}
-		sprite.push_back(row);
-	}
-	return sprite;
-}
-
-Sprite Graphics::loadSpriteFromFile(string path, Size& size, ptr_CollisionMask collisionMask) {
+Sprite Graphics::loadSpriteFromFile(string path, Size& size, CollisionMask& collisionMask) {
 	Sprite sprite;
 
 	try {
 		vector<string> fileContents = System::loadFile(path);
 		sprite = Graphics::parseSprite(fileContents, size, collisionMask);
-	}
-	catch (exception e) {
-#ifdef _DEBUG
-		cout << e.what();
-#else 
-		//Non interrompere l'esecuzione del codice, usa lo sprite di errore
-		size = errorSize;
-		sprite = Graphics::errorSprite;
-#endif
-
-
-	}
-
-	return sprite;
-}
-
-Sprite Graphics::loadSpriteFromFile(string path, Size& size) {
-	Sprite sprite;
-
-	try {
-		vector<string> fileContents = System::loadFile(path);
-		sprite = Graphics::parseSprite(fileContents, size);
 	}
 	catch (exception e) {
 #ifdef _DEBUG

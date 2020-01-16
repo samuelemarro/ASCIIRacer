@@ -11,9 +11,10 @@ RoadLine::RoadLine(Point2D position, char c) {
 	this->velocity = Point2D(0, 0.05);
 	Size size;
 	std::string directory = System::getExecutableDirectory();
-	if(c=='n') this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/RoadLine.txt", size);
-	else if(c=='d') this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/RoadLineRight.txt", size);
-	else if(c=='s') this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/RoadLineLeft.txt", size);
+	this->immovable = true;
+	if(c=='n') this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/RoadLine.txt", size, this->collisionMask);
+	else if(c=='d') this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/RoadLineRight.txt", size, this->collisionMask);
+	else if(c=='s') this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/RoadLineLeft.txt", size, this->collisionMask);
 	this->rect = Rect(position, size);
 }
 

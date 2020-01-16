@@ -12,7 +12,7 @@ AICar::AICar(Point2D position) {
 	this->velocity = Point2D(0, 10);
 	Size size;
 	std::string directory = System::getExecutableDirectory();
-	this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/AICar.txt", size, &this->collisionMask);
+	this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/AICar.txt", size, this->collisionMask);
 	this->rect = Rect(position, size);
 }
 
