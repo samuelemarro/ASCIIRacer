@@ -15,4 +15,4 @@ Obstacle::Obstacle(Point2D position, int d) {
 
 void Obstacle::onStart() {}
 void Obstacle::onUpdate() {}
-void Obstacle::onCollision(ptr_PhysicalObject collider) {}
+void Obstacle::onCollision(ptr_GameObject collider) {}

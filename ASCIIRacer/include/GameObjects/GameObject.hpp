@@ -12,18 +12,20 @@ public:
 	Rect rect;
 	Layer layer;
 	Sprite sprite;
-	bool initialised = false;
-	bool toBeDestroyed = false;
+	bool initialised;
+	bool toBeDestroyed;
+
+	bool checkCollisions;
+	CollisionMask collisionMask;
+	Point2D velocity;
+	bool immovable;
 
 	virtual void onStart();
 	virtual void onUpdate();
+	virtual void onCollision(GameObject* collider);
 
 	void destroy();
 
-	Point2D velocity;
-
-	GameObject(Rect rect, Layer layer);
-	GameObject(Rect rect, Layer layer, Sprite sprite);
 	GameObject();
 };
 

@@ -1,14 +1,14 @@
 #pragma once
 
-#include "GameObjects/PhysicalObject.hpp"
+#include "GameObjects/GameObject.hpp"
 
-class Border : public PhysicalObject {
+class Border : public GameObject {
 public:
 	int roadWidth;
 
 	void onStart() override;
 	void onUpdate() override;
-	void onCollision(ptr_PhysicalObject collider) override;
+	void onCollision(ptr_GameObject collider) override;
 
 	Border(Point2D position, int rw);
 };

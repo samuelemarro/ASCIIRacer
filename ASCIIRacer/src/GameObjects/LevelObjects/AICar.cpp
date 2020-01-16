@@ -8,7 +8,6 @@
 
 AICar::AICar(Point2D position) {
 	//this->sprite = Graphics::loadSpriteFromFile
-	this->collisionLayer = Layer::Content;
 	this->layer = Layer::Content;
 	this->velocity = Point2D(0, 10);
 	Size size;
@@ -20,4 +19,4 @@ AICar::AICar(Point2D position) {
 void AICar::onStart() {}
 void AICar::onUpdate() {
 }
-void AICar::onCollision(ptr_PhysicalObject collider) {}
+void AICar::onCollision(ptr_GameObject collider) {}

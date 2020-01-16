@@ -55,6 +55,20 @@ void GameScene::onStart()
 	this->nextLevel = NULL;
 
 	this->gameSpeed = currentLevel->speed;
+
+	//Prepara il collisionBuffer
+	Size screenSize = Graphics::screenSize;
+	collisionBuffer.reserve(screenSize.height);
+
+	for (int i = 0; i < screenSize.height; i++) {
+		vector<vector<int>> row = vector<vector<int>>();
+		row.reserve(screenSize.width);
+		for (int j = 0; j < screenSize.width; j++) {
+			vector<int> collisions = vector<int>();
+			row.push_back(collisions);
+		}
+		collisionBuffer.push_back(row);
+	}
 }
 
 void GameScene::onLoop() {
@@ -76,10 +90,10 @@ void GameScene::onLoop() {
 		gameObject->onUpdate();
 	}
 
-	for (auto physicalObject : physicalObjects_) {
-		//checkCollisions();
-		physicalObject->rect.position.x += physicalObject->velocity.x * GameEngine::deltaTime();
-		physicalObject->rect.position.y += physicalObject->velocity.y * GameEngine::deltaTime();
+	checkCollisions();
+	for (auto GameObject : gameObjects_) {
+		GameObject->rect.position.x += GameObject->velocity.x * GameEngine::deltaTime();
+		GameObject->rect.position.y += GameObject->velocity.y * GameEngine::deltaTime();
 	}
 }
 
@@ -104,15 +118,7 @@ void GameScene::onEndLoop()
 
 void GameScene::removeToBeDestroyed()
 {
-	//Rimuovi i PhysicalObject da distruggere (senza eliminare)
-	for (int i = 0; i < physicalObjects_.size(); i++) {
-		if (physicalObjects_[i]->toBeDestroyed) {
-			physicalObjects_.erase(physicalObjects_.begin() + i);
-			i--;
-		}
-	}
-
-	//Rimuovi i GameObject da distruggere (eliminando)
+	//Rimuovi i GameObject da distruggere
 	for (int i = 0; i < gameObjects_.size(); i++) {
 		if (gameObjects_[i]->toBeDestroyed) {
 			delete gameObjects_[i];
@@ -124,105 +130,75 @@ void GameScene::removeToBeDestroyed()
 
 void GameScene::checkCollisions()
 {
-	float correctionFactor = 0;
-	float movingThreshold = 0.01;
-	//Nota: Far ripetere tutto alla fine
+	Size screenSize = Graphics::screenSize;
+	Rect screenRect = Rect(Point2D(0, 0), screenSize);
 
-	Size screenSize = System::getConsoleSize();
+	//Pulisci il buffer
+	for (int i = 0; i < screenSize.height; i++) {
+		for (int j = 0; j < screenSize.width; j++) {
+			collisionBuffer[i][j].clear();
+		}
+	}
 
 	vector<pair<int, int>> collisions = vector<pair<int, int>>();
 
-	for (auto layer : getCollisionLayers()) {
-		bool performedCorrections = true;
+	for (int i = 0; i < gameObjects_.size(); i++) {
+		Point2D velocity = gameObjects_[i]->velocity;
+		Rect rect = gameObjects_[i]->rect;
 
-		while (performedCorrections) {
-			performedCorrections = false;
+		//Simula spostamento
+		rect.position.x = floor(rect.position.x + velocity.x * GameEngine::deltaTime());
+		rect.position.y = floor(rect.position.y + velocity.y * GameEngine::deltaTime());
 
-			//Segna i blocchi lentissimi come fermi
-			for (auto physicalObject : physicalObjects_) {
-				if (physicalObject->velocity.magnitude() < movingThreshold) {
-					physicalObject->velocity = Point2D(0, 0);
-				}
-			}
+		//Fuori dallo schermo, ignora
+		if (rect.position.x + rect.size.width < 0 || rect.position.y + rect.size.height < 0
+			|| rect.position.x > screenSize.width || rect.position.y > screenSize.height) {
+			continue;
+		}
 
-			for (int y = 0; y < screenSize.height; y++) {
-				for (int x = 0; x < screenSize.width; x++) {
-					//Identifica i conflitti
-					vector<int> conflicting = vector<int>();
+		bool happenedCollision = false;
 
-					for (int i = 0; i < physicalObjects_.size(); i++) {
-						auto physicalObject = physicalObjects_[i];
+		for (int x = 0; x < rect.size.width; x++) {
+			for (int y = 0; y < rect.size.height; y++) {
+				if (gameObjects_[i]->collisionMask[y][x]) {
+					int cellX = (int)floor(rect.position.x + (float)x);
+					int cellY = (int)floor(rect.position.y + (float)y);
 
-						if (physicalObject->collisionLayer != layer) {
-							continue;
-						}
+					//Ignora i punti fuori dallo schermo
+					if (screenRect.containsPoint(cellX, cellY, true)) {
+						if (!collisionBuffer[cellY][cellX].empty()) {
+							//Collisione
+							happenedCollision = true;
+							for (int other : collisionBuffer[cellY][cellX]) {
+								int first = min(i, other);
+								int second = max(i, other);
 
-						Size size = physicalObject->rect.size;
+								pair<int, int> collision = pair<int, int>(first, second);
 
-						//Simula uno spostamento
-						int posX = (int)round(physicalObject->rect.position.x + physicalObject->velocity.x * GameEngine::deltaTime());
-						int posY = (int)round(physicalObject->rect.position.y + physicalObject->velocity.y * GameEngine::deltaTime());
-						Point2D newPosition = Point2D(posX, posY);
-
-						Rect newRect = Rect(newPosition, size);
-
-						int spritePosX = x - posX;
-						int spritePosY = y - posY;
-
-						if (newRect.containsPoint(x, y, true)) {
-							if (physicalObject->collisionMask[spritePosY][spritePosX]) {
-								conflicting.push_back(i);
-							}
-						}
-					}
-
-					//Se ci sono state collisioni
-					if (conflicting.size() >= 2) {
-
-						//Segna tutte le collisioni
-						for (int i = 0; i < conflicting.size(); i++) {
-							for (int j = 0; j < conflicting.size(); j++) {
-								if (i != j) {
-									auto collision = pair<int, int>(min(i, j), max(i, j));
-									if (find(collisions.begin(), collisions.end(), collision) == collisions.end()) {
-										collisions.push_back(collision);
-									}
+								if (find(collisions.begin(), collisions.end(), collision) == collisions.end()) {
+									collisions.push_back(collision);
 								}
 							}
 						}
-
-
-						//Controlla che non siano tutti oggetti immovibili o fermi
-						bool allUnfixable = true;
-						for (auto index : conflicting) {
-							auto physicalObject = physicalObjects_[index];
-							if (!physicalObject->immovable && physicalObject->velocity.magnitude() != 0) {
-								allUnfixable = false;
-							}
-						}
-
-						if (!allUnfixable) {
-							performedCorrections = true;
-							//Riduci la velocità degli oggetti che hanno avuto una collisione
-							for (auto index : conflicting) {
-								auto physicalObject = physicalObjects_[index];
-								if (!physicalObject->immovable && physicalObject->velocity.magnitude() != 0) {
-									physicalObject->velocity.x *= correctionFactor;
-									physicalObject->velocity.y *= correctionFactor;
-								}
-
-							}
-						}
+						collisionBuffer[cellY][cellX].push_back(i);
 					}
 				}
 			}
 		}
 	}
 
-	//Informa gli oggetti delle collisioni
+	//Informa gli oggetti delle collisioni e ferma gli oggetti
+	//non immovibili
 	for (auto collision : collisions) {
-		ptr_PhysicalObject first = physicalObjects_[collision.first];
-		ptr_PhysicalObject second = physicalObjects_[collision.second];
+		ptr_GameObject first = gameObjects_[collision.first];
+		ptr_GameObject second = gameObjects_[collision.second];
+
+		if (!first->immovable) {
+			first->velocity = Point2D(0, 0);
+		}
+		if (!second->immovable) {
+			second->velocity = Point2D(0, 0);
+		}
 
 		first->onCollision(second);
 		second->onCollision(first);
@@ -244,26 +220,6 @@ vector<Layer> GameScene::getLayers()
 	return layers;
 }
 
-std::vector<Layer> GameScene::getCollisionLayers()
-{
-	vector<Layer> layers;
-
-	for (auto physicalObject : physicalObjects_) {
-		if (find(layers.begin(), layers.end(), physicalObject->collisionLayer) == layers.end()) {
-			layers.push_back(physicalObject->collisionLayer);
-		}
-	}
-
-	sort(layers.begin(), layers.end());
-
-	return layers;
-}
-
 void GameScene::addGameObject(ptr_GameObject gameObject) {
 	gameObjects_.push_back(gameObject);
-}
-
-void GameScene::addGameObject(ptr_PhysicalObject physicalObject) {
-	gameObjects_.push_back(physicalObject);
-	physicalObjects_.push_back(physicalObject);
 }

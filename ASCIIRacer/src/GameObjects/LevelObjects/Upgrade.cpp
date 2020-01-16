@@ -15,4 +15,4 @@ Upgrade::Upgrade(Point2D position, int b) {
 
 void Upgrade::onStart() {}
 void Upgrade::onUpdate() {}
-void Upgrade::onCollision(ptr_PhysicalObject collider) {}
+void Upgrade::onCollision(ptr_GameObject collider) {}

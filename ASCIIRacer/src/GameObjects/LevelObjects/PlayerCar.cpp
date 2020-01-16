@@ -8,7 +8,6 @@
 
 PlayerCar::PlayerCar(Point2D position) {
 	//this->sprite = Graphics::loadSpriteFromFile
-	this->collisionLayer = Layer::Content;
 	this->layer = Layer::Content;
 	this->velocity = Point2D(0, 0);
 	Size size;
@@ -54,4 +53,4 @@ void PlayerCar::onUpdate() {
 	}
 	
 }
-void PlayerCar::onCollision(ptr_PhysicalObject collider) {}
+void PlayerCar::onCollision(ptr_GameObject collider) {}

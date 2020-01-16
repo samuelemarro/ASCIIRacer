@@ -1,14 +1,14 @@
 #pragma once
 
-#include "GameObjects/PhysicalObject.hpp"
+#include "GameObjects/GameObject.hpp"
 
-class Obstacle : public PhysicalObject {
+class Obstacle : public GameObject {
 public:
 	int damage;
 
 	void onStart() override;
 	void onUpdate() override;
-	void onCollision(ptr_PhysicalObject collider) override;
+	void onCollision(ptr_GameObject collider) override;
 
 	Obstacle(Point2D position, int d);
 };

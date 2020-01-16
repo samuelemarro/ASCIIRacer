@@ -4,7 +4,7 @@
 #include <chrono>
 
 #include "GameObjects/GameObject.hpp"
-#include "GameObjects/PhysicalObject.hpp"
+#include "GameObjects/GameObject.hpp"
 #include "Scenes/Scene.hpp"
 
 

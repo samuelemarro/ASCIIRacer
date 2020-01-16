@@ -153,7 +153,6 @@
     <ClCompile Include="src\GameObjects\LevelObjects\RoadLine.cpp" />
     <ClCompile Include="src\GameObjects\LevelObjects\Upgrade.cpp" />
     <ClCompile Include="src\GameObjects\LevelObjects\WeirdWall.cpp" />
-    <ClCompile Include="src\GameObjects\PhysicalObject.cpp" />
     <ClCompile Include="src\Levels\Level.cpp" />
     <ClCompile Include="src\Scenes\GameScene.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -184,7 +183,6 @@
     <ClInclude Include="include\Scenes\Scene.hpp" />
     <ClInclude Include="include\GameObjects\GameObject.hpp" />
     <ClInclude Include="include\GameObjects\LevelObjects\PlayerCar.hpp" />
-    <ClInclude Include="include\GameObjects\PhysicalObject.hpp" />
     <ClInclude Include="include\Core\Layer.hpp" />
     <ClInclude Include="include\Core\Color.hpp" />
   </ItemGroup>

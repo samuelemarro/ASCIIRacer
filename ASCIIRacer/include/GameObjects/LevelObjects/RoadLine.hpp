@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameObjects/PhysicalObject.hpp"
+#include "GameObjects/GameObject.hpp"
 
 class RoadLine : public GameObject
 {

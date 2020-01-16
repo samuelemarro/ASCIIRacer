@@ -12,7 +12,7 @@ using std::cout;
 using std::endl;
 using std::max;
 using std::min;
-using std::round;
+using std::floor;
 using std::sscanf;
 using std::string;
 using std::vector;
@@ -45,12 +45,12 @@ void Graphics::initialise() {
 void Graphics::draw(Rect rect, Sprite sprite) {
 	//Se x è -20, ignorerà le prime 20 colonne dello sprite
 
-	int minSpriteX = max(0, (int)round(-rect.position.x));
-	int minSpriteY = max(0, (int)round(-rect.position.y));
+	int minSpriteX = max(0, -(int)floor(rect.position.x));
+	int minSpriteY = max(0, -(int)floor(rect.position.y));
 
 	//Le ultime coordinate (escluse)
-	int lastX = (int)round(rect.position.x) + rect.size.width;
-	int lastY = (int)round(rect.position.y) + rect.size.height;
+	int lastX = (int)floor(rect.position.x) + rect.size.width;
+	int lastY = (int)floor(rect.position.y) + rect.size.height;
 
 	//Quanto lo sprite fa overflow
 	int overflowX = max(0, lastX - screenSize.width);
@@ -64,8 +64,8 @@ void Graphics::draw(Rect rect, Sprite sprite) {
 		for (int x = minSpriteX; x < maxSpriteX; x++) {
 			int spritePosition = y * rect.size.width + x;
 
-			int screenX = (int)round(rect.position.x) + x;
-			int screenY = (int)round(rect.position.y) + y;
+			int screenX = (int)floor(rect.position.x) + x;
+			int screenY = (int)floor(rect.position.y) + y;
 
 			int screenPosition = screenY * screenSize.width + screenX;
 
@@ -200,7 +200,7 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size, ptr_CollisionMask
 				collisionMask->push_back(row);
 			}
 		}
-		else if (lines[currentLine].find("FOREGROUND") != string::npos) {
+		else if (lines[currentLine].find("FOREGround") != string::npos) {
 			int startingPoint = currentLine + 1;
 			for (int i = 0; i < height; i++) {
 				for (int j = 0; j < width; j++) {
@@ -211,7 +211,7 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size, ptr_CollisionMask
 			}
 			currentLine = startingPoint + height;
 		}
-		else if (lines[currentLine].find("BACKGROUND") != string::npos) {
+		else if (lines[currentLine].find("BACKGround") != string::npos) {
 			int startingPoint = currentLine + 1;
 			for (int i = 0; i < height; i++) {
 				for (int j = 0; j < width; j++) {

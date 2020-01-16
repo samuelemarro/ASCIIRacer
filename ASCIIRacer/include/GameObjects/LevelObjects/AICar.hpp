@@ -1,13 +1,13 @@
 #pragma once
 
-#include "GameObjects/PhysicalObject.hpp"
+#include "GameObjects/GameObject.hpp"
 
-class AICar : public PhysicalObject
+class AICar : public GameObject
 {
 public:
 	void onStart() override;
 	void onUpdate() override;
-	void onCollision(ptr_PhysicalObject collider) override;
+	void onCollision(ptr_GameObject collider) override;
 
 	AICar(Point2D position);
 };

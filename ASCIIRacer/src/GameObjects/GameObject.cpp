@@ -1,18 +1,19 @@
 #include "Engine/GameEngine.hpp"
+#include "Engine/Graphics.hpp"
 #include "GameObjects/GameObject.hpp"
 #include "Core/Rect.hpp"
 #include "Core/Utilities.hpp"
 
-GameObject::GameObject() : layer(Layer::Content) {
-}
-
-GameObject::GameObject(Rect rect, Layer layer) : GameObject() {
-	this->rect = rect;
-	this->layer = layer;
-}
-
-GameObject::GameObject(Rect rect, Layer layer, Sprite sprite) : GameObject(rect, layer) {
-	this->sprite = sprite;
+GameObject::GameObject() {
+	this->collisionMask = vector<vector<bool>>();
+	this->immovable = false;
+	this->initialised = false;
+	this->layer = Layer::Content;
+	this->rect = Rect(Point2D(0, 0), Graphics::errorSize);
+	this->sprite = Graphics::errorSprite;
+	this->toBeDestroyed = false;
+	this->velocity = Point2D(0, 0);
+	this->checkCollisions = true;
 }
 
 void GameObject::destroy() {
@@ -21,3 +22,7 @@ void GameObject::destroy() {
 
 void GameObject::onStart() {}
 void GameObject::onUpdate() {}
+
+void GameObject::onCollision(GameObject* collider)
+{
+}

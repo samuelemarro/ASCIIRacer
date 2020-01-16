@@ -1,7 +1,9 @@
 #include "Core/Rect.hpp"
 #include <cmath>
+#include <vector>
 
-using std::round;
+using std::floor;
+using std::vector;
 
 Rect::Rect(Point2D position, Size size) : position(position), size(size) {
 
@@ -19,11 +21,11 @@ bool Rect::containsPoint(Point2D point, bool snap)
 bool Rect::containsPoint(float x, float y, bool snap)
 {
 	if (snap) {
-		int gridX = (int)round(x);
-		int gridY = (int)round(y);
+		int gridX = (int)floor(x);
+		int gridY = (int)floor(y);
 
-		int posX = (int)round(position.x);
-		int posY = (int)round(position.y);
+		int posX = (int)floor(position.x);
+		int posY = (int)floor(position.y);
 		return (gridX >= posX && gridY >= posY && gridX < posX + size.width && gridY < posY + size.height);
 	}
 	else {

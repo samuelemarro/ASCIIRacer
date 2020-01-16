@@ -14,10 +14,10 @@ private:
 	static Sprite parseSprite(std::vector<std::string> lines, Size& size, ptr_CollisionMask);
 	static Sprite parseSprite(std::vector<std::string> lines, Size& size);
 
-	static const Size errorSize;
-	static const Sprite errorSprite;
 public:
 	static Size screenSize;
+	static const Size errorSize;
+	static const Sprite errorSprite;
 
 	static Sprite loadSpriteFromFile(std::string path, Size& size, ptr_CollisionMask collisionMask);
 	static Sprite loadSpriteFromFile(std::string path, Size& size);

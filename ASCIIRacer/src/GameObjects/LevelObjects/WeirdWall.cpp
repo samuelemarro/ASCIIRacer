@@ -32,7 +32,7 @@ void WeirdWall::onUpdate()
 
 }
 
-void WeirdWall::onCollision(PhysicalObject* collider)
+void WeirdWall::onCollision(GameObject* collider)
 {
 	this->sprite[2][2].character += 1;
 }

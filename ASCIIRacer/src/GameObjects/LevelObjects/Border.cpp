@@ -7,6 +7,7 @@ Border::Border(Point2D position, int rw) {
 	this->roadWidth = rw;
 	this->layer = Layer::Content;
 	this->velocity = Point2D(0, 3);
+	this->immovable = true;
 	Size size;
 	std::string directory = System::getExecutableDirectory();
 	this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/Border.txt", size, &this->collisionMask);
@@ -15,4 +16,4 @@ Border::Border(Point2D position, int rw) {
 
 void Border::onStart() {}
 void Border::onUpdate() {}
-void Border::onCollision(ptr_PhysicalObject collider) {}
+void Border::onCollision(ptr_GameObject collider) {}

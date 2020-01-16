@@ -1,7 +1,7 @@
 #pragma once
-#include "GameObjects/PhysicalObject.hpp"
+#include "GameObjects/GameObject.hpp"
 
-class WeirdWall : public PhysicalObject {
+class WeirdWall : public GameObject {
 public:
 	WeirdWall(Point2D position, float speed);
 
@@ -9,5 +9,5 @@ public:
 
 	void onStart() override;
 	void onUpdate() override;
-	void onCollision(PhysicalObject* collider);
+	void onCollision(GameObject* collider);
 };
