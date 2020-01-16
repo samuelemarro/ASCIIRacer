@@ -197,6 +197,8 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DeploymentContent>
     </Text>
     <Text Include="sprites\RoadLine.txt" />
+    <Text Include="sprites\RoadLineLeft.txt" />
+    <Text Include="sprites\RoadLineRight.txt" />
     <Text Include="sprites\Upgrade.txt" />
     <Text Include="sprites\WeirdWall.txt" />
   </ItemGroup>

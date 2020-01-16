@@ -8,13 +8,13 @@
 class Graphics {
 private:
 	Graphics();
-	static ScreenBuffer buffer;
 	static ScreenBuffer oldBuffer;
 
 	static Sprite parseSprite(std::vector<std::string> lines, Size& size, ptr_CollisionMask);
 	static Sprite parseSprite(std::vector<std::string> lines, Size& size);
 
 public:
+	static ScreenBuffer buffer;
 	static Size screenSize;
 	static const Size errorSize;
 	static const Sprite errorSprite;

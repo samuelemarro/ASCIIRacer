@@ -1,5 +1,8 @@
 #include <algorithm>
 #include <utility>
+#include <stdio.h>
+#include <stdlib.h> 
+#include <time.h>  
 
 #include "Scenes/GameScene.hpp"
 #include "Engine/GameEngine.hpp"
@@ -21,35 +24,24 @@ using std::pair;
 using std::vector;
 using std::sort;
 PlayerCar* player;
+int roadX = 10;
 
 void GameScene::onStart()
 {
-	this->gameSpeed = 1;
+	srand(time(NULL));
 	PlayerCar* p1 = new PlayerCar(Point2D(30, 27));
 	player = p1;
 	/*AICar* p2 = new AICar(Point2D(2, 0));
-	RoadLine* rl[5];
-	for (int i = 0; i < 5; i++) {
-		rl[i] = new RoadLine(Point2D(i*7, 0));
-		GameScene::addGameObject(rl[i]);
-	}
 	GameScene::addGameObject(p1);
 	GameScene::addGameObject(p2);*/
 	//WeirdWall* w = new WeirdWall(Point2D(15, 15), 5);
 	//GameScene::addGameObject(w);
 	
 	GameScene::addGameObject(p1);
-	
-	//Aggiungi la mappa (ora solo bordi della strada)
-	for(int y = -100; y < 20; ++y) {
-		Border* border_sx = new Border(Point2D(5, y), 67);
-		Border* border_dx = new Border(Point2D(5 + border_sx->roadWidth, y), 23);
-		GameScene::addGameObject(border_sx);
-		GameScene::addGameObject(border_dx);
+	for (int i = 0; i < 30; i++) {
+		RoadLine* rl = new RoadLine(Point2D(roadX, i), 'n');
+		GameScene::addGameObject(rl);
 	}
-
-
-
 	ptr_Level l = new Level(100, -1, 3, 1);  //random level with difficulty 1
 	this->currentLevel = l;
 	this->nextLevel = NULL;
@@ -72,6 +64,17 @@ void GameScene::onStart()
 }
 
 void GameScene::onLoop() {
+
+	if (Graphics::buffer[0][roadX] == ' ') {
+		int k = rand() % 3;
+		char c='d';
+		if (k == 0 && roadX > 0) { c = 's'; roadX--; }
+		else if (k == 1) c = 'n';
+		else if (k == 2 && roadX < 40) c = 'd';
+		RoadLine* rl = new RoadLine(Point2D(roadX, 0), c);
+		GameScene::addGameObject(rl);
+		if (roadX < 40 && c=='d') roadX++;
+	}
 
 	if (currentLevel->changeLevel(player->points)) {
 		this->currentLevel = currentLevel->NextLevel();
