@@ -7,7 +7,7 @@
 #include "Engine/GameEngine.hpp"
 
 PlayerCar::PlayerCar(Point2D position) {
-	//this->sprite = Graphics::loadSpriteFromFile
+	this->name = "PlayerCar";
 	this->layer = Layer::Content;
 	this->velocity = Point2D(0, 0);
 	Size size;
@@ -21,17 +21,6 @@ void PlayerCar::onUpdate() {
 	float speedX = 100;
 	float speedY = 50;
 	KeyboardStatus status = Keyboard::currentStatus;
-	/*if (status.isPressed(Key::Right) && rect.position.x < 21)
-	{
-		rect.position.x += 7;
-	}
-	else if (status.isPressed(Key::Left) && rect.position.x>0) {
-		rect.position.x -= 7;
-	}
-	else {
-		velocity.x = 0;
-	}*/
-	
 	if (status.isDown(Key::Right)) {
 		velocity.x = speedX;
 	}
@@ -42,10 +31,10 @@ void PlayerCar::onUpdate() {
 		velocity.x = 0;
 	}
 
-	if (status.isDown(Key::Up)) {
+	if (status.isDown(Key::Up) && this->rect.position.y>1) {
 		velocity.y = -speedY;
 	}
-	else if (status.isDown(Key::Down)) {
+	else if (status.isDown(Key::Down) && this->rect.position.y < 27) {
 		velocity.y = speedY;
 	}
 	else {
@@ -53,4 +42,7 @@ void PlayerCar::onUpdate() {
 	}
 	
 }
-void PlayerCar::onCollision(ptr_GameObject collider) {}
+void PlayerCar::onCollision(ptr_GameObject collider) {
+	if (collider->name == "Upgrade") this->points += 100;
+	else if (collider->name == "Obstacle") this->points -= 100;
+}

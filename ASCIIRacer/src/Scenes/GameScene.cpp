@@ -28,34 +28,28 @@ int roadX = 10;
 
 void GameScene::onStart()
 {
-	ptr_Level l = new Level(100, -1, 3, 1, 70, 5);  //random level with difficulty 1
+	ptr_Level l = new Level(100, -1, 1, 1, 70, 5);  //random level with difficulty 1
 	this->currentLevel = l;
 	this->nextLevel = NULL;
 
 	this->gameSpeed = 1;
-	//srand(time(NULL));
+	srand(time(NULL));
 	PlayerCar* p1 = new PlayerCar(Point2D(30, 27));
 	player = p1;
 	AICar* p2 = new AICar(Point2D(2, 0));
-	//WeirdWall* w = new WeirdWall(Point2D(15, 15), 5);
-	//GameScene::addGameObject(w);
 	
 	GameScene::addGameObject(p1);
-	/*for (int i = 0; i < 30; i++) {
+	
+	for (int i = 0; i < 30; i++) {
 		RoadLine* rl = new RoadLine(Point2D(roadX, i), 'n');
 		GameScene::addGameObject(rl);
-	GameScene::addGameObject(p2);*/
-
-	//Aggiungi la mappa (ora solo bordi della strada)
-	for(int y = 0; y < 30; ++y) {
-		Border* border_sx = new Border(Point2D(currentLevel->road_leftposition, y));
-		Border* border_dx = new Border(Point2D(currentLevel->road_leftposition + currentLevel->roadWidth, y));
-		GameScene::addGameObject(border_sx);
-		GameScene::addGameObject(border_dx);
 	}
-
+	//GameScene::addGameObject(p2);
 	Upgrade* upgrade = new Upgrade(Point2D(25, -10), 250);  //random upgrade with 250 points as bonus
 	GameScene::addGameObject(upgrade);
+
+	Obstacle* obstacle = new Obstacle(Point2D(25, -15), 250);  //random upgrade with 250 points as bonus
+	GameScene::addGameObject(obstacle);
 
 	this->gameSpeed = currentLevel->speed;
 
@@ -75,26 +69,21 @@ void GameScene::onStart()
 }
 
 void GameScene::onLoop() {
-	/*
+
 	if (Graphics::buffer[0][roadX] == ' ') {
-		int k = rand() % 3;
-		char c='d';
+		int k = rand() % 5;
+		char c = 'n';
 		if (k == 0 && roadX > 0) { c = 's'; roadX--; }
-		else if (k == 1) c = 'n';
+		else if (k != 0 && k != 2) c = 'n';
 		else if (k == 2 && roadX < 40) c = 'd';
 		RoadLine* rl = new RoadLine(Point2D(roadX, 0), c);
 		GameScene::addGameObject(rl);
-		if (roadX < 40 && c=='d') roadX++;
-	}*/
+		if (roadX < 40 && c == 'd') roadX++;
+	}
 
 	if (currentLevel->changeLevel(player->points)) {
 		this->currentLevel = currentLevel->NextLevel(player->points);
 	}
-
-	pair<Border*, Border*> borders = currentLevel->generateRoad();
-	GameScene::addGameObject(borders.first);
-	GameScene::addGameObject(borders.second);
-
 	//Inizializzazione dei gameObject
 	for (auto gameObject : gameObjects_) {
 		if (!gameObject->initialised) {
@@ -104,7 +93,7 @@ void GameScene::onLoop() {
 	}
 
 	for (auto gameObject : gameObjects_) {
-		//gameObject->gameSpeed = this->gameSpeed;
+		gameObject->gameSpeed = this->gameSpeed;
 		gameObject->onUpdate();
 	}
 

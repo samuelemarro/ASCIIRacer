@@ -4,6 +4,7 @@
 #include "Engine/System.hpp"
 
 Upgrade::Upgrade(Point2D position, int b) {
+	this->name = "Upgrade";
 	this->bonus = b;
 	this->layer = Layer::Content;
 	this->velocity = Point2D(0, 3);
@@ -15,4 +16,6 @@ Upgrade::Upgrade(Point2D position, int b) {
 
 void Upgrade::onStart() {}
 void Upgrade::onUpdate() {}
-void Upgrade::onCollision(ptr_GameObject collider) {}
+void Upgrade::onCollision(ptr_GameObject collider) {
+	this->toBeDestroyed = true;
+}
