@@ -5,7 +5,6 @@
 #include "Core/Utilities.hpp"
 
 GameObject::GameObject() {
-	this->collisionMask = vector<vector<bool>>();
 	this->immovable = false;
 	this->initialised = false;
 	this->layer = Layer::Content;

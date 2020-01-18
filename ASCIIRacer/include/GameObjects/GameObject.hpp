@@ -15,7 +15,6 @@ public:
 	bool toBeDestroyed;
 
 	bool checkCollisions;
-	CollisionMask collisionMask;
 	Point2D velocity;
 	bool immovable;
 

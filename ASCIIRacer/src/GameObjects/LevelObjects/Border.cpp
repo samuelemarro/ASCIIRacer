@@ -9,7 +9,7 @@ Border::Border(Point2D position) {
 	this->immovable = true;
 	Size size;
 	std::string directory = System::getExecutableDirectory();
-	this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/Border.txt", size, this->collisionMask);
+	this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/Border.txt", size);
 	this->rect = Rect(position, size);
 }
 

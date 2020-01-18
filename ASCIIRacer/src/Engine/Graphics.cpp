@@ -157,7 +157,7 @@ Sprite Graphics::newSprite(int width, int height, char defaultValue) {
 	return sprite;
 }
 
-Sprite Graphics::parseSprite(vector<string> lines, Size& size, CollisionMask& collisionMask) {
+Sprite Graphics::parseSprite(vector<string> lines, Size& size) {
 	Sprite sprite;
 
 	//Esegui il parsing della prima linea
@@ -178,10 +178,10 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size, CollisionMask& co
 		vector<Cell> row = vector<Cell>();
 		for (int x = 0; x < width; x++) {
 			if (lines[currentLine][x] == IGNORE_CHAR_FILE) {
-				row.push_back(IGNORE_CHAR);
+				row.push_back(Cell(IGNORE_CHAR));
 			}
 			else {
-				row.push_back(lines[currentLine][x]);
+				row.push_back(Cell(lines[currentLine][x]));
 			}
 		}
 		sprite.push_back(row);
@@ -190,14 +190,14 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size, CollisionMask& co
 	while (currentLine < lines.size()) {
 		//Mask: conta come collisione se il carattere non è IGNORE_CHAR_FILE
 		if (lines[currentLine].find("MASK") != string::npos) {
-			collisionMask = vector<vector<bool>>();
+			int firstLine = currentLine;
 			int lastLine = currentLine + height;
-			for (currentLine = currentLine + 1; currentLine <= lastLine; currentLine++) {
+			for (currentLine = currentLine + 1; currentLine < lastLine; currentLine++) {
 				vector<bool> row;
 				for (int x = 0; x < width; x++) {
-					row.push_back(lines[currentLine][x] != IGNORE_CHAR_FILE);
+					int y = currentLine - firstLine;
+					sprite[y][x].collision = (lines[currentLine][x] != IGNORE_CHAR_FILE);
 				}
-				collisionMask.push_back(row);
 			}
 		}
 		else if (lines[currentLine].find("FOREGROUND") != string::npos) {
@@ -230,12 +230,12 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size, CollisionMask& co
 	return sprite;
 }
 
-Sprite Graphics::loadSpriteFromFile(string path, Size& size, CollisionMask& collisionMask) {
+Sprite Graphics::loadSpriteFromFile(string path, Size& size) {
 	Sprite sprite;
 
 	try {
 		vector<string> fileContents = System::loadFile(path);
-		sprite = Graphics::parseSprite(fileContents, size, collisionMask);
+		sprite = Graphics::parseSprite(fileContents, size);
 	}
 	catch (exception e) {
 #ifdef _DEBUG

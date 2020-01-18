@@ -8,8 +8,6 @@
 typedef std::vector<std::vector<Cell>> Sprite;
 typedef std::vector<std::vector<Cell>> ScreenBuffer;
 typedef ScreenBuffer* ptr_ScreenBuffer;
-typedef std::vector<std::vector<bool>> CollisionMask;
-typedef CollisionMask* ptr_CollisionMask;
 
 //Il carattere usato dal motore per indicare "nessun carattere"
 const char IGNORE_CHAR = 1;

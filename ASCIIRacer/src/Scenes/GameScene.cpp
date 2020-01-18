@@ -17,6 +17,7 @@
 #include "GameObjects/LevelObjects/Obstacle.hpp"
 #include "GameObjects/LevelObjects/Upgrade.hpp"
 #include "Levels/Level.hpp"
+#include "GameObjects/Road.hpp"
 
 using std::max;
 using std::min;
@@ -47,12 +48,15 @@ void GameScene::onStart()
 	GameScene::addGameObject(p2);*/
 
 	//Aggiungi la mappa (ora solo bordi della strada)
-	for(int y = 0; y < 30; ++y) {
+	/*for(int y = 0; y < 30; ++y) {
 		Border* border_sx = new Border(Point2D(currentLevel->road_leftposition, y));
 		Border* border_dx = new Border(Point2D(currentLevel->road_leftposition + currentLevel->roadWidth, y));
 		GameScene::addGameObject(border_sx);
 		GameScene::addGameObject(border_dx);
-	}
+	}*/
+
+	Road* road = new Road(Graphics::screenSize, 5);
+	GameScene::addGameObject(road);
 
 	Upgrade* upgrade = new Upgrade(Point2D(25, -10), 250);  //random upgrade with 250 points as bonus
 	GameScene::addGameObject(upgrade);
@@ -91,9 +95,9 @@ void GameScene::onLoop() {
 		this->currentLevel = currentLevel->NextLevel(player->points);
 	}
 
-	pair<Border*, Border*> borders = currentLevel->generateRoad();
-	GameScene::addGameObject(borders.first);
-	GameScene::addGameObject(borders.second);
+	//pair<Border*, Border*> borders = currentLevel->generateRoad();
+	//GameScene::addGameObject(borders.first);
+	//GameScene::addGameObject(borders.second);
 
 	//Inizializzazione dei gameObject
 	for (auto gameObject : gameObjects_) {
@@ -176,7 +180,7 @@ void GameScene::checkCollisions()
 
 		for (int x = 0; x < rect.size.width; x++) {
 			for (int y = 0; y < rect.size.height; y++) {
-				if (gameObjects_[i]->collisionMask[y][x]) {
+				if (gameObjects_[i]->sprite[y][x].collision) {
 					int cellX = (int)floor(rect.position.x + (float)x);
 					int cellY = (int)floor(rect.position.y + (float)y);
 

@@ -10,7 +10,7 @@ WeirdWall::WeirdWall(Point2D position, float speed) {
 	this->velocity = Point2D(speed, 0);
 	Size size;
 	std::string directory = System::getExecutableDirectory();
-	this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/WeirdWall.txt", size, this->collisionMask);
+	this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/WeirdWall.txt", size);
 	this->rect = Rect(position, size);
 }
 

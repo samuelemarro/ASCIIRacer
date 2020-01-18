@@ -9,7 +9,7 @@ Obstacle::Obstacle(Point2D position, int d) {
 	this->velocity = Point2D(0, 1);
 	Size size;
 	std::string directory = System::getExecutableDirectory();
-	this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/Obstacle.txt", size, this->collisionMask);
+	this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/Obstacle.txt", size);
 	this->rect = Rect(position, size);
 }
 
