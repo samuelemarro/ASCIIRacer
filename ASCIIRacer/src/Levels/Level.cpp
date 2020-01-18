@@ -32,9 +32,3 @@ Level* Level::NextLevel(int player_points) {
 
 	else return 0;		//Caso mai raggiunto poichè precondition: changeLevel == true
 }
-
-pair<Border*, Border*> Level::generateRoad() {
-	Border* border_sx = new Border(Point2D(road_leftposition, -1));
-	Border* border_dx = new Border(Point2D(road_leftposition + roadWidth, -1));
-	return make_pair(border_sx, border_dx);
-}

@@ -1,6 +1,5 @@
 #pragma once
 #include "GameObjects/GameObject.hpp"
-#include "GameObjects/GameObject.hpp"
 #include "Scenes/Scene.hpp"
 #include "Levels/Level.hpp"
 
@@ -9,10 +8,8 @@ private:
 	std::vector<ptr_GameObject> gameObjects_;
 	std::vector<Layer> getLayers();
 	
-	ptr_Level nextLevel;
-
 	void removeToBeDestroyed();
-	double gameSpeed = 0;
+	double gameSpeed = 0;    //probabilmente da togliere, l'attributo della velocità del gioco ce l'ha il livello
 
 	std::vector<std::vector<std::vector<int>>> collisionBuffer;
 
