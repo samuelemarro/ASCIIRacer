@@ -37,7 +37,7 @@ Road::Road(Size size, float initialSpeed) {
 
 	this->sprite = vector<vector<Cell>>();
 	for (int i = 0; i < rect.size.height; i++) {
-		sprite.push_back(newLine());
+		sprite.insert(sprite.begin(), newLine());
 	}
 
 	this->velocity = Point2D(0, initialSpeed);
