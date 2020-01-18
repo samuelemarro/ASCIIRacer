@@ -12,10 +12,8 @@ Upgrade::Upgrade(Point2D position, int b) {
 	std::string directory = System::getExecutableDirectory();
 	this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/Upgrade.txt", size);
 	this->rect = Rect(position, size);
+	this->solid = false;
 }
 
 void Upgrade::onStart() {}
 void Upgrade::onUpdate() {}
-void Upgrade::onCollision(ptr_GameObject collider) {
-	this->toBeDestroyed = true;
-}

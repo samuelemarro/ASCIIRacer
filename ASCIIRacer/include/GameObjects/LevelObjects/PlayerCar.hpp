@@ -9,7 +9,7 @@ public:
 	int points = 0;
 	void onStart() override;
 	void onUpdate() override;
-	void onCollision(ptr_GameObject collider) override;
+	void onCollision(ptr_GameObject collider, bool horizontal);
 
 	PlayerCar(Point2D position);
 };

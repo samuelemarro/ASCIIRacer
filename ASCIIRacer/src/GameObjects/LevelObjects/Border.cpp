@@ -6,7 +6,6 @@
 Border::Border(Point2D position) {
 	this->layer = Layer::Content;
 	this->velocity = Point2D(0, 3);
-	this->immovable = true;
 	Size size;
 	std::string directory = System::getExecutableDirectory();
 	this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/Border.txt", size);
@@ -15,4 +14,3 @@ Border::Border(Point2D position) {
 
 void Border::onStart() {}
 void Border::onUpdate() {}
-void Border::onCollision(ptr_GameObject collider) {}

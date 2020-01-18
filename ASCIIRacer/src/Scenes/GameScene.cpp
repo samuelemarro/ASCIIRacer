@@ -31,14 +31,15 @@ void GameScene::onStart()
 {
 	ptr_Level l = new Level(100, -1, 1, 1, 70, 5);  //random level with difficulty 1
 	this->currentLevel = l;
-	this->nextLevel = NULL;
 
 	srand(time(NULL));
 	PlayerCar* p1 = new PlayerCar(Point2D(30, 27));
 	player = p1;
 	AICar* p2 = new AICar(Point2D(2, 0));
+
+	this->playerCar = p1;
 	
-	GameScene::addGameObject(p1);
+	//GameScene::addGameObject(p1);
 	/*for (int i = 0; i < 30; i++) {
 		RoadLine* rl = new RoadLine(Point2D(roadX, i), 'n');
 		GameScene::addGameObject(rl);
@@ -52,7 +53,7 @@ void GameScene::onStart()
 		GameScene::addGameObject(border_dx);
 	}*/
 
-	Road* road = new Road(Graphics::screenSize, 5);
+	Road* road = new Road(Graphics::screenSize, 5, Graphics::screenSize.height);
 	GameScene::addGameObject(road);
 
 	Upgrade* upgrade = new Upgrade(Point2D(25, -10), 250);  //random upgrade with 250 points as bonus
@@ -68,11 +69,10 @@ void GameScene::onStart()
 	collisionBuffer.reserve(screenSize.height);
 
 	for (int i = 0; i < screenSize.height; i++) {
-		vector<vector<int>> row = vector<vector<int>>();
+		vector<ptr_GameObject> row = vector<ptr_GameObject>();
 		row.reserve(screenSize.width);
 		for (int j = 0; j < screenSize.width; j++) {
-			vector<int> collisions = vector<int>();
-			row.push_back(collisions);
+			row.push_back(NULL);
 		}
 		collisionBuffer.push_back(row);
 	}
@@ -95,22 +95,25 @@ void GameScene::onLoop() {
 	if (currentLevel->changeLevel(player->points)) {
 		this->currentLevel = currentLevel->NextLevel(player->points);
 	}
+	//allGameObjects include anche l'automobile
+	vector<ptr_GameObject> allGameObjects = gameObjects_;
+	allGameObjects.push_back(this->playerCar);
 
 	//Inizializzazione dei gameObject
-	for (auto gameObject : gameObjects_) {
+	for (auto gameObject : allGameObjects) {
 		if (!gameObject->initialised) {
 			gameObject->onStart();
 			gameObject->initialised = true;
 		}
 	}
 
-	for (auto gameObject : gameObjects_) {
+	for (auto gameObject : allGameObjects) {
 		gameObject->gameSpeed = this->gameSpeed;
 		gameObject->onUpdate();
 	}
 
 	checkCollisions();
-	for (auto GameObject : gameObjects_) {
+	for (auto GameObject : allGameObjects) {
 		GameObject->rect.position.x += GameObject->velocity.x * GameEngine::deltaTime();
 		GameObject->rect.position.y += GameObject->velocity.y * GameEngine::deltaTime();
 	}
@@ -118,10 +121,14 @@ void GameScene::onLoop() {
 
 void GameScene::onGraphics()
 {
+	//allGameObjects include anche l'automobile
+	vector<ptr_GameObject> allGameObjects = gameObjects_;
+	allGameObjects.push_back(this->playerCar);
+
 	Graphics::write(100, 5, "LEVEL: " + std::to_string(currentLevel->difficulty));
 	Graphics::write(100, 7, "SCORE: " + std::to_string(player->points));
 	for (Layer layer : getLayers()) {
-		for (auto gameObject : gameObjects_) {
+		for (auto gameObject : allGameObjects) {
 			if (gameObject->layer == layer) {
 				Graphics::draw(gameObject);
 			}
@@ -155,7 +162,7 @@ void GameScene::checkCollisions()
 	//Pulisci il buffer
 	for (int i = 0; i < screenSize.height; i++) {
 		for (int j = 0; j < screenSize.width; j++) {
-			collisionBuffer[i][j].clear();
+			collisionBuffer[i][j] = NULL;
 		}
 	}
 
@@ -183,43 +190,74 @@ void GameScene::checkCollisions()
 
 					//Ignora i punti fuori dallo schermo
 					if (screenRect.containsPoint(cellX, cellY, true)) {
-						if (!collisionBuffer[cellY][cellX].empty()) {
-							//Collisione
-							for (int other : collisionBuffer[cellY][cellX]) {
-								int first = min(i, other);
-								int second = max(i, other);
-
-								pair<int, int> collision = pair<int, int>(first, second);
-
-								if (find(collisions.begin(), collisions.end(), collision) == collisions.end()) {
-									collisions.push_back(collision);
-								}
-							}
-						}
-						collisionBuffer[cellY][cellX].push_back(i);
+						collisionBuffer[cellY][cellX] = gameObjects_[i];
 					}
 				}
 			}
 		}
 	}
 
-	//Informa gli oggetti delle collisioni e ferma gli oggetti
-	//non immovibili
-	for (auto collision : collisions) {
-		ptr_GameObject first = gameObjects_[collision.first];
-		ptr_GameObject second = gameObjects_[collision.second];
+	//Collisione con spostamento e senza spostamento = collisione verticale
+	//Collisione con spostamento = collisione orizzontale
+	//Collisione senza spostamento = nessuna collisione (l'ha schivato)
 
-		if (!first->immovable) {
-			first->velocity = Point2D(0, 0);
-		}
-		if (!second->immovable) {
-			second->velocity = Point2D(0, 0);
-		}
+	vector<ptr_GameObject> colliders = vector<ptr_GameObject>();
+	vector<ptr_GameObject> staticColliders = vector<ptr_GameObject>();
 
-		first->onCollision(second);
-		second->onCollision(first);
+	//La posizione verticale dell'auto non cambia
+	int carPosY = (int)floor(this->playerCar->rect.position.y);
+
+	//Primo controllo collisioni: Usa la posizione futura (quella che avrà se si muove)
+	Point2D futureCarPosition = this->playerCar->futurePosition();
+	int futurePosX = (int)floor(futureCarPosition.x);
+	
+	for (int y = 0; y < this->playerCar->rect.size.height; y++) {
+		for (int x = 0; x < this->playerCar->rect.size.width; x++) {
+			int cellX = x + futurePosX;
+			int cellY = y + carPosY;
+
+			if (screenRect.containsPoint(cellX, cellY, true)) {
+				if (this->playerCar->sprite[y][x].collision && collisionBuffer[cellY][cellX] != NULL) {
+					ptr_GameObject collider = collisionBuffer[cellY][cellX];
+					if (find(colliders.begin(), colliders.end(), collider) == colliders.end()) {
+						colliders.push_back(collider);
+					}
+				}
+			}
+		}
+	}
+
+	if (colliders.size() > 0) {
+		//Secondo controllo collisioni: Usa la posizione statica
+		int staticPosX = (int)floor(this->playerCar->rect.position.x);
+
+		for (int y = 0; y < this->playerCar->rect.size.height; y++) {
+			for (int x = 0; x < this->playerCar->rect.size.width; x++) {
+				int cellX = x + staticPosX;
+				int cellY = y + carPosY;
+
+				if (screenRect.containsPoint(cellX, cellY, true)) {
+					if (this->playerCar->sprite[y][x].collision && collisionBuffer[cellY][cellX] != NULL) {
+						ptr_GameObject collider = collisionBuffer[cellY][cellX];
+
+						//Conta come collisione solo se c'è stata anche la collisione con la posizione futura
+						if (find(colliders.begin(), colliders.end(), collider) != colliders.end() &&
+							find(staticColliders.begin(), staticColliders.end(), collider) == staticColliders.end()) {
+							staticColliders.push_back(collider);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	//Informa l'automobile delle collisioni
+	for (auto collider : colliders) {
+		bool horizontal = (find(staticColliders.begin(), staticColliders.end(), collider) == staticColliders.end());
+		this->playerCar->onCollision(collider, horizontal);
 	}
 }
+
 
 vector<Layer> GameScene::getLayers()
 {

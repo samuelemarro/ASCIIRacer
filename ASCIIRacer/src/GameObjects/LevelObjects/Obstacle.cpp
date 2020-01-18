@@ -12,10 +12,8 @@ Obstacle::Obstacle(Point2D position, int d) {
 	std::string directory = System::getExecutableDirectory();
 	this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/Obstacle.txt", size);
 	this->rect = Rect(position, size);
+	this->solid = false;
 }
 
 void Obstacle::onStart() {}
 void Obstacle::onUpdate() {}
-void Obstacle::onCollision(ptr_GameObject collider) {
-	this->toBeDestroyed = true;
-}

@@ -31,9 +31,10 @@ vector<Cell> Road::newLine()
 	return roadPiece;
 }
 
-Road::Road(Size size, float initialSpeed) {
+Road::Road(Size size, float initialSpeed, int memory) {
 	Point2D position = Point2D(0, -1);
-	this->rect = Rect(position, size);
+	Size trueSize = Size(size.width, size.height + memory);
+	this->rect = Rect(position, trueSize);
 
 	this->sprite = vector<vector<Cell>>();
 	for (int i = 0; i < rect.size.height; i++) {
@@ -41,14 +42,14 @@ Road::Road(Size size, float initialSpeed) {
 	}
 
 	this->velocity = Point2D(0, initialSpeed);
-	this->immovable = true;
+	this->solid = true;
 
 	this->roadBeginning = 10;
 	this->roadWidth = 50;
 }
 
 void Road::onUpdate() {
-	if (this->rect.position.y + this->velocity.y * GameEngine::deltaTime() >= 0) {
+	if (this->futurePosition().y >= 0) {
 		this->rect.position.y = -1;
 		vector<Cell> roadPiece = newLine();
 		sprite.insert(sprite.begin(), roadPiece);

@@ -19,4 +19,3 @@ AICar::AICar(Point2D position) {
 void AICar::onStart() {}
 void AICar::onUpdate() {
 }
-void AICar::onCollision(ptr_GameObject collider) {}

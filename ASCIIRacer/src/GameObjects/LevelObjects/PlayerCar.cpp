@@ -30,19 +30,23 @@ void PlayerCar::onUpdate() {
 	else {
 		velocity.x = 0;
 	}
-
-	if (status.isDown(Key::Up) && this->rect.position.y>1) {
-		velocity.y = -speedY;
-	}
-	else if (status.isDown(Key::Down) && this->rect.position.y < 27) {
-		velocity.y = speedY;
-	}
-	else {
-		velocity.y = 0;
-	}
 	
 }
-void PlayerCar::onCollision(ptr_GameObject collider) {
+void PlayerCar::onCollision(ptr_GameObject collider, bool horizontal) {
+	if (collider->solid) {
+		this->velocity.x = 0;
+		if (horizontal) {
+			//Scontro orizzontale: perdi punti
+			this->sprite[1][1].character = 'H';
+		}
+		else {
+			//Scontro verticale: Salto indietro
+			this->sprite[1][1].character = 'V';
+			collider->rect.position.y -= 5;
+		}
+	}
+
+
 	if (collider->name == "Upgrade") this->points += 100;
 	else if (collider->name == "Obstacle") this->points -= 100;
 }

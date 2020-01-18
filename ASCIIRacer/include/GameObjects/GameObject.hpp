@@ -18,15 +18,15 @@ public:
 	bool toBeDestroyed;
 	double gameSpeed;
 
-	bool checkCollisions;
+	bool solid;
 	Point2D velocity;
-	bool immovable;
 
 	virtual void onStart();
 	virtual void onUpdate();
-	virtual void onCollision(GameObject* collider);
 
 	void destroy();
+
+	Point2D futurePosition();
 
 	GameObject();
 };

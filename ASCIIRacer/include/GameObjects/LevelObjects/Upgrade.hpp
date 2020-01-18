@@ -8,7 +8,6 @@ public:
 
 	void onStart() override;
 	void onUpdate() override;
-	void onCollision(ptr_GameObject collider) override;
 
 	Upgrade(Point2D position, int b);
 };

@@ -5,7 +5,7 @@
 
 WeirdWall::WeirdWall(Point2D position, float speed) {
 	this->layer = Layer::Content;
-	this->immovable = true;
+	this->solid = true;
 	this->speed = speed;
 	this->velocity = Point2D(speed, 0);
 	Size size;

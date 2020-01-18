@@ -9,9 +9,7 @@ private:
 	int roadWidth;
 public:
 
-	Road(Size size, float initialSpeed);
-
-	void onCollision(GameObject other);
+	Road(Size size, float initialSpeed, int memory);
 
 	void onUpdate();
 };
