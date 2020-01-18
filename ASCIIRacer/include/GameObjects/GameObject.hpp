@@ -5,14 +5,18 @@
 #include "Core/Typedefs.hpp"
 #include <string>
 
+using std::string;
+
 class GameObject
 {
 public:
+	string name;
 	Rect rect;
 	Layer layer;
 	Sprite sprite;
 	bool initialised;
 	bool toBeDestroyed;
+	double gameSpeed;
 
 	bool checkCollisions;
 	Point2D velocity;

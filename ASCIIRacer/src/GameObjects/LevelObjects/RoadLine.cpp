@@ -7,8 +7,9 @@
 #include "Engine/GameEngine.hpp"
 
 RoadLine::RoadLine(Point2D position, char c) {
+	this->name = "RoadLine";
 	this->layer = Layer::Background_1;
-	this->velocity = Point2D(0, 0.05);
+	this->velocity = Point2D(0, this->gameSpeed);
 	Size size;
 	std::string directory = System::getExecutableDirectory();
 	this->immovable = true;
@@ -20,5 +21,5 @@ RoadLine::RoadLine(Point2D position, char c) {
 
 void RoadLine::onStart() {}
 void RoadLine::onUpdate() {
-	this->rect.position.y += this->velocity.y;
+	this->rect.position.y += this->gameSpeed;
 }

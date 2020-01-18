@@ -4,6 +4,7 @@
 #include "Engine/System.hpp"
 
 Obstacle::Obstacle(Point2D position, int d) {
+	this->name = "Obstacle";
 	this->damage = d;
 	this->layer = Layer::Content;
 	this->velocity = Point2D(0, 1);
@@ -15,4 +16,6 @@ Obstacle::Obstacle(Point2D position, int d) {
 
 void Obstacle::onStart() {}
 void Obstacle::onUpdate() {}
-void Obstacle::onCollision(ptr_GameObject collider) {}
+void Obstacle::onCollision(ptr_GameObject collider) {
+	this->toBeDestroyed = true;
+}

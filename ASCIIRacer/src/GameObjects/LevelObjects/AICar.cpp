@@ -7,7 +7,7 @@
 #include "Engine/GameEngine.hpp"
 
 AICar::AICar(Point2D position) {
-	//this->sprite = Graphics::loadSpriteFromFile
+	this->name = "AICar";
 	this->layer = Layer::Content;
 	this->velocity = Point2D(0, 1);
 	Size size;
