@@ -21,5 +21,6 @@ RoadLine::RoadLine(Point2D position, char c) {
 
 void RoadLine::onStart() {}
 void RoadLine::onUpdate() {
-	this->rect.position.y += this->gameSpeed;
+	//this->rect.position.y += this->gameSpeed;
+	if (this->rect.position.y > Graphics::screenSize.height) this->toBeDestroyed = true;
 }

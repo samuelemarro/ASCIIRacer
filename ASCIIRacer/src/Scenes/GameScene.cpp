@@ -33,7 +33,6 @@ void GameScene::onStart()
 	this->currentLevel = l;
 	this->nextLevel = NULL;
 
-	this->gameSpeed = 1;
 	srand(time(NULL));
 	PlayerCar* p1 = new PlayerCar(Point2D(30, 27));
 	player = p1;
@@ -96,6 +95,7 @@ void GameScene::onLoop() {
 	if (currentLevel->changeLevel(player->points)) {
 		this->currentLevel = currentLevel->NextLevel(player->points);
 	}
+
 	//Inizializzazione dei gameObject
 	for (auto gameObject : gameObjects_) {
 		if (!gameObject->initialised) {

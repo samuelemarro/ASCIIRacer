@@ -1,17 +1,22 @@
 #pragma once
 
-#include "GameObjects/LevelObjects/Border.hpp"
+#include "GameObjects/GameObject.hpp"
 
-using std::pair;
-using std::make_pair;
+#include <queue>
+
+using std::queue;
 
 class Level {
+private:
+	queue <ptr_GameObject> map;
+
 public:
 	int pointsToNextLevel;
 	int pointsToPrevLevel;
-	double speed;
+	double speed;    // forse meglio che sia un int? da capire
 	int difficulty;
 
+	// forse inutili?
 	int roadWidth;
 	int road_leftposition;
 
@@ -23,7 +28,6 @@ public:
 
 	Level* NextLevel(int player_points);
 	bool changeLevel(int player_points);
-	pair<Border*, Border*> generateRoad();
 };
 
 typedef Level* ptr_Level;
