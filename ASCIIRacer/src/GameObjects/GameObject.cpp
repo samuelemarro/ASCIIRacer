@@ -12,6 +12,7 @@ GameObject::GameObject() {
 	this->toBeDestroyed = false;
 	this->velocity = Point2D(0, 0);
 	this->solid = true;
+	this->value = 0;
 }
 
 void GameObject::destroy() {

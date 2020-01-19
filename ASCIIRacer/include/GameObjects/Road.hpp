@@ -5,9 +5,9 @@
 class Road : public GameObject {
 private:
 	std::vector<Cell> newLine();
+public:
 	int roadBeginning;
 	int roadWidth;
-public:
 
 	Road(Size size, float initialSpeed, int memory);
 

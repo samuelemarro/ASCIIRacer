@@ -24,7 +24,7 @@ using std::min;
 using std::pair;
 using std::vector;
 using std::sort;
-int roadX = 10;
+Road* roadGen = NULL;
 
 void GameScene::onStart()
 {
@@ -38,6 +38,7 @@ void GameScene::onStart()
 	this->playerCar = p1;
 
 	Road* road = new Road(Graphics::screenSize, 5, Graphics::screenSize.height);
+	roadGen = road;
 	GameScene::addGameObject(road);
 
 	Upgrade* upgrade = new Upgrade(Point2D(25, -10), 250);  //random upgrade with 250 points as bonus

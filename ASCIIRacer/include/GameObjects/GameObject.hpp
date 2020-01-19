@@ -17,6 +17,7 @@ public:
 	bool initialised;
 	bool toBeDestroyed;
 	double gameSpeed;
+	int value;
 
 	bool solid;
 	Point2D velocity;
