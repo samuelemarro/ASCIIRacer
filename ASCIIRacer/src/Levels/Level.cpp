@@ -5,13 +5,11 @@ Level::Level() {
 	this->nextLevel = nullptr;
 }
 
-Level::Level(int ptn, int ptp, float s, int d, int rw, int rlp) : Level(){
+Level::Level(int ptn, int ptp, double s, int d) : Level(){
 	this->pointsToNextLevel = ptn;
 	this->pointsToPrevLevel = ptp;
 	this->speed = s;
 	this->difficulty = d;
-	this->roadWidth = rw;
-	this->road_leftposition = rlp;
 }
 
 bool Level::changeLevel(int player_points) {
@@ -20,7 +18,7 @@ bool Level::changeLevel(int player_points) {
 
 Level* Level::NextLevel(int player_points) {
 	if (player_points >= this->pointsToNextLevel) {
-		Level* nl = new Level(pointsToNextLevel + 100, pointsToNextLevel - 5, speed + 1, difficulty + 1, roadWidth, road_leftposition);
+		Level* nl = new Level(pointsToNextLevel + 100*(difficulty + 1), pointsToNextLevel * 0.90, speed + (int)(difficulty % 3 == 0), difficulty + 1);
 		this->nextLevel = nl;
 		nl->prevLevel = this;
 		return nl;
