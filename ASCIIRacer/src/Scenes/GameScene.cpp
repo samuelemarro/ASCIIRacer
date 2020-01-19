@@ -24,11 +24,11 @@ using std::min;
 using std::pair;
 using std::vector;
 using std::sort;
-Road* roadGen = NULL;
+double roadIndex = 0;
 
 void GameScene::onStart()
 {
-	ptr_Level l = new Level(100, -1, 1, 1, 70, 5);  //random level with difficulty 1
+	ptr_Level l = new Level(100, -1, 1, 1);  //random level with difficulty 1
 	this->currentLevel = l;
 
 	srand(time(NULL));
@@ -38,16 +38,19 @@ void GameScene::onStart()
 	this->playerCar = p1;
 
 	Road* road = new Road(Graphics::screenSize, 5, Graphics::screenSize.height);
-	roadGen = road;
 	GameScene::addGameObject(road);
 
 	Upgrade* upgrade = new Upgrade(Point2D(25, -10), 250);  //random upgrade with 250 points as bonus
 	GameScene::addGameObject(upgrade);
 
-	Obstacle* obstacle = new Obstacle(Point2D(25, -15), 250);  //random upgrade with 250 points as bonus
+	Obstacle* obstacle = new Obstacle(Point2D(25, -15), 250);  //random obstacle with 250 points as penalty
 	GameScene::addGameObject(obstacle);
 
 	this->gameSpeed = currentLevel->speed;
+
+	for (auto gameObject : gameObjects_) {
+		gameObject->velocity.y = currentLevel->speed;
+	}
 
 	//Prepara il collisionBuffer
 	Size screenSize = Graphics::screenSize;
@@ -79,8 +82,15 @@ void GameScene::onLoop() {
 		}
 	}
 
+	//player->points += 1;
+	if (currentLevel->changeLevel(this->playerCar->points)) {
+		this->currentLevel = currentLevel->NextLevel(this->playerCar->points);
+		for (auto gameObject : gameObjects_) {
+			gameObject->velocity.y = currentLevel->speed;
+		}
+	}
+
 	for (auto gameObject : allGameObjects) {
-		gameObject->gameSpeed = this->gameSpeed;
 		gameObject->onUpdate();
 	}
 
@@ -88,6 +98,11 @@ void GameScene::onLoop() {
 	for (auto GameObject : allGameObjects) {
 		GameObject->rect.position.x += GameObject->velocity.x * GameEngine::deltaTime();
 		GameObject->rect.position.y += GameObject->velocity.y * GameEngine::deltaTime();
+	}
+	int old_roadIndex = roadIndex;
+	roadIndex += (int)(currentLevel->speed) * GameEngine::deltaTime();
+	if (old_roadIndex != roadIndex) {
+		this->playerCar->points += 5 * (int)(roadIndex - old_roadIndex);
 	}
 }
 
