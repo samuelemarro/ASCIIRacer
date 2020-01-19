@@ -42,7 +42,6 @@ void PlayerCar::onCollision(ptr_GameObject collider, bool horizontal) {
 		else {
 			//Scontro verticale: Salto indietro
 			this->sprite[1][1].character = 'V';
-			collider->rect.position.y -= 1;
 			if (this->rect.position.x + this->rect.size.width > 30) this->rect.position.x--;
 			else if (this->rect.position.x < 30) this->rect.position.x++;
 		}
