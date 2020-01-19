@@ -28,7 +28,7 @@ double roadIndex = 0;
 
 void GameScene::onStart()
 {
-	ptr_Level l = new Level(100, -1, 1, 1);  //random level with difficulty 1
+	ptr_Level l = new Level(100, -1, 100, 1);  //random level with difficulty 1
 	this->currentLevel = l;
 
 	srand(time(NULL));
@@ -114,6 +114,7 @@ void GameScene::onGraphics()
 
 	Graphics::write(100, 5, "LEVEL: " + std::to_string(currentLevel->difficulty));
 	Graphics::write(100, 7, "SCORE: " + std::to_string(this->playerCar->points));
+	Graphics::write(100, 9, "POSITION: " + std::to_string(this->playerCar->rect.position.x));
 	for (Layer layer : getLayers()) {
 		for (auto gameObject : allGameObjects) {
 			if (gameObject->layer == layer) {
