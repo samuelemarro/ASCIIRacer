@@ -24,7 +24,6 @@ using std::min;
 using std::pair;
 using std::vector;
 using std::sort;
-PlayerCar* player;
 int roadX = 10;
 
 void GameScene::onStart()
@@ -34,24 +33,9 @@ void GameScene::onStart()
 
 	srand(time(NULL));
 	PlayerCar* p1 = new PlayerCar(Point2D(30, 27));
-	player = p1;
 	AICar* p2 = new AICar(Point2D(2, 0));
 
 	this->playerCar = p1;
-	
-	//GameScene::addGameObject(p1);
-	/*for (int i = 0; i < 30; i++) {
-		RoadLine* rl = new RoadLine(Point2D(roadX, i), 'n');
-		GameScene::addGameObject(rl);
-	GameScene::addGameObject(p2);*/
-
-	//Aggiungi la mappa (ora solo bordi della strada)
-	/*for(int y = 0; y < 30; ++y) {
-		Border* border_sx = new Border(Point2D(currentLevel->road_leftposition, y));
-		Border* border_dx = new Border(Point2D(currentLevel->road_leftposition + currentLevel->roadWidth, y));
-		GameScene::addGameObject(border_sx);
-		GameScene::addGameObject(border_dx);
-	}*/
 
 	Road* road = new Road(Graphics::screenSize, 5, Graphics::screenSize.height);
 	GameScene::addGameObject(road);
@@ -79,21 +63,8 @@ void GameScene::onStart()
 }
 
 void GameScene::onLoop() {
-	//Questo va spostato poi in Road::newLine()
-	/*
-	if (Graphics::buffer[0][roadX] == ' ') {
-		int k = rand() % 5;
-		char c = 'n';
-		if (k == 0 && roadX > 0) { c = 's'; roadX--; }
-		else if (k != 0 && k != 2) c = 'n';
-		else if (k == 2 && roadX < 40) c = 'd';
-		RoadLine* rl = new RoadLine(Point2D(roadX, 0), c);
-		GameScene::addGameObject(rl);
-		if (roadX < 40 && c == 'd') roadX++;
-	}
-	*/
-	if (currentLevel->changeLevel(player->points)) {
-		this->currentLevel = currentLevel->NextLevel(player->points);
+	if (currentLevel->changeLevel(this->playerCar->points)) {
+		this->currentLevel = currentLevel->NextLevel(this->playerCar->points);
 	}
 	//allGameObjects include anche l'automobile
 	vector<ptr_GameObject> allGameObjects = gameObjects_;
@@ -126,7 +97,7 @@ void GameScene::onGraphics()
 	allGameObjects.push_back(this->playerCar);
 
 	Graphics::write(100, 5, "LEVEL: " + std::to_string(currentLevel->difficulty));
-	Graphics::write(100, 7, "SCORE: " + std::to_string(player->points));
+	Graphics::write(100, 7, "SCORE: " + std::to_string(this->playerCar->points));
 	for (Layer layer : getLayers()) {
 		for (auto gameObject : allGameObjects) {
 			if (gameObject->layer == layer) {

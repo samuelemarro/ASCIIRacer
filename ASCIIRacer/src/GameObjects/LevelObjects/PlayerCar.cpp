@@ -47,6 +47,6 @@ void PlayerCar::onCollision(ptr_GameObject collider, bool horizontal) {
 	}
 
 
-	if (collider->name == "Upgrade") this->points += 100;
-	else if (collider->name == "Obstacle") this->points -= 100;
+	if (collider->name == "Upgrade") { this->points += 100; collider->toBeDestroyed = true; }
+	else if (collider->name == "Obstacle") { this->points -= 100; collider->toBeDestroyed = true; }
 }

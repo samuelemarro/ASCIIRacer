@@ -190,7 +190,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="sprites\AICar.txt" />
-    <Text Include="sprites\Border.txt" />
     <Text Include="sprites\Obstacle.txt" />
     <Text Include="sprites\PlayerCar.txt">
       <DeploymentContent>false</DeploymentContent>
@@ -198,9 +197,6 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DeploymentContent>
     </Text>
-    <Text Include="sprites\RoadLine.txt" />
-    <Text Include="sprites\RoadLineLeft.txt" />
-    <Text Include="sprites\RoadLineRight.txt" />
     <Text Include="sprites\Upgrade.txt" />
     <Text Include="sprites\WeirdWall.txt" />
   </ItemGroup>

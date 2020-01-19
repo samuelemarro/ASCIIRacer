@@ -122,13 +122,9 @@
   <ItemGroup>
     <Text Include="sprites\WeirdWall.txt" />
     <Text Include="sprites\PlayerCar.txt" />
-    <Text Include="sprites\RoadLine.txt" />
     <Text Include="sprites\Upgrade.txt" />
     <Text Include="sprites\WeirdWall.txt" />
-    <Text Include="sprites\RoadLineRight.txt" />
-    <Text Include="sprites\RoadLineLeft.txt" />
     <Text Include="sprites\AICar.txt" />
-    <Text Include="sprites\Border.txt" />
     <Text Include="sprites\Obstacle.txt" />
   </ItemGroup>
 </Project>
