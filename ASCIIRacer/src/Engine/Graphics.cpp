@@ -190,15 +190,14 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size) {
 	while (currentLine < lines.size()) {
 		//Mask: conta come collisione se il carattere non è IGNORE_CHAR_FILE
 		if (lines[currentLine].find("MASK") != string::npos) {
-			int firstLine = currentLine;
-			int lastLine = currentLine + height;
-			for (currentLine = currentLine + 1; currentLine < lastLine; currentLine++) {
+			int startingPoint = currentLine + 1;
+			for (int y = 0; y < height; y++) {
 				vector<bool> row;
 				for (int x = 0; x < width; x++) {
-					int y = currentLine - firstLine;
-					sprite[y][x].collision = (lines[currentLine][x] != IGNORE_CHAR_FILE);
+					sprite[y][x].collision = (lines[startingPoint + y][x] != IGNORE_CHAR_FILE);
 				}
 			}
+			currentLine = startingPoint + height;
 		}
 		else if (lines[currentLine].find("FOREGROUND") != string::npos) {
 			int startingPoint = currentLine + 1;
