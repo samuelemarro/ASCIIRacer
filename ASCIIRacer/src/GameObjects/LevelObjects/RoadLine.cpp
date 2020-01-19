@@ -9,7 +9,7 @@
 RoadLine::RoadLine(Point2D position, char c) {
 	this->name = "RoadLine";
 	this->layer = Layer::Background_1;
-	this->velocity = Point2D(0, this->gameSpeed);
+	this->velocity = Point2D(0, 0);
 	Size size;
 	std::string directory = System::getExecutableDirectory();
 	this->solid = true;
@@ -21,6 +21,5 @@ RoadLine::RoadLine(Point2D position, char c) {
 
 void RoadLine::onStart() {}
 void RoadLine::onUpdate() {
-	//this->rect.position.y += this->gameSpeed;
 	if (this->rect.position.y > Graphics::screenSize.height) this->toBeDestroyed = true;
 }

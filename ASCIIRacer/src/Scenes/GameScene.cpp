@@ -46,8 +46,6 @@ void GameScene::onStart()
 	Obstacle* obstacle = new Obstacle(Point2D(25, -15), 250);  //random obstacle with 250 points as penalty
 	GameScene::addGameObject(obstacle);
 
-	this->gameSpeed = currentLevel->speed;
-
 	for (auto gameObject : gameObjects_) {
 		gameObject->velocity.y = currentLevel->speed;
 	}

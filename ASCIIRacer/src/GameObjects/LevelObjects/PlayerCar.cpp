@@ -1,4 +1,6 @@
 #include "GameObjects/LevelObjects/PlayerCar.hpp"
+#include "GameObjects/LevelObjects/Upgrade.hpp"
+#include "GameObjects/LevelObjects/Obstacle.hpp"
 #include "Engine/Graphics.hpp"
 #include "Core/Utilities.hpp"
 
@@ -47,7 +49,15 @@ void PlayerCar::onCollision(ptr_GameObject collider, bool horizontal) {
 		}
 	}
 
-
-	if (collider->name == "Upgrade") { this->points += collider->value; collider->toBeDestroyed = true; }
-	else if (collider->name == "Obstacle") { this->points -= collider->value; collider->toBeDestroyed = true; }
+	//cast per poter accedere ai rispettivi campi
+	Upgrade* up = dynamic_cast<Upgrade*>(collider);
+	Obstacle* obs = dynamic_cast<Obstacle*>(collider);
+	if (collider->name == "Upgrade") { 
+		this->points += up->bonus; 
+		collider->toBeDestroyed = true; 
+	}
+	else if (collider->name == "Obstacle") { 
+		this->points -= obs->damage; 
+		collider->toBeDestroyed = true; 
+	}
 }

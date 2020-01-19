@@ -9,9 +9,9 @@ private:
 	std::vector<Layer> getLayers();
 
 	PlayerCar* playerCar;
+	double roadIndex = 0;
 	
 	void removeToBeDestroyed();
-	double gameSpeed = 0;    //probabilmente da togliere, l'attributo della velocità del gioco ce l'ha il livello
 
 	std::vector<std::vector<ptr_GameObject>> collisionBuffer;
 

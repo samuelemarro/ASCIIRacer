@@ -7,8 +7,7 @@
 
 using std::string;
 
-class GameObject
-{
+class GameObject {
 public:
 	string name;
 	Rect rect;
@@ -16,8 +15,6 @@ public:
 	Sprite sprite;
 	bool initialised;
 	bool toBeDestroyed;
-	double gameSpeed;
-	int value;
 
 	bool solid;
 	Point2D velocity;
