@@ -51,6 +51,7 @@ Road::Road(Size size, float initialSpeed, int memory) {
 	Point2D position = Point2D(0, -1);
 	Size trueSize = Size(size.width, size.height + memory);
 	this->rect = Rect(position, trueSize);
+	this->name = "Road";
 
 	this->roadBeginning = 10;
 	this->roadWidth = 50;

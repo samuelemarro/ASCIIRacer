@@ -5,7 +5,7 @@
 
 Obstacle::Obstacle(Point2D position, int d) {
 	this->name = "Obstacle";
-	this->value = d;
+	this->damage = d;
 	this->layer = Layer::Content;
 	this->velocity = Point2D(0, 1);
 	Size size;

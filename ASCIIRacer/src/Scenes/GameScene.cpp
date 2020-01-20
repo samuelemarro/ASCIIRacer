@@ -24,14 +24,14 @@ using std::min;
 using std::pair;
 using std::vector;
 using std::sort;
-double roadIndex = 0;
 
 void GameScene::onStart()
 {
-	ptr_Level l = new Level(100, -1, 100, 1);  //random level with difficulty 1
+	srand(time(NULL));
+
+	ptr_Level l = new Level(100, -1, 3, 1);  //initial level with difficulty 1
 	this->currentLevel = l;
 
-	srand(time(NULL));
 	PlayerCar* p1 = new PlayerCar(Point2D(30, 27));
 	AICar* p2 = new AICar(Point2D(2, 0));
 
@@ -39,12 +39,6 @@ void GameScene::onStart()
 
 	Road* road = new Road(Graphics::screenSize, 5, Graphics::screenSize.height);
 	GameScene::addGameObject(road);
-
-	Upgrade* upgrade = new Upgrade(Point2D(25, -10), 250);  //random upgrade with 250 points as bonus
-	GameScene::addGameObject(upgrade);
-
-	Obstacle* obstacle = new Obstacle(Point2D(25, -15), 250);  //random obstacle with 250 points as penalty
-	GameScene::addGameObject(obstacle);
 
 	for (auto gameObject : gameObjects_) {
 		gameObject->velocity.y = currentLevel->speed;
@@ -65,9 +59,7 @@ void GameScene::onStart()
 }
 
 void GameScene::onLoop() {
-	if (currentLevel->changeLevel(this->playerCar->points)) {
-		this->currentLevel = currentLevel->NextLevel(this->playerCar->points);
-	}
+
 	//allGameObjects include anche l'automobile
 	vector<ptr_GameObject> allGameObjects = gameObjects_;
 	allGameObjects.push_back(this->playerCar);
@@ -80,7 +72,7 @@ void GameScene::onLoop() {
 		}
 	}
 
-	//player->points += 1;
+	//playerCar->points += 5;
 	if (currentLevel->changeLevel(this->playerCar->points)) {
 		this->currentLevel = currentLevel->NextLevel(this->playerCar->points);
 		for (auto gameObject : gameObjects_) {
@@ -88,19 +80,34 @@ void GameScene::onLoop() {
 		}
 	}
 
+	int old_roadIndex = this->roadIndex;
+	this->roadIndex += (int)(currentLevel->speed) * GameEngine::deltaTime();
+
+	if (old_roadIndex != (int)(this->roadIndex)) {
+		this->playerCar->points += 5 * (int)(this->roadIndex - old_roadIndex);
+
+		if (gameObjects_[0]->name == "Road") {
+			gameObjects_[0]->onUpdate();
+		} else {
+			Graphics::write(100, 9, "ERROR: Road");
+		}
+
+		//generate new line of map
+		bool generateMap = (old_roadIndex % 29 == 0);
+		vector<ptr_GameObject> levelObjects = currentLevel->getMapLine(this->roadIndex, gameObjects_[0], generateMap);
+		for (auto levelObject : levelObjects) {
+			gameObjects_.push_back(levelObject);
+		}
+	}
+
 	for (auto gameObject : allGameObjects) {
-		gameObject->onUpdate();
+		if(gameObject->name != "Road") gameObject->onUpdate();
 	}
 
 	checkCollisions();
 	for (auto GameObject : allGameObjects) {
 		GameObject->rect.position.x += GameObject->velocity.x * GameEngine::deltaTime();
 		GameObject->rect.position.y += GameObject->velocity.y * GameEngine::deltaTime();
-	}
-	int old_roadIndex = roadIndex;
-	roadIndex += (int)(currentLevel->speed) * GameEngine::deltaTime();
-	if (old_roadIndex != roadIndex) {
-		this->playerCar->points += 5 * (int)(roadIndex - old_roadIndex);
 	}
 }
 
@@ -112,7 +119,9 @@ void GameScene::onGraphics()
 
 	Graphics::write(100, 5, "LEVEL: " + std::to_string(currentLevel->difficulty));
 	Graphics::write(100, 7, "SCORE: " + std::to_string(this->playerCar->points));
-	Graphics::write(100, 9, "POSITION: " + std::to_string(this->playerCar->rect.position.x));
+	//test printing
+	Graphics::write(100, 9, "TEST: " + std::to_string((int)(roadIndex)));
+	//test printing
 	for (Layer layer : getLayers()) {
 		for (auto gameObject : allGameObjects) {
 			if (gameObject->layer == layer) {
@@ -124,6 +133,7 @@ void GameScene::onGraphics()
 
 void GameScene::onEndLoop()
 {
+
 	//Finalizzazione
 	removeToBeDestroyed();
 }

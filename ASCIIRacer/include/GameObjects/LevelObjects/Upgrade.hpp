@@ -4,6 +4,7 @@
 
 class Upgrade : public GameObject {
 public:
+	int bonus;
 
 	void onStart() override;
 	void onUpdate() override;

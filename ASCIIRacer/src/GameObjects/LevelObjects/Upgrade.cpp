@@ -5,7 +5,7 @@
 
 Upgrade::Upgrade(Point2D position, int b) {
 	this->name = "Upgrade";
-	this->value = b;
+	this->bonus = b;
 	this->layer = Layer::Content;
 	this->velocity = Point2D(0, 3);
 	Size size;

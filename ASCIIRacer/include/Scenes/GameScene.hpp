@@ -3,6 +3,8 @@
 #include "Scenes/Scene.hpp"
 #include "Levels/Level.hpp"
 #include "GameObjects/LevelObjects/PlayerCar.hpp"
+#include "GameObjects/Road.hpp"
+
 
 class GameScene : public Scene {
 private:

@@ -1,14 +1,21 @@
 #pragma once
 
 #include "GameObjects/GameObject.hpp"
+#include "GameObjects/Road.hpp"
+#include "GameObjects/LevelObjects/Upgrade.hpp"
+#include "GameObjects/LevelObjects/Obstacle.hpp"
 
 #include <queue>
 
 using std::queue;
+using std::vector;
+using std::rand;
 
 class Level {
 private:
-	queue <ptr_GameObject> map;
+	queue <ptr_GameObject> Map;
+	vector <ptr_GameObject> mapSlice;    //50x30 slice of map
+	int slicesCount;
 
 public:
 	int pointsToNextLevel;
@@ -25,6 +32,11 @@ public:
 
 	Level* NextLevel(int player_points);
 	bool changeLevel(int player_points);
+
+	void generateMap();
+	void saveMap();
+	vector<ptr_GameObject> getMapLine(int roadIndex, ptr_GameObject Road_object, bool generateMap);
+
 };
 
 typedef Level* ptr_Level;

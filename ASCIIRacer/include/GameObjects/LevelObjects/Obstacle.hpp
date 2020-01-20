@@ -4,6 +4,7 @@
 
 class Obstacle : public GameObject {
 public:
+	int damage;
 
 	void onStart() override;
 	void onUpdate() override;
