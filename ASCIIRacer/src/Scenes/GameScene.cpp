@@ -78,11 +78,8 @@ void GameScene::onLoop() {
 	if (currentLevel->changeLevel(this->playerCar->points)) {
 		this->currentLevel = currentLevel->NextLevel(this->playerCar->points);
 		for (auto gameObject : gameObjects_) {
-			if(this->playerCar->points>=0) gameObject->velocity.y = currentLevel->speed;
-			else {
-				ptr_Scene p = new GameOverScene();
-				GameEngine::changeScene(p);
-			}
+			if (this->playerCar->points >= 0) gameObject->velocity.y = currentLevel->speed;
+			else GameEngine::changeScene("GameOverScene");
 		}
 	}
 
@@ -124,11 +121,8 @@ void GameScene::onGraphics()
 	allGameObjects.push_back(this->playerCar);
 
 	Graphics::write(100, 5, "LEVEL: " + std::to_string(currentLevel->difficulty));
-	if(this->playerCar->points >= 0)Graphics::write(100, 7, "SCORE: " + std::to_string(this->playerCar->points));
-	else {
-		ptr_Scene p = new GameOverScene();
-		GameEngine::changeScene(p);
-	}
+	if (this->playerCar->points >= 0)Graphics::write(100, 7, "SCORE: " + std::to_string(this->playerCar->points));
+	else GameEngine::changeScene("GameOverScene");
 	//test printing
 	Graphics::write(100, 9, "TEST: " + std::to_string((int)(roadIndex)));
 	//test printing
@@ -282,4 +276,14 @@ vector<Layer> GameScene::getLayers()
 
 void GameScene::addGameObject(ptr_GameObject gameObject) {
 	gameObjects_.push_back(gameObject);
+}
+
+GameScene::~GameScene() {
+	this->initialised = false;
+	this->collisionBuffer.erase(this->collisionBuffer.begin(), this->collisionBuffer.end());
+	delete this->currentLevel;
+	this->gameObjects_.erase(this->gameObjects_.begin(), this->gameObjects_.end());
+	delete this->nextScene;
+	delete this->playerCar;
+	this->roadIndex = 0;
 }

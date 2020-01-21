@@ -24,6 +24,7 @@ public:
 
 	ptr_Level currentLevel;
 
+	~GameScene();
 	void onStart() override;
 	void onLoop() override;
 	void onGraphics() override;

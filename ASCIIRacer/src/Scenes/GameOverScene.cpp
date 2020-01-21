@@ -13,22 +13,19 @@
 #include <iostream>
 
 using namespace std;
-typedef pair<string, ptr_Scene> pss;
+typedef pair<string, string> pss;
 
 const int marginY = 2;
 const int marginX = 30;
 const int distanceY = 2;
 
-void GameOverScene::addOption(string name, ptr_Scene s) {
+void GameOverScene::addOption(string name, string s) {
 	this->options.push_back(pss(name, s));
 }
 
 void GameOverScene::fetchOptions() {
-	ptr_Scene adder = new GameScene();
-	addOption("NEW GAME", adder);
-	//se voglio aggiungere altra scene faccio adder = new nomeScene; e poi addOption("option name", adder);
-	adder = new MenuScene();
-	addOption("MAIN MENU", adder);
+	addOption("NEW GAME", "GameScene");
+	addOption("MAIN MENU", "MenuScene");
 }
 
 void GameOverScene::drawMenu() {
@@ -54,7 +51,7 @@ void GameOverScene::onLoop() {
 	this->status = Keyboard::currentStatus;
 	bool change = false;
 	if (this->status.isPressed(Key::Confirm)) change = true;
-	if (this->options[this->cursor].second != NULL && change) GameEngine::changeScene(this->options[this->cursor].second);
+	if (this->options[this->cursor].second != " " && change) GameEngine::changeScene(this->options[this->cursor].second);
 }
 
 void GameOverScene::onGraphics() {

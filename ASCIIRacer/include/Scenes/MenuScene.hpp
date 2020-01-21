@@ -12,12 +12,12 @@ using namespace std;
 class MenuScene : public Scene {
 	protected:
 		KeyboardStatus status;
-		vector<pair<string, ptr_Scene> > options;
+		vector<pair<string, string> > options;
 		int cursor=0;
 		void fetchOptions();
 		void drawMenu();
 		void moveCursor(bool down);
-		void addOption(string name, ptr_Scene s);
+		void addOption(string name, string s);
 	public:
 		void onStart() override;
 		void onLoop() override;

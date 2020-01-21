@@ -1,5 +1,8 @@
 #include <thread>
 
+#include "Scenes/GameOverScene.hpp"
+#include "Scenes/GameScene.hpp"
+#include "Scenes/MenuScene.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Keyboard.hpp"
 #include "Engine/KeyboardStatus.hpp"
@@ -12,11 +15,16 @@ using std::chrono::milliseconds;
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;
 using std::this_thread::sleep_for;
+using std::string;
 
 std::chrono::time_point<std::chrono::steady_clock> GameEngine::lastLoopTime_;
 int GameEngine::fps;
 ptr_Scene GameEngine::currentScene;
 ptr_Scene GameEngine::nextScene;
+//Fetch delle Scenes
+GameScene* GameEngine::gameScene = new GameScene();
+MenuScene* GameEngine::menuScene = new MenuScene();
+GameOverScene* GameEngine::gameOverScene = new GameOverScene();
 
 void GameEngine::start(ptr_Scene firstScene) {
 	//Qui va il codice di inizio gioco
@@ -25,9 +33,15 @@ void GameEngine::start(ptr_Scene firstScene) {
 	GameEngine::nextScene = NULL;
 }
 
-void GameEngine::changeScene(ptr_Scene newScene)
+void GameEngine::changeScene(string name)
 {
-	GameEngine::nextScene = newScene;
+	if (name == "GameScene") {
+		delete gameScene;
+		gameScene = new GameScene();
+		GameEngine::nextScene = gameScene;
+	}
+	else if(name == "MenuScene") GameEngine::nextScene = menuScene;
+	else if(name == "GameOverScene") GameEngine::nextScene = gameOverScene;
 }
 
 void GameEngine::loop()

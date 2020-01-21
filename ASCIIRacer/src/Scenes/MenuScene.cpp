@@ -12,24 +12,22 @@
 #include <iostream>
 
 using namespace std;
-typedef pair<string, ptr_Scene> pss;
+typedef pair<string, string> pss;
 
 const int marginY = 2;
 const int marginX = 30;
 const int distanceY = 2;
 
-void MenuScene::addOption(string name, ptr_Scene s) {
+void MenuScene::addOption(string name, string s) {
 	this->options.push_back(pss(name, s));
 }
 
 void MenuScene::fetchOptions() {
-	ptr_Scene adder = new GameScene();
-	addOption("PLAY", adder);
-	//se voglio aggiungere altra scene faccio adder = new nomeScene; e poi addOption("option name", adder);
-	addOption("OPTIONS", NULL);
-	addOption("CREDITS", NULL);
+	addOption("PLAY", "GameScene");
+	addOption("OPTIONS", " ");
+	addOption("CREDITS", " ");
 	//EXIT opzione deve essere ultima aggiunta
-	addOption("EXIT", NULL);
+	addOption("EXIT", " ");
 }
 
 void MenuScene::drawMenu() {
@@ -55,7 +53,7 @@ void MenuScene::onLoop() {
 	this->status = Keyboard::currentStatus;
 	bool change = false;
 	if (this->status.isPressed(Key::Confirm)) change = true;
-	if (this->options[this->cursor].second != NULL && change) GameEngine::changeScene(this->options[this->cursor].second);
+	if (this->options[this->cursor].second != " " && change) GameEngine::changeScene(this->options[this->cursor].second);
 	else if (this->cursor == this->options.size() - 1 && change) exit(EXIT_SUCCESS);
 }
 
