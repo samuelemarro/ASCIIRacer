@@ -155,6 +155,7 @@
     <ClCompile Include="src\GameObjects\LevelObjects\WeirdWall.cpp" />
     <ClCompile Include="src\GameObjects\Road.cpp" />
     <ClCompile Include="src\Levels\Level.cpp" />
+    <ClCompile Include="src\Scenes\GameOverScene.cpp" />
     <ClCompile Include="src\Scenes\GameScene.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Scenes\MenuScene.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="include\GameObjects\LevelObjects\AICar.hpp" />
     <ClInclude Include="include\GameObjects\Road.hpp" />
     <ClInclude Include="include\Levels\Level.hpp" />
+    <ClInclude Include="include\Scenes\GameOverScene.hpp" />
     <ClInclude Include="include\Scenes\GameScene.hpp" />
     <ClInclude Include="include\Scenes\MenuScene.hpp" />
     <ClInclude Include="include\Scenes\Scene.hpp" />

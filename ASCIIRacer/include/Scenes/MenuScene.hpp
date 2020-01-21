@@ -1,14 +1,19 @@
 #pragma once
 #include "Scenes/Scene.hpp"
+#include "Engine/KeyboardStatus.hpp"
 #include "windows.h"
 #include <utility>
 #include <cstdlib>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
 class MenuScene : public Scene {
 	protected:
+		KeyboardStatus status;
+		vector<pair<string, ptr_Scene> > options;
+		int cursor=0;
 		void fetchOptions();
 		void drawMenu();
 		void moveCursor(bool down);

@@ -24,6 +24,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Scenes\MenuScene.cpp" />
     <ClCompile Include="src\GameObjects\Road.cpp" />
+    <ClCompile Include="src\Scenes\GameOverScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Utilities.cpp">
@@ -118,6 +119,7 @@
     <ClInclude Include="include\Core\Layer.hpp" />
     <ClInclude Include="include\Core\Color.hpp" />
     <ClInclude Include="include\GameObjects\Road.hpp" />
+    <ClInclude Include="include\Scenes\GameOverScene.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="sprites\WeirdWall.txt" />

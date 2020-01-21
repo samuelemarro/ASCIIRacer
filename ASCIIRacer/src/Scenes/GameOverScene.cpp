@@ -1,3 +1,4 @@
+#include "Scenes/GameOverScene.hpp"
 #include "Scenes/MenuScene.hpp"
 #include "Engine/Keyboard.hpp"
 #include "Engine/System.hpp"
@@ -18,37 +19,35 @@ const int marginY = 2;
 const int marginX = 30;
 const int distanceY = 2;
 
-void MenuScene::addOption(string name, ptr_Scene s) {
+void GameOverScene::addOption(string name, ptr_Scene s) {
 	this->options.push_back(pss(name, s));
 }
 
-void MenuScene::fetchOptions() {
+void GameOverScene::fetchOptions() {
 	ptr_Scene adder = new GameScene();
-	addOption("PLAY", adder);
+	addOption("NEW GAME", adder);
 	//se voglio aggiungere altra scene faccio adder = new nomeScene; e poi addOption("option name", adder);
-	addOption("OPTIONS", NULL);
-	addOption("CREDITS", NULL);
-	//EXIT opzione deve essere ultima aggiunta
-	addOption("EXIT", NULL);
+	adder = new MenuScene();
+	addOption("MAIN MENU", adder);
 }
 
-void MenuScene::drawMenu() {
-	Graphics::write(marginX, marginY, "ASCIIRacer");
+void GameOverScene::drawMenu() {
+	Graphics::write(marginX, marginY, "GAME OVER");
 	for (int i = 0; i < this->options.size(); i++) {
 		Graphics::write((float)marginX, (float)marginY + (i + 1) * (float)distanceY, this->options[i].first);
 	}
 }
 
-void MenuScene::moveCursor(bool down) {
-	if (down && (this->cursor< this->options.size()-1)) this->cursor++;
-	else if(!down && this->cursor>0) this->cursor--;
+void GameOverScene::moveCursor(bool down) {
+	if (down && (this->cursor < this->options.size() - 1)) this->cursor++;
+	else if (!down && this->cursor > 0) this->cursor--;
 }
 
-void MenuScene::onStart(){
+void GameOverScene::onStart() {
 	fetchOptions();
 }
 
-void MenuScene::onLoop() {
+void GameOverScene::onLoop() {
 	if (this->status.isPressed(Key::Down)) moveCursor(true);
 	else if (this->status.isPressed(Key::Up)) moveCursor(false);
 
@@ -56,15 +55,14 @@ void MenuScene::onLoop() {
 	bool change = false;
 	if (this->status.isPressed(Key::Confirm)) change = true;
 	if (this->options[this->cursor].second != NULL && change) GameEngine::changeScene(this->options[this->cursor].second);
-	else if (this->cursor == this->options.size() - 1 && change) exit(EXIT_SUCCESS);
 }
 
-void MenuScene::onGraphics() {
+void GameOverScene::onGraphics() {
 	drawMenu();
 	Graphics::write((float)marginX - 1, (float)marginY + (this->cursor + 1) * (float)distanceY, " ");
 	Graphics::write((float)marginX - 1, (float)marginY + (this->cursor + 1) * (float)distanceY, ">");
 }
 
-void MenuScene::onEndLoop() {
+void GameOverScene::onEndLoop() {
 
 }

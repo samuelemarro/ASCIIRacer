@@ -5,6 +5,7 @@
 #include <time.h>  
 
 #include "Scenes/GameScene.hpp"
+#include "Scenes/GameOverScene.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Graphics.hpp"
 #include "Engine/System.hpp"
@@ -36,10 +37,11 @@ void GameScene::onStart()
 	AICar* p2 = new AICar(Point2D(2, 0));
 
 	this->playerCar = p1;
-
+	this->playerCar->points=0;
 	Road* road = new Road(Graphics::screenSize, 5, Graphics::screenSize.height);
 	GameScene::addGameObject(road);
-
+	Obstacle* o = new Obstacle(Point2D(30, 10), 1000);
+	GameScene::addGameObject(o);
 	for (auto gameObject : gameObjects_) {
 		gameObject->velocity.y = currentLevel->speed;
 	}
@@ -76,7 +78,11 @@ void GameScene::onLoop() {
 	if (currentLevel->changeLevel(this->playerCar->points)) {
 		this->currentLevel = currentLevel->NextLevel(this->playerCar->points);
 		for (auto gameObject : gameObjects_) {
-			gameObject->velocity.y = currentLevel->speed;
+			if(this->playerCar->points>=0) gameObject->velocity.y = currentLevel->speed;
+			else {
+				ptr_Scene p = new GameOverScene();
+				GameEngine::changeScene(p);
+			}
 		}
 	}
 
@@ -118,7 +124,11 @@ void GameScene::onGraphics()
 	allGameObjects.push_back(this->playerCar);
 
 	Graphics::write(100, 5, "LEVEL: " + std::to_string(currentLevel->difficulty));
-	Graphics::write(100, 7, "SCORE: " + std::to_string(this->playerCar->points));
+	if(this->playerCar->points >= 0)Graphics::write(100, 7, "SCORE: " + std::to_string(this->playerCar->points));
+	else {
+		ptr_Scene p = new GameOverScene();
+		GameEngine::changeScene(p);
+	}
 	//test printing
 	Graphics::write(100, 9, "TEST: " + std::to_string((int)(roadIndex)));
 	//test printing
