@@ -49,15 +49,21 @@ void PlayerCar::onCollision(ptr_GameObject collider, bool horizontal) {
 		}
 	}
 
+	//Level* currentLevel = ((GameScene*)GameEngine::currentScene)->currentLevel;
+
 	//cast per poter accedere ai rispettivi campi
 	Upgrade* up = dynamic_cast<Upgrade*>(collider);
 	Obstacle* obs = dynamic_cast<Obstacle*>(collider);
 	if (collider->name == "Upgrade") { 
 		this->points += up->bonus; 
 		collider->toBeDestroyed = true; 
+
+		up->parentLevel->removedIds.push_back(up->generationId);
 	}
 	else if (collider->name == "Obstacle") { 
 		this->points -= obs->damage; 
 		collider->toBeDestroyed = true; 
+
+		obs->parentLevel->removedIds.push_back(obs->generationId);
 	}
 }

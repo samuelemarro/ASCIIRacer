@@ -1,13 +1,13 @@
 #pragma once
 
-#include "GameObjects/GameObject.hpp"
+#include "GameObjects/GeneratedObject.hpp"
 
-class Upgrade : public GameObject {
+class Upgrade : public GeneratedObject {
 public:
 	int bonus;
 
 	void onStart() override;
 	void onUpdate() override;
 
-	Upgrade(Point2D position, int b);
+	Upgrade(Point2D position, int b, ptr_Level parentLevel, int generationId);
 };

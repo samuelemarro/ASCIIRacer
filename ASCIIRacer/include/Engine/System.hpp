@@ -16,6 +16,7 @@ public:
 	static void clearScreen();
 	static void moveCursor(int x, int y);
 	static void setTextColor(Color foreground, Color background);
+	static float randomFloat();
 
 	static std::string getExecutableDirectory();
 	static std::vector<std::string> loadFile(std::string path);

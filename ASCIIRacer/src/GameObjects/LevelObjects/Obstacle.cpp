@@ -3,7 +3,7 @@
 #include "Engine/Graphics.hpp"
 #include "Engine/System.hpp"
 
-Obstacle::Obstacle(Point2D position, int d) {
+Obstacle::Obstacle(Point2D position, int d, ptr_Level parentLevel, int generationId) {
 	this->name = "Obstacle";
 	this->damage = d;
 	this->layer = Layer::Content;
@@ -13,6 +13,8 @@ Obstacle::Obstacle(Point2D position, int d) {
 	this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/Obstacle.txt", size);
 	this->rect = Rect(position, size);
 	this->solid = false;
+	this->parentLevel = parentLevel;
+	this->generationId = generationId;
 }
 
 void Obstacle::onStart() {}

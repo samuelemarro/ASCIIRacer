@@ -133,7 +133,7 @@ void Graphics::updateScreen() {
 				redraw = true;
 
 				System::setTextColor(buffer[y][x].foreground, buffer[y][x].background);
-				cout << buffer[y][x].character;
+				printf("%c", buffer[y][x].character);
 			}
 		}
 	}

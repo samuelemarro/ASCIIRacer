@@ -1,9 +1,15 @@
 #include "Levels/Level.hpp"
+#include "Engine/System.hpp"
+#include "Engine/GameEngine.hpp"
+#include "Scenes/GameScene.hpp"
+#include "GameObjects/LevelObjects/Obstacle.hpp"
+#include "GameObjects/LevelObjects/Upgrade.hpp"
 
 Level::Level() {
 	this->prevLevel = nullptr;
 	this->nextLevel = nullptr;
-	this->slicesCount = 0;
+	this->currentId = 0;
+	this->seed = -1;
 }
 
 Level::Level(int ptn, int ptp, double s, int d) : Level(){
@@ -17,7 +23,16 @@ bool Level::changeLevel(int player_points) {
 	return (player_points >= this->pointsToNextLevel) || (player_points <= this->pointsToPrevLevel);
 }
 
-Level* Level::NextLevel(int player_points) {
+void Level::prepareLevel()
+{
+	if (this->seed == -1) {
+		this->seed = time(NULL);
+	}
+	srand(this->seed);
+	this->currentId = 0;
+}
+
+Level* Level::newLevel(int player_points) {
 	if (player_points >= this->pointsToNextLevel) {
 		Level* nl = new Level(pointsToNextLevel + 100*(difficulty + 1), pointsToNextLevel * 0.90, speed + 1, difficulty + 1);
 		this->nextLevel = nl;
@@ -32,71 +47,36 @@ Level* Level::NextLevel(int player_points) {
 	else return 0;		//Caso mai raggiunto poichè precondition: changeLevel == true
 }
 
-void Level::generateMap() {
+void Level::generateLine(int roadPosition, int roadWidth) {
+	float obstacleProbability = 0.0075;
+	float upgradeProbability = 0.0075;
 
-	//bool grid[50][30] = {0};
+	GameScene* scene = (GameScene*)GameEngine::currentScene;
+	
+	for (int i = 1; i < roadWidth; i++) {
+		float r = System::randomFloat();
 
-	int obstacles_number = 29 + this->difficulty;
-	int upgrades_number = 29;
+		if (r < obstacleProbability) {
+			//Genera ostacolo
+			if (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) {
+				Obstacle* obstacle = new Obstacle(Point2D(roadPosition + i, 0), this->difficulty * 15, this, currentId);    //dato da speed * 2(sec che voglio che mi riduca per dover arrivare al next)
+				obstacle->velocity.y = this->speed;
+				obstacle->velocity.x = 0;
 
-	for (int i = 0; i < obstacles_number; ++i) {
+				scene->addGameObject(obstacle);
+			}
+			currentId++;
+		}
+		else if (r < obstacleProbability + upgradeProbability) {
+			//Genera upgrade
+			if (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) {
+				Upgrade* upgrade = new Upgrade(Point2D(roadPosition + i, 0), this->difficulty * 10, this, currentId);
+				upgrade->velocity.y = this->speed;
+				upgrade->velocity.x = 0;
 
-		int x = rand() % 49 + 1;
-		int y = rand() % 30;
-
-		Obstacle* obstacle = new Obstacle(Point2D(x, y), this->difficulty * 15);    //dato da speed * 2(sec che voglio che mi riduca per dover arrivare al next)
-		obstacle->velocity.y = this->speed;
-		obstacle->velocity.x = 0;
-		this->mapSlice.push_back(obstacle);
-	}
-
-	for (int i = 0; i < upgrades_number; ++i) {
-
-		int x = rand() % 49 + 1;
-		int y = rand() % 30;
-
-		Upgrade* upgrade = new Upgrade(Point2D(x, y), this->difficulty * 10);
-		upgrade->velocity.y = this->speed;
-		upgrade->velocity.x = 0;
-		this->mapSlice.push_back(upgrade);
-	}
-}
-
-void Level::saveMap() {
-	Map.push_back(mapSlice);
-
-	this->mapSlice.clear();
-}
-
-vector<ptr_GameObject> Level::getMapLine(int roadIndex, ptr_GameObject Road_object, bool generateMap) {
-	Road* road = dynamic_cast<Road*>(Road_object);
-
-	if (generateMap) {
-		this->slicesCount += 1;
-		this->saveMap();
-		this->generateMap();
-	}
-
-	//get and return all elements of that line from mapSlice depending on roadIndex, shifted right or left depending on the road object in that position
-	vector<ptr_GameObject> Line;
-	for (auto gameObject : this->mapSlice) {				//la correttezza di questo sotto è da verificare
-		if (gameObject->rect.position.y  == 29 - (roadIndex % 30)) {
-			gameObject->rect.position.y -= 30 * this->slicesCount;
-			gameObject->rect.position.x += road->roadBeginning;
-			
-			GameObject* g = gameObject;
-			g->rect.position.y = -1;
-			Line.push_back(gameObject);
+				scene->addGameObject(upgrade);
+			}
+			currentId++;
 		}
 	}
-
-	if (Line.size() != 2) {
-		int j = 0;
-	}
-
-	return Line;
-}
-
-void Level::saveObject(ptr_GameObject gameObject) {
-	int j = 69; //TODO
 }

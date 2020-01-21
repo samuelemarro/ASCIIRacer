@@ -44,6 +44,8 @@ vector<Cell> Road::newLine()
 			roadPiece.push_back(Cell(IGNORE_CHAR, false));
 		}
 	}
+
+
 	return roadPiece;
 }
 
@@ -71,5 +73,8 @@ void Road::onUpdate() {
 		vector<Cell> roadPiece = newLine();
 		sprite.insert(sprite.begin(), roadPiece);
 		sprite.erase(sprite.end() - 1);
+
+		//Chiama la generazione del livello
+		((GameScene*)GameEngine::currentScene)->currentLevel->generateLine(this->roadBeginning, this->roadWidth);
 	}
 }

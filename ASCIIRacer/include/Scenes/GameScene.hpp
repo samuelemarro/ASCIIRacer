@@ -2,6 +2,7 @@
 #include "GameObjects/GameObject.hpp"
 #include "Scenes/Scene.hpp"
 #include "Levels/Level.hpp"
+#include "GameObjects/GeneratedObject.hpp"
 #include "GameObjects/LevelObjects/PlayerCar.hpp"
 #include "GameObjects/Road.hpp"
 
@@ -12,6 +13,8 @@ private:
 
 	PlayerCar* playerCar;
 	double roadIndex = 0;
+	Road* road;
+	vector<ptr_GeneratedObject> otherObjects;
 	
 	void removeToBeDestroyed();
 
@@ -19,8 +22,10 @@ private:
 
 	void checkCollisions();
 
+	vector<ptr_GameObject> getGameObjects();
+	std::vector<ptr_GameObject> getLevelObjects();
+
 public:
-	std::vector<ptr_GameObject> gameObjects_;
 
 	ptr_Level currentLevel;
 
@@ -30,5 +35,5 @@ public:
 	void onGraphics() override;
 	void onEndLoop() override;
 
-	void addGameObject(ptr_GameObject gameObject);
+	void addGameObject(ptr_GeneratedObject gameObject);
 };

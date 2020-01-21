@@ -65,12 +65,17 @@ void System::setTextColor(Color foreground, Color background)
 	return;
 }
 
+float System::randomFloat()
+{
+	return (float)(rand()) / (float)(RAND_MAX);
+}
+
 std::string System::getExecutableDirectory()
 {
 	char result[MAX_PATH];
 	string executablePath = std::string(result, GetModuleFileName(NULL, result, MAX_PATH));
-	return executablePath.substr(0, executablePath.find_last_of("\\/")-9)+"ASCIIRacer";	//questa funziona per Filip
-	//return executablePath.substr(0, executablePath.find_last_of("\\/"));				//questa funziona per Sam ed Edo
+	//return executablePath.substr(0, executablePath.find_last_of("\\/")-9)+"ASCIIRacer";	//questa funziona per Filip
+	return executablePath.substr(0, executablePath.find_last_of("\\/"));				//questa funziona per Sam ed Edo
 }
 
 vector<string> System::loadFile(string path) {

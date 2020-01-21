@@ -24,6 +24,8 @@ private:
 
 	static ptr_Scene nextScene;
 
+	static float deltaTime_;
+
 public:
 	static ptr_Scene currentScene;
 

@@ -1,13 +1,13 @@
 #pragma once
 
-#include "GameObjects/GameObject.hpp"
+#include "GameObjects/GeneratedObject.hpp"
 
-class Obstacle : public GameObject {
+class Obstacle : public GeneratedObject {
 public:
 	int damage;
 
 	void onStart() override;
 	void onUpdate() override;
 
-	Obstacle(Point2D position, int d);
+	Obstacle(Point2D position, int d, ptr_Level parentLevel, int generationId);
 };

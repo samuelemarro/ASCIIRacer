@@ -39,10 +39,11 @@ void GameScene::onStart()
 	this->playerCar = p1;
 	this->playerCar->points=0;
 	Road* road = new Road(Graphics::screenSize, 5, Graphics::screenSize.height);
-	GameScene::addGameObject(road);
-	Obstacle* o = new Obstacle(Point2D(30, 10), 1000);
-	GameScene::addGameObject(o);
-	for (auto gameObject : gameObjects_) {
+	this->road = road;
+	//Obstacle* o = new Obstacle(Point2D(30, 10), 1000);
+	//GameScene::addGameObject(o);
+
+	for (auto gameObject : getLevelObjects()) {
 		gameObject->velocity.y = currentLevel->speed;
 	}
 
@@ -62,12 +63,8 @@ void GameScene::onStart()
 
 void GameScene::onLoop() {
 
-	//allGameObjects include anche l'automobile
-	vector<ptr_GameObject> allGameObjects = gameObjects_;
-	allGameObjects.push_back(this->playerCar);
-
 	//Inizializzazione dei gameObject
-	for (auto gameObject : allGameObjects) {
+	for (auto gameObject : getGameObjects()) {
 		if (!gameObject->initialised) {
 			gameObject->onStart();
 			gameObject->initialised = true;
@@ -76,40 +73,31 @@ void GameScene::onLoop() {
 
 	//playerCar->points += 5;
 	if (currentLevel->changeLevel(this->playerCar->points)) {
-		this->currentLevel = currentLevel->NextLevel(this->playerCar->points);
-		for (auto gameObject : gameObjects_) {
-			if (this->playerCar->points >= 0) gameObject->velocity.y = currentLevel->speed;
-			else GameEngine::changeScene("GameOverScene");
+		this->currentLevel = currentLevel->newLevel(this->playerCar->points);
+		this->currentLevel->prepareLevel();
+
+		if (this->playerCar->points >= 0) {
+			for (auto gameObject : getLevelObjects()) {
+				gameObject->velocity.y = currentLevel->speed;
+
+			}
+		}
+		else {
+			GameEngine::changeScene("GameOverScene");
 		}
 	}
 
-	int old_roadIndex = this->roadIndex;
-	this->roadIndex += (int)(currentLevel->speed) * GameEngine::deltaTime();
-
-	if (old_roadIndex != (int)(this->roadIndex)) {
-		this->playerCar->points += 1 * (int)(this->roadIndex - old_roadIndex);
-
-		//generate new line of map
-
-		gameObjects_[0]->onUpdate();
-
-		bool generateMap = (old_roadIndex % 30 == 0);
-		vector<ptr_GameObject> levelObjects = currentLevel->getMapLine(old_roadIndex, gameObjects_[0], generateMap);
-		for (auto levelObject : levelObjects) {
-			gameObjects_.push_back(levelObject);
-		}
-
-		if (levelObjects.size() != 0) {
-			int j = 0; //debugging stop
-		}
+	//Aggiorna la velocità
+	for (auto levelObject : getLevelObjects()) {
+		levelObject->velocity.y = this->currentLevel->speed;
 	}
 
-	for (auto gameObject : allGameObjects) {
-		if(gameObject->name != "Road") gameObject->onUpdate();
+	for (auto gameObject : getGameObjects()) {
+		gameObject->onUpdate();
 	}
 
 	checkCollisions();
-	for (auto GameObject : allGameObjects) {
+	for (auto GameObject : getGameObjects()) {
 		GameObject->rect.position.x += GameObject->velocity.x * GameEngine::deltaTime();
 		GameObject->rect.position.y += GameObject->velocity.y * GameEngine::deltaTime();
 	}
@@ -117,18 +105,15 @@ void GameScene::onLoop() {
 
 void GameScene::onGraphics()
 {
-	//allGameObjects include anche l'automobile
-	vector<ptr_GameObject> allGameObjects = gameObjects_;
-	allGameObjects.push_back(this->playerCar);
 
 	Graphics::write(100, 5, "LEVEL: " + std::to_string(currentLevel->difficulty));
 	if (this->playerCar->points >= 0)Graphics::write(100, 7, "SCORE: " + std::to_string(this->playerCar->points));
 	else GameEngine::changeScene("GameOverScene");
 	//test printing
-	Graphics::write(100, 9, "TEST: " + std::to_string(allGameObjects.size()));
+	Graphics::write(100, 9, "TEST: " + std::to_string(getGameObjects().size()));
 	//test printing
 	for (Layer layer : getLayers()) {
-		for (auto gameObject : allGameObjects) {
+		for (auto gameObject : getGameObjects()) {
 			if (gameObject->layer == layer) {
 				Graphics::draw(gameObject);
 			}
@@ -138,9 +123,8 @@ void GameScene::onGraphics()
 
 void GameScene::onEndLoop()
 {
-	for (auto gameObject : gameObjects_) {
+	for (auto gameObject : getGameObjects()) {
 		if (gameObject->rect.position.y > Graphics::screenSize.height) {
-			currentLevel->saveObject(gameObject);
 			gameObject->toBeDestroyed = true;
 		}
 	}
@@ -152,10 +136,10 @@ void GameScene::onEndLoop()
 void GameScene::removeToBeDestroyed()
 {
 	//Rimuovi i GameObject da distruggere
-	for (int i = 0; i < gameObjects_.size(); i++) {
-		if (gameObjects_[i]->toBeDestroyed) {
-			delete gameObjects_[i];
-			gameObjects_.erase(gameObjects_.begin() + i);
+	for (int i = 0; i < otherObjects.size(); i++) {
+		if (otherObjects[i]->toBeDestroyed) {
+			delete otherObjects[i];
+			otherObjects.erase(otherObjects.begin() + i);
 			i--;
 		}
 	}
@@ -175,13 +159,19 @@ void GameScene::checkCollisions()
 
 	vector<pair<int, int>> collisions = vector<pair<int, int>>();
 
-	for (int i = 0; i < gameObjects_.size(); i++) {
-		Point2D velocity = gameObjects_[i]->velocity;
-		Rect rect = gameObjects_[i]->rect;
+
+	for (ptr_GameObject levelObject : getLevelObjects()) {
+		Point2D velocity = levelObject->velocity;
+		Rect rect = levelObject->rect;
 
 		//Simula spostamento
 		rect.position.x = floor(rect.position.x + velocity.x * GameEngine::deltaTime());
 		rect.position.y = floor(rect.position.y + velocity.y * GameEngine::deltaTime());
+
+		if (floor(rect.position.y + rect.size.height) < this->playerCar->rect.position.y - 1) {
+			//Troppo lontano per fare collisioni
+			continue;
+		}
 
 		//Fuori dallo schermo, ignora
 		if (rect.position.x + rect.size.width < 0 || rect.position.y + rect.size.height < 0
@@ -191,13 +181,13 @@ void GameScene::checkCollisions()
 
 		for (int x = 0; x < rect.size.width; x++) {
 			for (int y = 0; y < rect.size.height; y++) {
-				if (gameObjects_[i]->sprite[y][x].collision) {
+				if (levelObject->sprite[y][x].collision) {
 					int cellX = (int)floor(rect.position.x + (float)x);
 					int cellY = (int)floor(rect.position.y + (float)y);
 
 					//Ignora i punti fuori dallo schermo
 					if (screenRect.containsPoint(cellX, cellY, true)) {
-						collisionBuffer[cellY][cellX] = gameObjects_[i];
+						collisionBuffer[cellY][cellX] = levelObject;
 					}
 				}
 			}
@@ -265,12 +255,35 @@ void GameScene::checkCollisions()
 	}
 }
 
+vector<ptr_GameObject> GameScene::getGameObjects()
+{
+	vector<ptr_GameObject> allGameObjects(this->otherObjects.begin(), this->otherObjects.end());
+	if (this->road != NULL) {
+		allGameObjects.push_back(this->road);
+	}
+	if (this->playerCar != NULL) {
+		allGameObjects.push_back(this->playerCar);
+	}
+
+	return allGameObjects;
+}
+
+std::vector<ptr_GameObject> GameScene::getLevelObjects()
+{
+	vector<ptr_GameObject> collisionGameObjects(this->otherObjects.begin(), this->otherObjects.end());
+	if (this->road != NULL) {
+		collisionGameObjects.push_back(this->road);
+	}
+
+	return collisionGameObjects;
+}
+
 
 vector<Layer> GameScene::getLayers()
 {
 	vector<Layer> layers;
 
-	for (auto gameObject : gameObjects_) {
+	for (auto gameObject : getGameObjects()) {
 		if (find(layers.begin(), layers.end(), gameObject->layer) == layers.end()) {
 			layers.push_back(gameObject->layer);
 		}
@@ -281,15 +294,15 @@ vector<Layer> GameScene::getLayers()
 	return layers;
 }
 
-void GameScene::addGameObject(ptr_GameObject gameObject) {
-	gameObjects_.push_back(gameObject);
+void GameScene::addGameObject(ptr_GeneratedObject gameObject) {
+	this->otherObjects.push_back(gameObject);
 }
 
 GameScene::~GameScene() {
 	this->initialised = false;
 	this->collisionBuffer.erase(this->collisionBuffer.begin(), this->collisionBuffer.end());
 	delete this->currentLevel;
-	this->gameObjects_.erase(this->gameObjects_.begin(), this->gameObjects_.end());
+	this->otherObjects.erase(this->otherObjects.begin(), this->otherObjects.end());
 	delete this->nextScene;
 	delete this->playerCar;
 	this->roadIndex = 0;
