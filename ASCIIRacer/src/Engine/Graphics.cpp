@@ -30,7 +30,7 @@ void Graphics::clearBuffer() {
 	for (int row = 0; row < screenSize.height; row++) {
 		for (int column = 0; column < screenSize.width; column++) {
 			oldBuffer[row][column] = buffer[row][column];
-			buffer[row][column] = ' ';
+			buffer[row][column] = Cell(' ');
 		}
 	}
 }

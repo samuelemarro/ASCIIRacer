@@ -4,6 +4,7 @@
 #include "Engine/Keyboard.hpp"
 #include "Engine/KeyboardStatus.hpp"
 #include "Engine/Graphics.hpp"
+#include "Engine/System.hpp"
 #include "GameObjects/GameObject.hpp"
 #include "Core/Utilities.hpp"
 
@@ -27,7 +28,7 @@ void GameEngine::start(ptr_Scene firstScene) {
 void GameEngine::changeScene(ptr_Scene newScene)
 {
 	GameEngine::nextScene = newScene;
-	Graphics::clearBuffer();
+	System::clearScreen();
 }
 
 void GameEngine::loop()
@@ -36,6 +37,7 @@ void GameEngine::loop()
 	if (GameEngine::nextScene != NULL) {
 		GameEngine::currentScene = GameEngine::nextScene;
 		GameEngine::nextScene = NULL;
+		Graphics::clearBuffer();
 	}
 
 	//Inizializzazione della scena
