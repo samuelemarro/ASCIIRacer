@@ -27,9 +27,7 @@ void GameEngine::start(ptr_Scene firstScene) {
 
 void GameEngine::changeScene(ptr_Scene newScene)
 {
-	System::clearScreen();
 	GameEngine::nextScene = newScene;
-	System::clearScreen();
 }
 
 void GameEngine::loop()
@@ -39,6 +37,7 @@ void GameEngine::loop()
 		GameEngine::currentScene = GameEngine::nextScene;
 		GameEngine::nextScene = NULL;
 		Graphics::clearBuffer();
+		System::clearScreen();
 	}
 
 	//Inizializzazione della scena
