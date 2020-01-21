@@ -30,7 +30,7 @@ void GameScene::onStart()
 {
 	srand(time(NULL));
 
-	ptr_Level l = new Level(100, -1, 3, 1);  //initial level with difficulty 1
+	ptr_Level l = new Level(100, -1, 10, 1);  //initial level with difficulty 1
 	this->currentLevel = l;
 
 	PlayerCar* p1 = new PlayerCar(Point2D(30, 27));
@@ -87,19 +87,20 @@ void GameScene::onLoop() {
 	this->roadIndex += (int)(currentLevel->speed) * GameEngine::deltaTime();
 
 	if (old_roadIndex != (int)(this->roadIndex)) {
-		this->playerCar->points += 5 * (int)(this->roadIndex - old_roadIndex);
-
-		if (gameObjects_[0]->name == "Road") {
-			gameObjects_[0]->onUpdate();
-		} else {
-			Graphics::write(100, 9, "ERROR: Road");
-		}
+		this->playerCar->points += 1 * (int)(this->roadIndex - old_roadIndex);
 
 		//generate new line of map
-		bool generateMap = (old_roadIndex % 29 == 0);
-		vector<ptr_GameObject> levelObjects = currentLevel->getMapLine(this->roadIndex, gameObjects_[0], generateMap);
+
+		gameObjects_[0]->onUpdate();
+
+		bool generateMap = (old_roadIndex % 30 == 0);
+		vector<ptr_GameObject> levelObjects = currentLevel->getMapLine(old_roadIndex, gameObjects_[0], generateMap);
 		for (auto levelObject : levelObjects) {
 			gameObjects_.push_back(levelObject);
+		}
+
+		if (levelObjects.size() != 0) {
+			int j = 0; //debugging stop
 		}
 	}
 
@@ -124,7 +125,7 @@ void GameScene::onGraphics()
 	if (this->playerCar->points >= 0)Graphics::write(100, 7, "SCORE: " + std::to_string(this->playerCar->points));
 	else GameEngine::changeScene("GameOverScene");
 	//test printing
-	Graphics::write(100, 9, "TEST: " + std::to_string((int)(roadIndex)));
+	Graphics::write(100, 9, "TEST: " + std::to_string(allGameObjects.size()));
 	//test printing
 	for (Layer layer : getLayers()) {
 		for (auto gameObject : allGameObjects) {
@@ -137,6 +138,12 @@ void GameScene::onGraphics()
 
 void GameScene::onEndLoop()
 {
+	for (auto gameObject : gameObjects_) {
+		if (gameObject->rect.position.y > Graphics::screenSize.height) {
+			currentLevel->saveObject(gameObject);
+			gameObject->toBeDestroyed = true;
+		}
+	}
 
 	//Finalizzazione
 	removeToBeDestroyed();

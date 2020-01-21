@@ -19,7 +19,7 @@ bool Level::changeLevel(int player_points) {
 
 Level* Level::NextLevel(int player_points) {
 	if (player_points >= this->pointsToNextLevel) {
-		Level* nl = new Level(pointsToNextLevel + 100*(difficulty + 1), pointsToNextLevel * 0.90, speed + (int)(difficulty % 3 == 0), difficulty + 1);
+		Level* nl = new Level(pointsToNextLevel + 100*(difficulty + 1), pointsToNextLevel * 0.90, speed + 1, difficulty + 1);
 		this->nextLevel = nl;
 		nl->prevLevel = this;
 		return nl;
@@ -36,15 +36,15 @@ void Level::generateMap() {
 
 	//bool grid[50][30] = {0};
 
-	int obstacles_number = 5;
-	int upgrades_number = obstacles_number - this->difficulty;
+	int obstacles_number = 29 + this->difficulty;
+	int upgrades_number = 29;
 
 	for (int i = 0; i < obstacles_number; ++i) {
 
-		int x = rand() % 50;
-		int y = 0;
+		int x = rand() % 49 + 1;
+		int y = rand() % 30;
 
-		Obstacle* obstacle = new Obstacle(Point2D(x, y), this->speed * 10);    //dato da speed * 2(sec che voglio che mi riduca per dover arrivare al next)
+		Obstacle* obstacle = new Obstacle(Point2D(x, y), this->difficulty * 15);    //dato da speed * 2(sec che voglio che mi riduca per dover arrivare al next)
 		obstacle->velocity.y = this->speed;
 		obstacle->velocity.x = 0;
 		this->mapSlice.push_back(obstacle);
@@ -52,10 +52,10 @@ void Level::generateMap() {
 
 	for (int i = 0; i < upgrades_number; ++i) {
 
-		int x = rand() % 50;
-		int y = 0;
+		int x = rand() % 49 + 1;
+		int y = rand() % 30;
 
-		Upgrade* upgrade = new Upgrade(Point2D(x, y), this->speed * 10);
+		Upgrade* upgrade = new Upgrade(Point2D(x, y), this->difficulty * 10);
 		upgrade->velocity.y = this->speed;
 		upgrade->velocity.x = 0;
 		this->mapSlice.push_back(upgrade);
@@ -63,10 +63,9 @@ void Level::generateMap() {
 }
 
 void Level::saveMap() {
-	for (auto gameObject : this->mapSlice) {
-		gameObject->rect.position.y -= 30 * (this->slicesCount - 1);
-		Map.push(gameObject);
-	}
+	Map.push_back(mapSlice);
+
+	this->mapSlice.clear();
 }
 
 vector<ptr_GameObject> Level::getMapLine(int roadIndex, ptr_GameObject Road_object, bool generateMap) {
@@ -81,12 +80,23 @@ vector<ptr_GameObject> Level::getMapLine(int roadIndex, ptr_GameObject Road_obje
 	//get and return all elements of that line from mapSlice depending on roadIndex, shifted right or left depending on the road object in that position
 	vector<ptr_GameObject> Line;
 	for (auto gameObject : this->mapSlice) {				//la correttezza di questo sotto è da verificare
-		if ((gameObject->rect.position.y /*+ gameObject->rect.size.height - 1*/) == (-1) * (roadIndex % 30)) {
-			gameObject->rect.position.y -= 30 * (this->slicesCount - 1);
+		if (gameObject->rect.position.y  == 29 - (roadIndex % 30)) {
+			gameObject->rect.position.y -= 30 * this->slicesCount;
 			gameObject->rect.position.x += road->roadBeginning;
+			
+			GameObject* g = gameObject;
+			g->rect.position.y = -1;
 			Line.push_back(gameObject);
 		}
 	}
 
+	if (Line.size() != 2) {
+		int j = 0;
+	}
+
 	return Line;
+}
+
+void Level::saveObject(ptr_GameObject gameObject) {
+	int j = 69; //TODO
 }
