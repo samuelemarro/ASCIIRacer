@@ -68,8 +68,8 @@ Road::Road(Size size, float initialSpeed, int memory) {
 }
 
 void Road::onUpdate() {
-	if (this->futurePosition().y >= 0) {
-		this->rect.position.y = -1;
+	while (this->futurePosition().y >= 0) {
+		this->rect.position.y -= 1;
 		vector<Cell> roadPiece = newLine();
 		sprite.insert(sprite.begin(), roadPiece);
 		sprite.erase(sprite.end() - 1);

@@ -118,6 +118,10 @@ void Graphics::redrawScreen() {
 }
 
 void Graphics::updateScreen() {
+	bool setColor = false;
+	Color lastForeground = Color::No_Color;
+	Color lastBackground = Color::No_Color;
+
 	for (int y = 0; y < screenSize.height; y++) {
 		bool redraw = false;
 		for (int x = 0; x < screenSize.width; x++) {
@@ -132,8 +136,15 @@ void Graphics::updateScreen() {
 				}
 				redraw = true;
 
-				System::setTextColor(buffer[y][x].foreground, buffer[y][x].background);
-				printf("%c", buffer[y][x].character);
+				if (!setColor || buffer[y][x].foreground != lastForeground || buffer[y][x].background != lastBackground) {
+					System::setTextColor(buffer[y][x].foreground, buffer[y][x].background);
+					setColor = true;
+					lastForeground = buffer[y][x].foreground;
+					lastBackground = buffer[y][x].background;
+				}
+
+				//Il metodo più veloce per stampare un carattere
+				_putchar_nolock(buffer[y][x].character);
 			}
 		}
 	}

@@ -91,7 +91,11 @@ void GameEngine::loop()
 	auto currentTime = high_resolution_clock::now();
 	milliseconds elapsedTime = duration_cast<milliseconds>((currentTime - GameEngine::lastLoopTime_));
 	milliseconds sleepTime = expectedDeltaTime - elapsedTime;
-	sleep_for(sleepTime);
+	if (sleepTime.count() > 0) {
+		sleep_for(sleepTime);
+	}
+	//GameEngine::deltaTime_ = max((float)elapsedTime.count() / 1000, (float)expectedDeltaTime.count() / 1000);
+	//GameEngine::deltaTime_ = (float)expectedDeltaTime.count() / 1000;
 	GameEngine::lastLoopTime_ = high_resolution_clock::now();
 }
 
