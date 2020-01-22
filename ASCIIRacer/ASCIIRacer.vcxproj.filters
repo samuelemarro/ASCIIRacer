@@ -26,6 +26,8 @@
     <ClCompile Include="src\GameObjects\Road.cpp" />
     <ClCompile Include="src\Scenes\GameOverScene.cpp" />
     <ClCompile Include="src\GameObjects\GeneratedObject.cpp" />
+    <ClCompile Include="src\Core\CollisionInfo.cpp" />
+    <ClCompile Include="src\Core\CollisionType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Utilities.cpp">
@@ -122,6 +124,8 @@
     <ClInclude Include="include\GameObjects\Road.hpp" />
     <ClInclude Include="include\Scenes\GameOverScene.hpp" />
     <ClInclude Include="include\GameObjects\GeneratedObject.hpp" />
+    <ClInclude Include="include\Core\CollisionInfo.hpp" />
+    <ClInclude Include="include\Core\CollisionType.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="sprites\WeirdWall.txt" />

@@ -34,22 +34,30 @@ void PlayerCar::onUpdate() {
 	}
 	
 }
-void PlayerCar::onCollision(ptr_GameObject collider, bool horizontal) {
+void PlayerCar::onCollision(CollisionInfo collisionInfo) {
+	ptr_GameObject collider = collisionInfo.collider;
+
 	if (collider->solid) {
-		this->velocity.x = 0;
-		if (horizontal) {
-			//Scontro orizzontale: perdi punti
+		if (collisionInfo.future.left || collisionInfo.future.right || collisionInfo.future.top) {
+			this->velocity.x = 0;
 			this->sprite[1][1].character = 'H';
 		}
-		else {
-			//Scontro verticale: Salto indietro
+
+		if (collisionInfo.present.top) {
+			//Scontro verticale
 			this->sprite[1][1].character = 'V';
-			if (this->rect.position.x + this->rect.size.width > 40) this->rect.position.x--;
-			else if (this->rect.position.x <= 30) this->rect.position.x++;
+
+			//TODO: Non è garantito che questo controllo sia corretto
+			if (this->rect.position.x + this->rect.size.width > 40) { 
+				this->rect.position.x--;
+			}
+			else if (this->rect.position.x <= 30) { 
+				this->rect.position.x++; 
+			}
+
+			this->velocity.x = 0;
 		}
 	}
-
-	//Level* currentLevel = ((GameScene*)GameEngine::currentScene)->currentLevel;
 
 	//cast per poter accedere ai rispettivi campi
 	Upgrade* up = dynamic_cast<Upgrade*>(collider);

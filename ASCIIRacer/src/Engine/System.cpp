@@ -17,6 +17,11 @@ void System::initialise() {
 	hStdin = GetStdHandle(STD_INPUT_HANDLE);
 	hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTitle("Code 850: Road Madness");
+
+	CONSOLE_CURSOR_INFO cursorInfo;
+	GetConsoleCursorInfo(hStdout, &cursorInfo);
+	cursorInfo.bVisible = false;
+	SetConsoleCursorInfo(hStdout, &cursorInfo);
 }
 
 bool System::keyIsDown(int key) {

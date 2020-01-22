@@ -1,11 +1,11 @@
 #pragma once
+#include "Core/CollisionInfo.hpp"
 #include "GameObjects/GameObject.hpp"
 #include "Scenes/Scene.hpp"
 #include "Levels/Level.hpp"
 #include "GameObjects/GeneratedObject.hpp"
 #include "GameObjects/LevelObjects/PlayerCar.hpp"
 #include "GameObjects/Road.hpp"
-
 
 class GameScene : public Scene {
 private:
@@ -20,6 +20,10 @@ private:
 
 	std::vector<std::vector<ptr_GameObject>> collisionBuffer;
 
+	void addToCollisionBuffer(ptr_GameObject gameObject);
+	vector<vector<ptr_GameObject>> getCollisionMatrix(ptr_GameObject gameObject, bool future);
+	std::vector<std::pair<ptr_GameObject, CollisionType>> getCollisionPairs(ptr_GameObject gameObject, bool future);
+	std::vector<CollisionInfo> getCollisionInfos(ptr_GameObject gameObject);
 	void checkCollisions();
 
 	vector<ptr_GameObject> getGameObjects();

@@ -55,6 +55,7 @@ void GameEngine::loop()
 		GameEngine::nextScene = NULL;
 		Graphics::clearBuffer();
 		System::clearScreen();
+		System::setTextColor(Color::No_Color, Color::No_Color);
 	}
 
 	//Inizializzazione della scena
@@ -78,6 +79,7 @@ void GameEngine::loop()
 	}
 	
 	Graphics::updateScreen();
+	//Graphics::redrawScreen();
 
 	if (GameEngine::currentScene != NULL) {
 		GameEngine::currentScene->onEndLoop();

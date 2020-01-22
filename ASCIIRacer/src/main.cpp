@@ -25,7 +25,7 @@ using namespace std::chrono;
 void sceneTest() {
 	PlayerCar car = PlayerCar(Point2D(5, 5));
 	MenuScene menuScene;
-	int fps = 60;
+	int fps = 120;
 	GameEngine::fps = fps;
 	GameEngine::start(&menuScene);
 	while (true)

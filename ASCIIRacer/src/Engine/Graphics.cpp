@@ -122,6 +122,7 @@ void Graphics::updateScreen() {
 	Color lastForeground = Color::No_Color;
 	Color lastBackground = Color::No_Color;
 
+
 	for (int y = 0; y < screenSize.height; y++) {
 		bool redraw = false;
 		for (int x = 0; x < screenSize.width; x++) {

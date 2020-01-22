@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObjects/GameObject.hpp"
+#include "Core/CollisionInfo.hpp"
 
 class PlayerCar : public GameObject
 {
@@ -9,7 +10,7 @@ public:
 	int points = 0;
 	void onStart() override;
 	void onUpdate() override;
-	void onCollision(ptr_GameObject collider, bool horizontal);
+	void onCollision(CollisionInfo collisionInfo);
 
 	PlayerCar(Point2D position);
 };

@@ -144,10 +144,196 @@ void GameScene::removeToBeDestroyed()
 	}
 }
 
+void GameScene::addToCollisionBuffer(ptr_GameObject gameObject) {
+	Size screenSize = Graphics::screenSize;
+	Rect screenRect = Rect(Point2D(0, 0), screenSize);
+
+	Point2D velocity = gameObject->velocity;
+	Rect rect = gameObject->rect;
+
+	//Simula spostamento
+	rect.position.x = floor(rect.position.x + velocity.x * GameEngine::deltaTime());
+	rect.position.y = floor(rect.position.y + velocity.y * GameEngine::deltaTime());
+
+	if (floor(rect.position.y + rect.size.height) < this->playerCar->rect.position.y - 1) {
+		//Troppo lontano per fare collisioni
+		return;
+	}
+
+	//Fuori dallo schermo, ignora
+	if (rect.position.x + rect.size.width < 0 || rect.position.y + rect.size.height < 0
+		|| rect.position.x > screenSize.width || rect.position.y > screenSize.height) {
+		return;
+	}
+
+	for (int x = 0; x < rect.size.width; x++) {
+		for (int y = 0; y < rect.size.height; y++) {
+			if (gameObject->sprite[y][x].collision) {
+				int cellX = (int)floor(rect.position.x + (float)x);
+				int cellY = (int)floor(rect.position.y + (float)y);
+
+				//Ignora i punti fuori dallo schermo
+				if (screenRect.containsPoint(cellX, cellY, true)) {
+					this->collisionBuffer[cellY][cellX] = gameObject;
+				}
+			}
+		}
+	}
+}
+
+vector<vector<ptr_GameObject>> GameScene::getCollisionMatrix(ptr_GameObject gameObject, bool future) {
+	Size screenSize = Graphics::screenSize;
+	Rect screenRect = Rect(Point2D(0, 0), screenSize);
+
+	int positionX;
+	int positionY;
+
+	if (future) {
+		positionX = (int)floor(gameObject->futurePosition().x);
+		positionY = (int)floor(gameObject->futurePosition().y);
+	}
+	else {
+		positionX = (int)floor(gameObject->rect.position.x);
+		positionY = (int)floor(gameObject->rect.position.y);
+	}
+
+	vector<vector<ptr_GameObject>> collisionMatrix;
+	collisionMatrix.reserve(gameObject->rect.size.height);
+
+	for (int y = 0; y < gameObject->rect.size.height; y++) {
+		vector<ptr_GameObject> row;
+		row.reserve(gameObject->rect.size.width);
+
+		for (int x = 0; x < gameObject->rect.size.width; x++) {
+			int cellX = x + positionX;
+			int cellY = y + positionY;
+
+			if (screenRect.containsPoint(cellX, cellY, true) && gameObject->sprite[y][x].collision
+				&& collisionBuffer[cellY][cellX] != NULL) {
+				ptr_GameObject collider = collisionBuffer[cellY][cellX];
+				row.push_back(collider);
+			}
+			else {
+				row.push_back(NULL);
+			}
+		}
+
+		collisionMatrix.push_back(row);
+	}
+
+	return collisionMatrix;
+}
+
+std::vector<std::pair<ptr_GameObject, CollisionType>> GameScene::getCollisionPairs(ptr_GameObject gameObject, bool future)
+{
+	vector<vector<ptr_GameObject>> collisionMatrix = getCollisionMatrix(gameObject, future);
+
+	vector<std::pair<ptr_GameObject, CollisionType>> pairs;
+
+	//Primo passo: Identifica tutti i collider
+	for (auto row : collisionMatrix) {
+		for (ptr_GameObject collider : row) {
+			bool alreadyAdded = false;
+			for (auto pair : pairs) {
+				if (pair.first == collider) {
+					alreadyAdded = true;
+				}
+			}
+
+			if (!alreadyAdded && collider != NULL) {
+				pairs.push_back(pair<ptr_GameObject, CollisionType>(collider, CollisionType()));
+			}
+		}
+	}
+
+	Size size = gameObject->rect.size;
+
+	//Secondo passo: Classifica i collider
+	for (int i = 0; i < pairs.size(); i++) {
+		ptr_GameObject collider = pairs[i].first;
+
+		//Any
+		for (int x = 0; x < size.width; x++) {
+			for (int y = 0; y < size.height; y++) {
+				if (collisionMatrix[y][x] == collider) {
+					pairs[i].second.any = true;
+				}
+			}
+		}
+
+		//Top e bottom
+		for (int x = 0; x < size.width; x++) {
+			if (collisionMatrix[0][x] == collider) {
+				pairs[i].second.top = true;
+			}
+
+			if (collisionMatrix[size.height - 1][x] == collider) {
+				pairs[i].second.bottom = true;
+			}
+		}
+
+		//Left e right
+		for (int y = 0; y < size.height; y++) {
+			if (collisionMatrix[y][0] == collider) {
+				pairs[i].second.left = true;
+			}
+
+			if (collisionMatrix[y][size.width - 1] == collider) {
+				pairs[i].second.right = true;
+			}
+		}
+	}
+
+	return pairs;
+}
+
+std::vector<CollisionInfo> GameScene::getCollisionInfos(ptr_GameObject gameObject)
+{
+	vector<pair<ptr_GameObject, CollisionType>> presentPairs = getCollisionPairs(gameObject, false);
+	vector<pair<ptr_GameObject, CollisionType>> futurePairs;
+
+	if (gameObject->velocity.magnitude() == 0) {
+		futurePairs = presentPairs;
+	}
+	else {
+		futurePairs = getCollisionPairs(gameObject, true);
+	}
+
+	vector<CollisionInfo> collisionInfos;
+
+	//Fai corrispondere le CollisionType dei present e dei future
+
+	for (auto futurePair : futurePairs) {
+		CollisionType present;
+
+		for (auto presentPair : presentPairs) {
+			if (presentPair.first == futurePair.first) {
+				present = presentPair.second;
+			}
+		}
+
+		collisionInfos.push_back(CollisionInfo(futurePair.first, present, futurePair.second));
+	}
+
+	for (auto presentPair : presentPairs) {
+		bool alreadyAdded = false;
+		for (CollisionInfo collisionInfo : collisionInfos) {
+			if (collisionInfo.collider == presentPair.first) {
+				alreadyAdded = true;
+			}
+		}
+
+		if (!alreadyAdded) {
+			collisionInfos.push_back(CollisionInfo(presentPair.first, presentPair.second, CollisionType()));
+		}
+	}
+
+	return collisionInfos;
+}
+
 void GameScene::checkCollisions()
 {
 	Size screenSize = Graphics::screenSize;
-	Rect screenRect = Rect(Point2D(0, 0), screenSize);
 
 	//Pulisci il buffer
 	for (int i = 0; i < screenSize.height; i++) {
@@ -156,101 +342,25 @@ void GameScene::checkCollisions()
 		}
 	}
 
-	vector<pair<int, int>> collisions = vector<pair<int, int>>();
-
-
-	for (ptr_GameObject levelObject : getLevelObjects()) {
-		Point2D velocity = levelObject->velocity;
-		Rect rect = levelObject->rect;
-
-		//Simula spostamento
-		rect.position.x = floor(rect.position.x + velocity.x * GameEngine::deltaTime());
-		rect.position.y = floor(rect.position.y + velocity.y * GameEngine::deltaTime());
-
-		if (floor(rect.position.y + rect.size.height) < this->playerCar->rect.position.y - 1) {
-			//Troppo lontano per fare collisioni
-			continue;
-		}
-
-		//Fuori dallo schermo, ignora
-		if (rect.position.x + rect.size.width < 0 || rect.position.y + rect.size.height < 0
-			|| rect.position.x > screenSize.width || rect.position.y > screenSize.height) {
-			continue;
-		}
-
-		for (int x = 0; x < rect.size.width; x++) {
-			for (int y = 0; y < rect.size.height; y++) {
-				if (levelObject->sprite[y][x].collision) {
-					int cellX = (int)floor(rect.position.x + (float)x);
-					int cellY = (int)floor(rect.position.y + (float)y);
-
-					//Ignora i punti fuori dallo schermo
-					if (screenRect.containsPoint(cellX, cellY, true)) {
-						collisionBuffer[cellY][cellX] = levelObject;
-					}
-				}
-			}
+	//Prima fase: oggetti che non richiedono controlli collisione
+	for (ptr_GameObject gameObject : getLevelObjects()) {
+		if (gameObject->name != "AICar") {
+			addToCollisionBuffer(gameObject);
 		}
 	}
 
-	//Collisione con spostamento e senza spostamento = collisione verticale
-	//Collisione con spostamento = collisione orizzontale
-	//Collisione senza spostamento = nessuna collisione (l'ha schivato)
-
-	vector<ptr_GameObject> colliders = vector<ptr_GameObject>();
-	vector<ptr_GameObject> staticColliders = vector<ptr_GameObject>();
-
-	//La posizione verticale dell'auto non cambia
-	int carPosY = (int)floor(this->playerCar->rect.position.y);
-
-	//Primo controllo collisioni: Usa la posizione futura (quella che avrà se si muove)
-	Point2D futureCarPosition = this->playerCar->futurePosition();
-	int futurePosX = (int)floor(futureCarPosition.x);
-	
-	for (int y = 0; y < this->playerCar->rect.size.height; y++) {
-		for (int x = 0; x < this->playerCar->rect.size.width; x++) {
-			int cellX = x + futurePosX;
-			int cellY = y + carPosY;
-
-			if (screenRect.containsPoint(cellX, cellY, true)) {
-				if (this->playerCar->sprite[y][x].collision && collisionBuffer[cellY][cellX] != NULL) {
-					ptr_GameObject collider = collisionBuffer[cellY][cellX];
-					if (find(colliders.begin(), colliders.end(), collider) == colliders.end()) {
-						colliders.push_back(collider);
-					}
-				}
+	for (ptr_GameObject gameObject : getLevelObjects()) {
+		if (gameObject->name == "AICar") {
+			for (auto collisionInfo : getCollisionInfos(gameObject)) {
+				((AICar*)gameObject)->onCollision(collisionInfo);
 			}
-		}
-	}
-
-	if (colliders.size() > 0) {
-		//Secondo controllo collisioni: Usa la posizione statica
-		int staticPosX = (int)floor(this->playerCar->rect.position.x);
-
-		for (int y = 0; y < this->playerCar->rect.size.height; y++) {
-			for (int x = 0; x < this->playerCar->rect.size.width; x++) {
-				int cellX = x + staticPosX;
-				int cellY = y + carPosY;
-
-				if (screenRect.containsPoint(cellX, cellY, true)) {
-					if (this->playerCar->sprite[y][x].collision && collisionBuffer[cellY][cellX] != NULL) {
-						ptr_GameObject collider = collisionBuffer[cellY][cellX];
-
-						//Conta come collisione solo se c'è stata anche la collisione con la posizione futura
-						if (find(colliders.begin(), colliders.end(), collider) != colliders.end() &&
-							find(staticColliders.begin(), staticColliders.end(), collider) == staticColliders.end()) {
-							staticColliders.push_back(collider);
-						}
-					}
-				}
-			}
+			addToCollisionBuffer(gameObject);
 		}
 	}
 
 	//Informa l'automobile delle collisioni
-	for (auto collider : colliders) {
-		bool horizontal = (find(staticColliders.begin(), staticColliders.end(), collider) == staticColliders.end());
-		this->playerCar->onCollision(collider, horizontal);
+	for (auto collisionInfo : getCollisionInfos(this->playerCar)) {
+		this->playerCar->onCollision(collisionInfo);
 	}
 }
 
