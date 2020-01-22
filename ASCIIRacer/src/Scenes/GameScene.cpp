@@ -71,7 +71,6 @@ void GameScene::onLoop() {
 		}
 	}
 
-	//playerCar->points += 5;
 	if (currentLevel->changeLevel(this->playerCar->points)) {
 		this->currentLevel = currentLevel->newLevel(this->playerCar->points);
 		this->currentLevel->prepareLevel();
@@ -89,7 +88,7 @@ void GameScene::onLoop() {
 
 	//Aggiorna la velocità
 	for (auto levelObject : getLevelObjects()) {
-		levelObject->velocity.y = this->currentLevel->speed;
+		levelObject->velocity.y = this->currentLevel->speed;    //questo blocco può essere rimosso?
 	}
 
 	for (auto gameObject : getGameObjects()) {
@@ -415,4 +414,14 @@ GameScene::~GameScene() {
 	delete this->nextScene;
 	delete this->playerCar;
 	this->roadIndex = 0;
+}
+
+void GameScene::increasePoints() {
+	this->tilesCount += 1;    //tiene il conto dei quadretti percorsi dall'ultimo increase di punti dovuti all'andare avanti
+	
+	//ogni 10 quadretti mi da 1 punto
+	if (tilesCount % 10 == 0) {
+		this->playerCar->points += 1;
+		this->tilesCount = 0;
+	}
 }

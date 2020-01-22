@@ -50,6 +50,7 @@ Level* Level::newLevel(int player_points) {
 void Level::generateLine(int roadPosition, int roadWidth) {
 	float obstacleProbability = 0.0075;
 	float upgradeProbability = 0.0075;
+	float AIcarProbability = 0.0005;
 
 	GameScene* scene = (GameScene*)GameEngine::currentScene;
 	
@@ -77,6 +78,13 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 				scene->addGameObject(upgrade);
 			}
 			currentId++;
+		}
+		else if (r < obstacleProbability + upgradeProbability + AIcarProbability) {
+			//Genera AIcar
+			if (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) {
+				//TODO
+				;
+			}
 		}
 	}
 }

@@ -76,5 +76,6 @@ void Road::onUpdate() {
 
 		//Chiama la generazione del livello
 		((GameScene*)GameEngine::currentScene)->currentLevel->generateLine(this->roadBeginning, this->roadWidth);
+		((GameScene*)GameEngine::currentScene)->increasePoints();
 	}
 }

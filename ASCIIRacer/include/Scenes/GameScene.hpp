@@ -13,6 +13,7 @@ private:
 
 	PlayerCar* playerCar;
 	double roadIndex = 0;
+	int tilesCount = 0;
 	Road* road;
 	vector<ptr_GeneratedObject> otherObjects;
 	
@@ -39,5 +40,6 @@ public:
 	void onGraphics() override;
 	void onEndLoop() override;
 
+	void increasePoints();
 	void addGameObject(ptr_GeneratedObject gameObject);
 };
