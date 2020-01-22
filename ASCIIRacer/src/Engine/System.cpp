@@ -16,6 +16,7 @@ HANDLE hStdout, hStdin;
 void System::initialise() {
 	hStdin = GetStdHandle(STD_INPUT_HANDLE);
 	hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTitle("Code 850: Road Madness");
 }
 
 bool System::keyIsDown(int key) {

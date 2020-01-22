@@ -14,8 +14,6 @@
 using namespace std;
 typedef pair<string, string> pss;
 
-const int marginY = 2;
-const int marginX = 30;
 const int distanceY = 2;
 
 void MenuScene::addOption(string name, string s) {
@@ -30,10 +28,10 @@ void MenuScene::fetchOptions() {
 	addOption("EXIT", " ");
 }
 
-void MenuScene::drawMenu() {
-	Graphics::write(marginX, marginY, "ASCIIRacer");
+void MenuScene::drawMenu(int xOffset, int yOffset) {
+	//Graphics::write(xOffset, yOffset, "ASCIIRacer");
 	for (int i = 0; i < this->options.size(); i++) {
-		Graphics::write((float)marginX, (float)marginY + (i + 1) * (float)distanceY, this->options[i].first);
+		Graphics::write((float)xOffset, (float)yOffset + (i + 1) * (float)distanceY, this->options[i].first);
 	}
 }
 
@@ -58,9 +56,27 @@ void MenuScene::onLoop() {
 }
 
 void MenuScene::onGraphics() {
-	drawMenu();
-	Graphics::write((float)marginX - 1, (float)marginY + (this->cursor + 1) * (float)distanceY, " ");
-	Graphics::write((float)marginX - 1, (float)marginY + (this->cursor + 1) * (float)distanceY, ">");
+
+	Size size;
+	Sprite s = Graphics::loadSpriteFromFile(System::getExecutableDirectory() + "/sprites/TitleScreen.txt", size);
+	int titleOffset = (Graphics::screenSize.width - size.width) / 2;
+	Rect r = Rect(Point2D(titleOffset, 0), size);
+	Graphics::draw(r, s);
+
+	int maxLength = -1;
+
+	for (pss pair : this->options) {
+		if ((int)pair.first.size() > maxLength) {
+			maxLength = pair.first.size();
+		}
+	}
+
+	int textOffsetX = (Graphics::screenSize.width - maxLength) / 2;
+	int textOffsetY = r.position.y + r.size.height;
+	
+	drawMenu(textOffsetX, textOffsetY);
+	//Graphics::write((float)marginX - 1, (float)marginY + (this->cursor + 1) * (float)distanceY, " ");
+	Graphics::write((float)textOffsetX - 1, (float)textOffsetY + (this->cursor + 1) * (float)distanceY, ">");
 }
 
 void MenuScene::onEndLoop() {

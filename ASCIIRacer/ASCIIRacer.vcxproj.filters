@@ -130,5 +130,6 @@
     <Text Include="sprites\WeirdWall.txt" />
     <Text Include="sprites\AICar.txt" />
     <Text Include="sprites\Obstacle.txt" />
+    <Text Include="sprites\TitleScreen.txt" />
   </ItemGroup>
 </Project>

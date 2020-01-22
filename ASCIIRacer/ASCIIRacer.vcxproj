@@ -203,6 +203,7 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DeploymentContent>
     </Text>
+    <Text Include="sprites\TitleScreen.txt" />
     <Text Include="sprites\Upgrade.txt" />
     <Text Include="sprites\WeirdWall.txt" />
   </ItemGroup>

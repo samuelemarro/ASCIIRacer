@@ -1,0 +1,40 @@
+102;19
+ ‹‹‹‹‹‹‹‹‹‹‹   ‹‹‹‹‹‹‹‹‹‹‹   ‹‹‹‹‹‹‹‹‹‹    ‹‹‹‹‹‹‹‹‹‹‹       ‹‹‹‹‹‹‹‹‹‹‹   ‹‹‹‹‹‹‹‹‹‹‹    ‹‹‹‹‹‹‹‹‹  
+€∞∞∞∞∞∞∞∞∞∞∞€ €∞∞∞∞∞∞∞∞∞∞∞€ €∞∞∞∞∞∞∞∞∞∞€  €∞∞∞∞∞∞∞∞∞∞∞€     €∞∞∞∞∞∞∞∞∞∞∞€ €∞∞∞∞∞∞∞∞∞∞∞€  €∞∞∞∞∞∞∞∞∞€ 
+€∞€ﬂﬂﬂﬂﬂﬂﬂﬂﬂ  €∞€ﬂﬂﬂﬂﬂﬂﬂ€∞€ €∞€ﬂﬂﬂﬂﬂﬂﬂ€∞€ €∞€ﬂﬂﬂﬂﬂﬂﬂﬂﬂ      €∞€ﬂﬂﬂﬂﬂﬂﬂ€∞€ €∞€ﬂﬂﬂﬂﬂﬂﬂﬂﬂ  €∞€∞€ﬂﬂﬂﬂﬂ€∞€
+€∞€           €∞€       €∞€ €∞€       €∞€ €∞€               €∞€       €∞€ €∞€‹‹‹‹‹‹‹‹‹  €∞€€∞€    €∞€
+€∞€           €∞€       €∞€ €∞€       €∞€ €∞€‹‹‹‹‹‹‹‹‹      €∞€‹‹‹‹‹‹‹€∞€ €∞∞∞∞∞∞∞∞∞∞∞€ €∞€ €∞€   €∞€
+€∞€           €∞€       €∞€ €∞€       €∞€ €∞∞∞∞∞∞∞∞∞∞∞€      €∞∞∞∞∞∞∞∞∞€   ﬂﬂﬂﬂﬂﬂﬂﬂﬂ€∞€ €∞€  €∞€  €∞€
+€∞€           €∞€       €∞€ €∞€       €∞€ €∞€ﬂﬂﬂﬂﬂﬂﬂﬂﬂ      €∞€ﬂﬂﬂﬂﬂﬂﬂ€∞€           €∞€ €∞€   €∞€ €∞€
+€∞€           €∞€       €∞€ €∞€       €∞€ €∞€               €∞€       €∞€           €∞€ €∞€    €∞€€∞€
+€∞€‹‹‹‹‹‹‹‹‹  €∞€‹‹‹‹‹‹‹€∞€ €∞€‹‹‹‹‹‹‹€∞€ €∞€‹‹‹‹‹‹‹‹‹      €∞€‹‹‹‹‹‹‹€∞€  ‹‹‹‹‹‹‹‹‹€∞€ €∞€‹‹‹‹‹€∞€∞€
+€∞∞∞∞∞∞∞∞∞∞∞€ €∞∞∞∞∞∞∞∞∞∞∞€ €∞∞∞∞∞∞∞∞∞∞€  €∞∞∞∞∞∞∞∞∞∞∞€     €∞∞∞∞∞∞∞∞∞∞∞€ €∞∞∞∞∞∞∞∞∞∞∞€  €∞∞∞∞∞∞∞∞∞€ 
+ ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ   ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ   ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ    ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ       ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ   ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ    ﬂﬂﬂﬂﬂﬂﬂﬂﬂ  
+=====================================================================================================
+                     ____                  __   __  ___          __                                   
+                    / __ \____  ____ _____/ /  /  |/  /___ _____/ /___  ___  __________              
+                   / /_/ / __ \/ __ `/ __  /  / /|_/ / __ `/ __  / __ \/ _ \/ ___/ ___/              
+                  / _, _/ /_/ / /_/ / /_/ /  / /  / / /_/ / /_/ / / / /  __(__  |__  )               
+                 /_/ |_|\____/\__,_/\__,_/  /_/  /_/\__,_/\__,_/_/ /_/\___/____/____/                
+                                                                                                     
+=====================================================================================================
+FOREGROUND
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee

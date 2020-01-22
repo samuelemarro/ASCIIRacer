@@ -105,7 +105,6 @@ void GameScene::onLoop() {
 
 void GameScene::onGraphics()
 {
-
 	Graphics::write(100, 5, "LEVEL: " + std::to_string(currentLevel->difficulty));
 	if (this->playerCar->points >= 0)Graphics::write(100, 7, "SCORE: " + std::to_string(this->playerCar->points));
 	else GameEngine::changeScene("GameOverScene");
