@@ -85,13 +85,14 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 						//test
 						//obstacle->sprite[0][0].character = '0' + currentId;
 						//test
-						if (i + obstacle->rect.size.width - 1 < roadWidth - 1)
+						if (i + obstacle->rect.size.width - 1 < roadWidth - 1) {
 							scene->addGameObject(obstacle);
+							i += obstacle->rect.size.width - 1;
+						}
 						else
 							delete obstacle;
 
 						placed = true;
-						i += obstacle->rect.size.width - 1;
 					}
 				}
 			}
@@ -112,13 +113,14 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 						//upgrade->sprite[0][0].character = '0' + currentId;
 						//test
 
-						if (i + upgrade->rect.size.width - 1 < roadWidth - 1)
+						if (i + upgrade->rect.size.width - 1 < roadWidth - 1) {
 							scene->addGameObject(upgrade);
+							i += upgrade->rect.size.width - 1;
+						}
 						else
 							delete upgrade;						
 						
 						placed = true;
-						i += upgrade->rect.size.width - 1;
 					}
 				}
 			}
