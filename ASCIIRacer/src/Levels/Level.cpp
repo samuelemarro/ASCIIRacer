@@ -104,6 +104,19 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 				aicar->sprite[1][1].character = '0' + currentId;
 				//test
 				
+				Color centerColor = (Color)(rand() % 15 + 1);
+				Color borderColor = (Color)(rand() % 15 + 1);
+				for (int y = 0; y < 3; y++) {
+					for (int x = 0; x < 3; x++) {
+						if (x == 1 && y == 1) {
+							aicar->sprite[x][y].foreground = centerColor;
+						}
+						else {
+							aicar->sprite[x][y].foreground = borderColor;
+						}
+					}
+				}
+				
 				scene->addGameObject(aicar);
 			}
 			currentId++;

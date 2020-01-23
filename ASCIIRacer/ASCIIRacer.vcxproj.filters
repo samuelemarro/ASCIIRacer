@@ -28,6 +28,7 @@
     <ClCompile Include="src\GameObjects\GeneratedObject.cpp" />
     <ClCompile Include="src\Core\CollisionInfo.cpp" />
     <ClCompile Include="src\Core\CollisionType.cpp" />
+    <ClCompile Include="src\GameObjects\Popup.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Utilities.cpp">
@@ -126,6 +127,7 @@
     <ClInclude Include="include\GameObjects\GeneratedObject.hpp" />
     <ClInclude Include="include\Core\CollisionInfo.hpp" />
     <ClInclude Include="include\Core\CollisionType.hpp" />
+    <ClInclude Include="include\GameObjects\Popup.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="sprites\WeirdWall.txt" />
@@ -139,5 +141,7 @@
     <Text Include="sprites\Obstacle2.txt" />
     <Text Include="sprites\Obstacle3.txt" />
     <Text Include="sprites\Upgrade1.txt" />
+    <Text Include="sprites\LevelUp.txt" />
+    <Text Include="sprites\LevelDown.txt" />
   </ItemGroup>
 </Project>

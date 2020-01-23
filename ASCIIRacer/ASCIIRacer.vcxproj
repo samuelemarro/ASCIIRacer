@@ -158,6 +158,7 @@
     <ClCompile Include="src\GameObjects\LevelObjects\RoadLine.cpp" />
     <ClCompile Include="src\GameObjects\LevelObjects\Upgrade.cpp" />
     <ClCompile Include="src\GameObjects\LevelObjects\WeirdWall.cpp" />
+    <ClCompile Include="src\GameObjects\Popup.cpp" />
     <ClCompile Include="src\GameObjects\Road.cpp" />
     <ClCompile Include="src\Levels\Level.cpp" />
     <ClCompile Include="src\Scenes\GameOverScene.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="include\GameObjects\LevelObjects\Upgrade.hpp" />
     <ClInclude Include="include\GameObjects\LevelObjects\WeirdWall.hpp" />
     <ClInclude Include="include\GameObjects\LevelObjects\AICar.hpp" />
+    <ClInclude Include="include\GameObjects\Popup.hpp" />
     <ClInclude Include="include\GameObjects\Road.hpp" />
     <ClInclude Include="include\Levels\Level.hpp" />
     <ClInclude Include="include\Scenes\GameOverScene.hpp" />
@@ -200,6 +202,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="sprites\AICar.txt" />
+    <Text Include="sprites\LevelDown.txt" />
+    <Text Include="sprites\LevelUp.txt" />
     <Text Include="sprites\Obstacle.txt" />
     <Text Include="sprites\Obstacle1.txt" />
     <Text Include="sprites\Obstacle2.txt" />

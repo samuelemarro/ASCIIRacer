@@ -9,9 +9,10 @@
 #include "Engine/Keyboard.hpp"
 #include "Engine/GameEngine.hpp"
 
-PlayerCar::PlayerCar(Point2D position) {
+PlayerCar::PlayerCar(Point2D position, float maxSpeed) {
 	this->name = "PlayerCar";
 	this->layer = Layer::Content;
+	this->maxSpeed = maxSpeed;
 	this->velocity = Point2D(0, 0);
 	Size size;
 	std::string directory = System::getExecutableDirectory();
@@ -25,10 +26,10 @@ void PlayerCar::onUpdate() {
 	float speedY = 50;
 	KeyboardStatus status = Keyboard::currentStatus;
 	if (status.isDown(Key::Right)) {
-		velocity.x = speedX;
+		velocity.x = maxSpeed;// max(0, min(maxSpeed, velocity.x + accelleration * GameEngine::deltaTime()));
 	}
 	else if (status.isDown(Key::Left)) {
-		velocity.x = -speedX;
+		velocity.x = -maxSpeed; // min(0, max(-maxSpeed, velocity.x - accelleration * GameEngine::deltaTime()));
 	}
 	else {
 		velocity.x = 0;
@@ -41,13 +42,10 @@ void PlayerCar::onCollision(CollisionInfo collisionInfo) {
 	if (collider->solid) {
 		if (collisionInfo.future.left || collisionInfo.future.right || collisionInfo.future.top) {
 			this->velocity.x = 0;
-			this->sprite[1][1].character = 'H';
 		}
 
 		if (collisionInfo.present.top) {
 			//Scontro verticale
-			this->sprite[1][1].character = 'V';
-
 			//TODO: Non è garantito che questo controllo sia corretto
 			if (this->rect.position.x + this->rect.size.width > 40) { 
 				this->rect.position.x--;

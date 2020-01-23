@@ -23,4 +23,23 @@ void AICar::onUpdate() {
 
 void AICar::onCollision(CollisionInfo collisionInfo)
 {
+	ptr_GameObject collider = collisionInfo.collider;
+	if (collider->name == "Road") {
+		if (collisionInfo.future.left || collisionInfo.future.right || collisionInfo.future.top) {
+			this->velocity.x = 0;
+		}
+
+		if (collisionInfo.present.top) {
+			//Scontro verticale
+			//TODO: Non è garantito che questo controllo sia corretto
+			if (this->rect.position.x + this->rect.size.width > 40) {
+				this->rect.position.x--;
+			}
+			else if (this->rect.position.x <= 30) {
+				this->rect.position.x++;
+			}
+
+			this->velocity.x = 0;
+		}
+	}
 }

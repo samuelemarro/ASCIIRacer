@@ -54,6 +54,7 @@ void GameEngine::loop()
 		GameEngine::currentScene = GameEngine::nextScene;
 		GameEngine::nextScene = NULL;
 		Graphics::clearBuffer();
+		Graphics::clearBuffer();
 		System::clearScreen();
 		System::setTextColor(Color::No_Color, Color::No_Color);
 	}
@@ -88,13 +89,20 @@ void GameEngine::loop()
 
 	//Sincronizza con il clock di fps
 
-	milliseconds expectedDeltaTime = milliseconds((int)1000 / GameEngine::fps);
+	float expectedDeltaTime = 1 / (float)GameEngine::fps;
 
 	float clockPrecision = (float)std::chrono::high_resolution_clock::period::num
 		/ std::chrono::high_resolution_clock::period::den;
 
 	auto currentTime = high_resolution_clock::now();
-	std::chrono::duration<float> elapsedTime = duration_cast<std::chrono::duration<float>>((currentTime - GameEngine::lastLoopTime_));
+	auto elapsedTime = duration_cast<std::chrono::duration<float>>((currentTime - GameEngine::lastLoopTime_));
+
+	if (elapsedTime.count() < expectedDeltaTime) {
+		//Siamo in anticipo: sleep
+		sleep_for(std::chrono::duration<float>(expectedDeltaTime - elapsedTime.count()));
+		currentTime = high_resolution_clock::now();
+		elapsedTime = duration_cast<std::chrono::duration<float>>((currentTime - GameEngine::lastLoopTime_));
+	}
 
 	GameEngine::deltaTime_ = max(elapsedTime.count(), clockPrecision);
 	GameEngine::lastLoopTime_ = high_resolution_clock::now();

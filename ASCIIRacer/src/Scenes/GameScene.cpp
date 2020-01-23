@@ -34,7 +34,7 @@ void GameScene::onStart()
 	this->currentLevel = l;
 	this->currentLevel->prepareLevel();
 
-	PlayerCar* p1 = new PlayerCar(Point2D(30, 27));
+	PlayerCar* p1 = new PlayerCar(Point2D(30, 27), 60, 400);
 
 	this->playerCar = p1;
 	this->playerCar->points=0;
@@ -59,6 +59,8 @@ void GameScene::onStart()
 		}
 		collisionBuffer.push_back(row);
 	}
+
+	this->popup = new Popup(Point2D(100, 9));
 }
 
 void GameScene::onLoop() {
@@ -72,8 +74,19 @@ void GameScene::onLoop() {
 	}
 
 	if (currentLevel->changeLevel(this->playerCar->points)) {
+		int oldDifficulty = currentLevel->difficulty;
+
 		this->currentLevel = currentLevel->newLevel(this->playerCar->points);
 		this->currentLevel->prepareLevel();
+
+		string directory = System::getExecutableDirectory();
+
+		if (currentLevel->difficulty > oldDifficulty) {
+			this->popup->notify(directory + "/sprites/LevelUp.txt", 0.5);
+		}
+		else {
+			this->popup->notify(directory + "/sprites/LevelDown.txt", 0.5);
+		}
 
 		if (this->playerCar->points >= 0) {
 			for (auto gameObject : getLevelObjects()) {
@@ -371,6 +384,9 @@ vector<ptr_GameObject> GameScene::getGameObjects()
 	}
 	if (this->playerCar != NULL) {
 		allGameObjects.push_back(this->playerCar);
+	}
+	if (this->popup != NULL) {
+		allGameObjects.push_back(this->popup);
 	}
 
 	return allGameObjects;

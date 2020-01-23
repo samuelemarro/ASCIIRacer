@@ -5,6 +5,7 @@
 #include "Levels/Level.hpp"
 #include "GameObjects/GeneratedObject.hpp"
 #include "GameObjects/LevelObjects/PlayerCar.hpp"
+#include "GameObjects/Popup.hpp"
 #include "GameObjects/Road.hpp"
 
 class GameScene : public Scene {
@@ -16,6 +17,8 @@ private:
 	int tilesCount = 0;
 	Road* road;
 	vector<ptr_GeneratedObject> otherObjects;
+
+	ptr_Popup popup;
 	
 	void removeToBeDestroyed();
 
