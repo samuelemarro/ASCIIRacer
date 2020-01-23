@@ -201,6 +201,9 @@
   <ItemGroup>
     <Text Include="sprites\AICar.txt" />
     <Text Include="sprites\Obstacle.txt" />
+    <Text Include="sprites\Obstacle1.txt" />
+    <Text Include="sprites\Obstacle2.txt" />
+    <Text Include="sprites\Obstacle3.txt" />
     <Text Include="sprites\PlayerCar.txt">
       <DeploymentContent>false</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
@@ -209,6 +212,7 @@
     </Text>
     <Text Include="sprites\TitleScreen.txt" />
     <Text Include="sprites\Upgrade.txt" />
+    <Text Include="sprites\Upgrade1.txt" />
     <Text Include="sprites\WeirdWall.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

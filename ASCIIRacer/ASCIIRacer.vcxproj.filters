@@ -135,5 +135,9 @@
     <Text Include="sprites\AICar.txt" />
     <Text Include="sprites\Obstacle.txt" />
     <Text Include="sprites\TitleScreen.txt" />
+    <Text Include="sprites\Obstacle1.txt" />
+    <Text Include="sprites\Obstacle2.txt" />
+    <Text Include="sprites\Obstacle3.txt" />
+    <Text Include="sprites\Upgrade1.txt" />
   </ItemGroup>
 </Project>

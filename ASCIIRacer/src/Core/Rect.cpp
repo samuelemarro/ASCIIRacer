@@ -2,7 +2,6 @@
 #include <cmath>
 #include <vector>
 
-using std::floor;
 using std::vector;
 
 Rect::Rect(Point2D position, Size size) : position(position), size(size) {
@@ -21,11 +20,11 @@ bool Rect::containsPoint(Point2D point, bool snap)
 bool Rect::containsPoint(float x, float y, bool snap)
 {
 	if (snap) {
-		int gridX = (int)floor(x);
-		int gridY = (int)floor(y);
+		int gridX = (int)(x);
+		int gridY = (int)(y);
 
-		int posX = (int)floor(position.x);
-		int posY = (int)floor(position.y);
+		int posX = (int)(position.x);
+		int posY = (int)(position.y);
 		return (gridX >= posX && gridY >= posY && gridX < posX + size.width && gridY < posY + size.height);
 	}
 	else {

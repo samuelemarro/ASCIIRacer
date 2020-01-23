@@ -12,7 +12,6 @@ using std::cout;
 using std::endl;
 using std::max;
 using std::min;
-using std::floor;
 using std::sscanf;
 using std::string;
 using std::vector;
@@ -45,12 +44,12 @@ void Graphics::initialise() {
 void Graphics::draw(Rect rect, Sprite sprite) {
 	//Se x è -20, ignorerà le prime 20 colonne dello sprite
 
-	int minSpriteX = max(0, -(int)floor(rect.position.x));
-	int minSpriteY = max(0, -(int)floor(rect.position.y));
+	int minSpriteX = max(0, -(int)(rect.position.x));
+	int minSpriteY = max(0, -(int)(rect.position.y));
 
 	//Le ultime coordinate (escluse)
-	int lastX = (int)floor(rect.position.x) + rect.size.width;
-	int lastY = (int)floor(rect.position.y) + rect.size.height;
+	int lastX = (int)(rect.position.x) + rect.size.width;
+	int lastY = (int)(rect.position.y) + rect.size.height;
 
 	//Quanto lo sprite fa overflow
 	int overflowX = max(0, lastX - screenSize.width);
@@ -64,8 +63,8 @@ void Graphics::draw(Rect rect, Sprite sprite) {
 		for (int x = minSpriteX; x < maxSpriteX; x++) {
 			int spritePosition = y * rect.size.width + x;
 
-			int screenX = (int)floor(rect.position.x) + x;
-			int screenY = (int)floor(rect.position.y) + y;
+			int screenX = (int)(rect.position.x) + x;
+			int screenY = (int)(rect.position.y) + y;
 
 			int screenPosition = screenY * screenSize.width + screenX;
 

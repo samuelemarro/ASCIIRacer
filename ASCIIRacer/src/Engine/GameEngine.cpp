@@ -90,18 +90,17 @@ void GameEngine::loop()
 
 	milliseconds expectedDeltaTime = milliseconds((int)1000 / GameEngine::fps);
 
+	float clockPrecision = (float)std::chrono::high_resolution_clock::period::num
+		/ std::chrono::high_resolution_clock::period::den;
+
 	auto currentTime = high_resolution_clock::now();
-	milliseconds elapsedTime = duration_cast<milliseconds>((currentTime - GameEngine::lastLoopTime_));
-	milliseconds sleepTime = expectedDeltaTime - elapsedTime;
-	if (sleepTime.count() > 0) {
-		sleep_for(sleepTime);
-	}
-	//GameEngine::deltaTime_ = max((float)elapsedTime.count() / 1000, (float)expectedDeltaTime.count() / 1000);
-	//GameEngine::deltaTime_ = (float)expectedDeltaTime.count() / 1000;
+	std::chrono::duration<float> elapsedTime = duration_cast<std::chrono::duration<float>>((currentTime - GameEngine::lastLoopTime_));
+
+	GameEngine::deltaTime_ = max(elapsedTime.count(), clockPrecision);
 	GameEngine::lastLoopTime_ = high_resolution_clock::now();
 }
 
 float GameEngine::deltaTime()
 {
-	return 1 / (float)GameEngine::fps;
+	return GameEngine::deltaTime_;
 }

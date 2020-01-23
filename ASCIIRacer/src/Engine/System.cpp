@@ -33,7 +33,6 @@ void System::clearScreen() {
 }
 
 Size System::getConsoleSize() {
-	//TODO: Ritornare la dimensione vera
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	int columns, rows;
 

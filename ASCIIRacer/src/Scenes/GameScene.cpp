@@ -152,10 +152,10 @@ void GameScene::addToCollisionBuffer(ptr_GameObject gameObject) {
 	Rect rect = gameObject->rect;
 
 	//Simula spostamento
-	rect.position.x = floor(rect.position.x + velocity.x * GameEngine::deltaTime());
-	rect.position.y = floor(rect.position.y + velocity.y * GameEngine::deltaTime());
+	rect.position.x = (rect.position.x + velocity.x * GameEngine::deltaTime());
+	rect.position.y = (rect.position.y + velocity.y * GameEngine::deltaTime());
 
-	if (floor(rect.position.y + rect.size.height) < this->playerCar->rect.position.y - 1) {
+	if ((rect.position.y + rect.size.height) < this->playerCar->rect.position.y - 1) {
 		//Troppo lontano per fare collisioni
 		return;
 	}
@@ -169,8 +169,8 @@ void GameScene::addToCollisionBuffer(ptr_GameObject gameObject) {
 	for (int x = 0; x < rect.size.width; x++) {
 		for (int y = 0; y < rect.size.height; y++) {
 			if (gameObject->sprite[y][x].collision) {
-				int cellX = (int)floor(rect.position.x + (float)x);
-				int cellY = (int)floor(rect.position.y + (float)y);
+				int cellX = (int)(rect.position.x + (float)x);
+				int cellY = (int)(rect.position.y + (float)y);
 
 				//Ignora i punti fuori dallo schermo
 				if (screenRect.containsPoint(cellX, cellY, true)) {
@@ -189,12 +189,12 @@ vector<vector<ptr_GameObject>> GameScene::getCollisionMatrix(ptr_GameObject game
 	int positionY;
 
 	if (future) {
-		positionX = (int)floor(gameObject->futurePosition().x);
-		positionY = (int)floor(gameObject->futurePosition().y);
+		positionX = (int)(gameObject->futurePosition().x);
+		positionY = (int)(gameObject->futurePosition().y);
 	}
 	else {
-		positionX = (int)floor(gameObject->rect.position.x);
-		positionY = (int)floor(gameObject->rect.position.y);
+		positionX = (int)(gameObject->rect.position.x);
+		positionY = (int)(gameObject->rect.position.y);
 	}
 
 	vector<vector<ptr_GameObject>> collisionMatrix;
@@ -420,7 +420,7 @@ GameScene::~GameScene() {
 void GameScene::increasePoints() {
 	this->tilesCount += 1;    //tiene il conto dei quadretti percorsi dall'ultimo increase di punti dovuti all'andare avanti
 	
-	//ogni 10 quadretti mi da 1 punto
+	//ogni 10 quadretti mi dà 1 punto
 	if (tilesCount % 10 == 0) {
 		//this->playerCar->points += 1;
 		this->tilesCount = 0;

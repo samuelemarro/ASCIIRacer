@@ -8,6 +8,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <Windows.h>
 
 using std::map;
 using std::vector;
@@ -15,7 +16,11 @@ using std::string;
 using std::find;
 
 KeyboardStatus Keyboard::currentStatus = KeyboardStatus();
-map<int, Key> Keyboard::keyBindings = { {'W', Key::Up}, {'A', Key::Left}, {'S', Key::Down}, {'D', Key::Right}, {13, Key::Confirm} };
+map<int, Key> Keyboard::keyBindings = { {'W', Key::Up}, {VK_UP, Key::Up},
+										{'A', Key::Left}, {VK_LEFT, Key::Left},
+										{'S', Key::Down}, {VK_DOWN, Key::Down},
+										{'D', Key::Right}, {VK_RIGHT, Key::Right},
+										{13, Key::Confirm} };
 
 vector<Key> Keyboard::getDownKeys() {
 	vector<Key> downKeys;
