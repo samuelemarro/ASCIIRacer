@@ -34,7 +34,7 @@ void GameScene::onStart()
 	this->currentLevel = l;
 	this->currentLevel->prepareLevel();
 
-	PlayerCar* p1 = new PlayerCar(Point2D(30, 27), 60, 400);
+	PlayerCar* p1 = new PlayerCar(Point2D(30, 27), 60);
 
 	this->playerCar = p1;
 	this->playerCar->points=0;
