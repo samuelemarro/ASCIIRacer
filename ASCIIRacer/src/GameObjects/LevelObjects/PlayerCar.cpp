@@ -1,6 +1,7 @@
 #include "GameObjects/LevelObjects/PlayerCar.hpp"
 #include "GameObjects/LevelObjects/Upgrade.hpp"
 #include "GameObjects/LevelObjects/Obstacle.hpp"
+#include "GameObjects/LevelObjects/AICar.hpp"
 #include "Engine/Graphics.hpp"
 #include "Core/Utilities.hpp"
 
@@ -60,18 +61,26 @@ void PlayerCar::onCollision(CollisionInfo collisionInfo) {
 	}
 
 	//cast per poter accedere ai rispettivi campi
-	Upgrade* up = dynamic_cast<Upgrade*>(collider);
-	Obstacle* obs = dynamic_cast<Obstacle*>(collider);
 	if (collider->name == "Upgrade") { 
+		Upgrade* up = dynamic_cast<Upgrade*>(collider);
 		this->points += up->bonus; 
 		collider->toBeDestroyed = true; 
 
 		up->parentLevel->removedIds.push_back(up->generationId);
 	}
 	else if (collider->name == "Obstacle") { 
+		Obstacle* obs = dynamic_cast<Obstacle*>(collider);
 		this->points -= obs->damage; 
 		collider->toBeDestroyed = true; 
 
 		obs->parentLevel->removedIds.push_back(obs->generationId);
+	}
+	else if (collider->name == "Road") {
+		GameScene* scene = (GameScene*)GameEngine::currentScene;
+		this->points -= 15 * scene->currentLevel->difficulty;
+	}
+	else if (collider->name == "AICar") {
+		AICar* aicar = dynamic_cast<AICar*>(collider);
+		this->points -= aicar->damage;
 	}
 }

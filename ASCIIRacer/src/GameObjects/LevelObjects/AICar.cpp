@@ -6,8 +6,9 @@
 #include "Engine/Keyboard.hpp"
 #include "Engine/GameEngine.hpp"
 
-AICar::AICar(Point2D position) {
+AICar::AICar(Point2D position, int d) {
 	this->name = "AICar";
+	this->damage = d;
 	this->layer = Layer::Content;
 	this->velocity = Point2D(0, 1);
 	Size size;
