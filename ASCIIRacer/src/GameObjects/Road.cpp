@@ -44,8 +44,16 @@ vector<Cell> Road::newLine()
 			roadPiece.push_back(Cell(IGNORE_CHAR, false));
 		}
 	}
-
-
+	/* TEST CON STRADA DRITTA (commentare parte sopra)
+	vector<Cell> roadPiece;
+	for (int i = 0; i < rect.size.width; i++) {
+		if (i == this->roadBeginning || i == this->roadBeginning + this->roadWidth) {
+			roadPiece.push_back(Cell('³', true));
+		}
+		else {
+			roadPiece.push_back(Cell(IGNORE_CHAR, false));
+		}
+	}*/
 	return roadPiece;
 }
 

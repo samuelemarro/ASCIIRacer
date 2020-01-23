@@ -5,7 +5,6 @@
 
 #include <queue>
 
-using std::queue;
 using std::vector;
 using std::rand;
 

@@ -34,10 +34,15 @@ void Level::prepareLevel()
 
 Level* Level::newLevel(int player_points) {
 	if (player_points >= this->pointsToNextLevel) {
-		Level* nl = new Level(pointsToNextLevel + 100*(difficulty + 1), pointsToNextLevel * 0.90, speed + 1, difficulty + 1);
-		this->nextLevel = nl;
-		nl->prevLevel = this;
-		return nl;
+		if (this->nextLevel == NULL) {
+			Level* nl = new Level(pointsToNextLevel + 100 * (difficulty + 1), pointsToNextLevel * 0.90, speed + 1, difficulty + 1);
+			this->nextLevel = nl;
+			nl->prevLevel = this;
+			nl->nextLevel = NULL;
+			return nl;
+		}
+		else
+			return this->nextLevel;
 	}
 
 	else if (player_points <= this->pointsToPrevLevel) {
@@ -48,13 +53,13 @@ Level* Level::newLevel(int player_points) {
 }
 
 void Level::generateLine(int roadPosition, int roadWidth) {
-	float obstacleProbability = 0.0075;
-	float upgradeProbability = 0.0075;
+	float obstacleProbability = 0.0015;
+	float upgradeProbability = 0.0015;
 	float AIcarProbability = 0.0005;
 
 	GameScene* scene = (GameScene*)GameEngine::currentScene;
 	
-	for (int i = 1; i < roadWidth; i++) {
+	for (int i = 1; i < roadWidth - 1; i++) {
 		float r = System::randomFloat();
 
 		if (r < obstacleProbability) {
@@ -71,7 +76,7 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 		else if (r < obstacleProbability + upgradeProbability) {
 			//Genera upgrade
 			if (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) {
-				Upgrade* upgrade = new Upgrade(Point2D(roadPosition + i, 0), this->difficulty * 10, this, currentId);
+				Upgrade* upgrade = new Upgrade(Point2D(roadPosition + i, 0), this->difficulty * 100, this, currentId);
 				upgrade->velocity.y = this->speed;
 				upgrade->velocity.x = 0;
 

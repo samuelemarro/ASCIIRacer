@@ -32,6 +32,7 @@ void GameScene::onStart()
 
 	ptr_Level l = new Level(100, -1, 10, 1);  //initial level with difficulty 1
 	this->currentLevel = l;
+	this->currentLevel->prepareLevel();
 
 	PlayerCar* p1 = new PlayerCar(Point2D(30, 27));
 	AICar* p2 = new AICar(Point2D(2, 0));
@@ -78,7 +79,6 @@ void GameScene::onLoop() {
 		if (this->playerCar->points >= 0) {
 			for (auto gameObject : getLevelObjects()) {
 				gameObject->velocity.y = currentLevel->speed;
-
 			}
 		}
 		else {
@@ -107,9 +107,10 @@ void GameScene::onGraphics()
 	Graphics::write(100, 5, "LEVEL: " + std::to_string(currentLevel->difficulty));
 	if (this->playerCar->points >= 0)Graphics::write(100, 7, "SCORE: " + std::to_string(this->playerCar->points));
 	else GameEngine::changeScene("GameOverScene");
-	//test printing
-	Graphics::write(100, 9, "TEST: " + std::to_string(getGameObjects().size()));
-	//test printing
+	/*test printing
+	for (int i = 0; i < getLevelObjects().size(); i++)
+		Graphics::write(100, 9 + i, "OBJECT " + std::to_string(i) + ": " + std::to_string(getLevelObjects()[i]->velocity.y));
+	test printing*/
 	for (Layer layer : getLayers()) {
 		for (auto gameObject : getGameObjects()) {
 			if (gameObject->layer == layer) {
@@ -421,7 +422,7 @@ void GameScene::increasePoints() {
 	
 	//ogni 10 quadretti mi da 1 punto
 	if (tilesCount % 10 == 0) {
-		this->playerCar->points += 1;
+		//this->playerCar->points += 1;
 		this->tilesCount = 0;
 	}
 }
