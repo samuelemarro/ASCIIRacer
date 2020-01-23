@@ -35,7 +35,6 @@ void GameScene::onStart()
 	this->currentLevel->prepareLevel();
 
 	PlayerCar* p1 = new PlayerCar(Point2D(30, 27));
-	AICar* p2 = new AICar(Point2D(2, 0));
 
 	this->playerCar = p1;
 	this->playerCar->points=0;
@@ -78,7 +77,7 @@ void GameScene::onLoop() {
 
 		if (this->playerCar->points >= 0) {
 			for (auto gameObject : getLevelObjects()) {
-				gameObject->velocity.y = currentLevel->speed;
+				gameObject->velocity.y = currentLevel->speed * ((gameObject->name == "AICar") ? 0.5 : 1);
 			}
 		}
 		else {
@@ -86,10 +85,10 @@ void GameScene::onLoop() {
 		}
 	}
 
-	//Aggiorna la velocità
+	/*Aggiorna la velocità
 	for (auto levelObject : getLevelObjects()) {
 		levelObject->velocity.y = this->currentLevel->speed;    //questo blocco può essere rimosso?
-	}
+	}*/
 
 	for (auto gameObject : getGameObjects()) {
 		gameObject->onUpdate();

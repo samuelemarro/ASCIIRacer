@@ -4,6 +4,7 @@
 #include "Scenes/GameScene.hpp"
 #include "GameObjects/LevelObjects/Obstacle.hpp"
 #include "GameObjects/LevelObjects/Upgrade.hpp"
+#include "GameObjects/LevelObjects/AICar.hpp"
 
 Level::Level() {
 	this->prevLevel = nullptr;
@@ -69,6 +70,10 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 				obstacle->velocity.y = this->speed;
 				obstacle->velocity.x = 0;
 
+				//test
+				//obstacle->sprite[0][0].character = '0' + currentId;
+				//test
+
 				scene->addGameObject(obstacle);
 			}
 			currentId++;
@@ -80,6 +85,10 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 				upgrade->velocity.y = this->speed;
 				upgrade->velocity.x = 0;
 
+				//test
+				//upgrade->sprite[0][0].character = '0' + currentId;
+				//test
+
 				scene->addGameObject(upgrade);
 			}
 			currentId++;
@@ -87,9 +96,17 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 		else if (r < obstacleProbability + upgradeProbability + AIcarProbability) {
 			//Genera AIcar
 			if (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) {
-				//TODO
-				;
+				AICar* aicar = new AICar(Point2D(roadPosition + i, -2), this->difficulty * 50);
+				aicar->velocity.y = this->speed * 0.5;
+				aicar->velocity.x = 0;
+
+				//test
+				aicar->sprite[1][1].character = '0' + currentId;
+				//test
+				
+				scene->addGameObject(aicar);
 			}
+			currentId++;
 		}
 	}
 }
