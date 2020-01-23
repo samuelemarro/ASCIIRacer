@@ -1,8 +1,6 @@
 1;1
-+
+ð
 MASK
 .
 FOREGROUND
-c
-BACKGROUND
-f
+6

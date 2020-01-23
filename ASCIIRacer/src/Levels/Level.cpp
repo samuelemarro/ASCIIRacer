@@ -131,7 +131,7 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 			if (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) {
 				//TODO: make it impossible for aicar to spawn on top of walls
 				AICar* aicar = new AICar(Point2D(roadPosition + i, -2), this->difficulty * 50);
-				aicar->velocity.y = this->speed * 0.5;
+				aicar->velocity.y = this->speed  * 0.5;
 				aicar->velocity.x = 0;
 
 				//test
