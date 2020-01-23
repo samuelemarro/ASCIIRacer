@@ -3,10 +3,11 @@
 #include "GameObjects/GameObject.hpp"
 #include "GameObjects/Road.hpp"
 
-#include <queue>
+#include <numeric>
 
 using std::vector;
 using std::rand;
+using std::accumulate;
 
 class Level {
 private:

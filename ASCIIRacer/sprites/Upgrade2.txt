@@ -1,8 +1,8 @@
 1;1
-.
++
 MASK
 .
 FOREGROUND
-8
+c
 BACKGROUND
-8
+f
