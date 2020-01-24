@@ -75,17 +75,17 @@ void PlayerCar::onCollision(CollisionInfo collisionInfo) {
 	}
 	else if (collider->name == "Obstacle") { 
 		Obstacle* obs = dynamic_cast<Obstacle*>(collider);
-		//this->points -= obs->damage; 
+		this->points -= obs->damage; 
 		collider->toBeDestroyed = true; 
 
 		obs->parentLevel->removedIds.push_back(obs->generationId);
 	}
 	else if (collider->name == "Road") {
 		GameScene* scene = (GameScene*)GameEngine::currentScene;
-		//this->points -= 15 * scene->currentLevel->difficulty;
+		this->points -= 15 * scene->currentLevel->difficulty;
 	}
 	else if (collider->name == "AICar") {
 		AICar* aicar = dynamic_cast<AICar*>(collider);
-		//this->points -= aicar->damage;
+		this->points -= aicar->damage;
 	}
 }
