@@ -25,7 +25,7 @@ using namespace std::chrono;
 void sceneTest() {
 	MenuScene menuScene;
 	int fps = 120;
-	GameEngine::fps = fps;
+	GameEngine::maxFps = fps;
 	GameEngine::start(&menuScene);
 	while (true)
 	{

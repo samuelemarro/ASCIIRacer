@@ -41,7 +41,8 @@ vector<Cell> Road::newLine()
 			roadPiece.push_back(Cell('Ù', true));
 		}
 		else {
-			roadPiece.push_back(Cell(IGNORE_CHAR, false));
+			bool insideRoad = (i >= this->roadBeginning && i < this->roadBeginning + this->roadWidth);
+			roadPiece.push_back(Cell(IGNORE_CHAR, !insideRoad));
 		}
 	}
 	/* TEST CON STRADA DRITTA (commentare parte sopra)
@@ -76,7 +77,7 @@ Road::Road(Size size, float initialSpeed, int memory) {
 }
 
 void Road::onUpdate() {
-	while (this->futurePosition().y >= 0) {
+	while ((int)this->futurePosition().y >= 0) {
 		this->rect.position.y -= 1;
 		vector<Cell> roadPiece = newLine();
 		sprite.insert(sprite.begin(), roadPiece);

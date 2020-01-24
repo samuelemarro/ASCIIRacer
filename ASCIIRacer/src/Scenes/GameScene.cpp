@@ -9,7 +9,6 @@
 #include "Engine/GameEngine.hpp"
 #include "Engine/Graphics.hpp"
 #include "Engine/System.hpp"
-#include "Core/Utilities.hpp"
 #include "GameObjects/LevelObjects/PlayerCar.hpp"
 #include "GameObjects/LevelObjects/AICar.hpp"
 #include "GameObjects/LevelObjects/WeirdWall.hpp"
@@ -90,7 +89,7 @@ void GameScene::onLoop() {
 
 		if (this->playerCar->points >= 0) {
 			for (auto gameObject : getLevelObjects()) {
-				gameObject->velocity.y = currentLevel->speed * ((gameObject->name == "AICar") ? 0.5 : 1);
+				gameObject->velocity.y = currentLevel->speed * ((gameObject->name == "AICar") ? 0.5f : 1);
 			}
 		}
 		else {

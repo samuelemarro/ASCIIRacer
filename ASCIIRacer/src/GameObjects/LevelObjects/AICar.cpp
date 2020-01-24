@@ -1,6 +1,5 @@
 #include "GameObjects/LevelObjects/AICar.hpp"
 #include "Engine/Graphics.hpp"
-#include "Core/Utilities.hpp"
 
 #include "Engine/System.hpp"
 #include "Engine/Keyboard.hpp"
@@ -25,21 +24,27 @@ void AICar::onCollision(CollisionInfo collisionInfo)
 {
 	ptr_GameObject collider = collisionInfo.collider;
 	if (collider->name == "Road") {
-		if (collisionInfo.future.left || collisionInfo.future.right || collisionInfo.future.top) {
-			this->velocity.x = 0;
-		}
-
-		if (collisionInfo.present.top) {
+		if (collisionInfo.future.any && collisionInfo.present.any) {
 			//Scontro verticale
 			//TODO: Non è garantito che questo controllo sia corretto
-			if (this->rect.position.x + this->rect.size.width > 40) {
-				this->rect.position.x--;
-			}
-			else if (this->rect.position.x <= 30) {
+			if (collisionInfo.future.left) {
 				this->rect.position.x++;
+			}
+			else {
+				this->rect.position.x--;
 			}
 
 			this->velocity.x = 0;
+		}
+	}
+	else if (collider->name == "AICar" && collisionInfo.future.any && collisionInfo.present.any) {
+		if (collisionInfo.future.left) {
+			this->rect.position.x++;
+			//((AICar*)collisionInfo.collider)->rect.position.x--;
+		}
+		else {
+			this->rect.position.x--;
+			//((AICar*)collisionInfo.collider)->rect.position.x++;
 		}
 	}
 }

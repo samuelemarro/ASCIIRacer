@@ -6,7 +6,6 @@
     <ClCompile Include="src\Core\Rect.cpp" />
     <ClCompile Include="src\Core\Size.cpp" />
     <ClCompile Include="src\Engine\GameEngine.cpp" />
-    <ClCompile Include="src\Core\Utilities.cpp" />
     <ClCompile Include="src\Engine\Graphics.cpp" />
     <ClCompile Include="src\Engine\Keyboard.cpp" />
     <ClCompile Include="src\Engine\KeyboardStatus.cpp" />
@@ -101,7 +100,6 @@
     <ClInclude Include="include\Engine\GameEngine.hpp" />
     <ClInclude Include="include\Core\Rect.hpp" />
     <ClInclude Include="include\Core\Size.hpp" />
-    <ClInclude Include="include\Core\Utilities.hpp" />
     <ClInclude Include="include\Core\Point2D.hpp" />
     <ClInclude Include="include\Engine\Graphics.hpp" />
     <ClInclude Include="include\Engine\Key.hpp" />

@@ -2,7 +2,6 @@
 #include "Engine/Graphics.hpp"
 #include "GameObjects/GameObject.hpp"
 #include "Core/Rect.hpp"
-#include "Core/Utilities.hpp"
 
 GameObject::GameObject() {
 	this->initialised = false;

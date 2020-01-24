@@ -13,7 +13,7 @@ Level::Level() {
 	this->seed = -1;
 }
 
-Level::Level(int ptn, int ptp, double s, int d) : Level(){
+Level::Level(int ptn, int ptp, float s, int d) : Level(){
 	this->pointsToNextLevel = ptn;
 	this->pointsToPrevLevel = ptp;
 	this->speed = s;
@@ -54,9 +54,9 @@ Level* Level::newLevel(int player_points) {
 }
 
 void Level::generateLine(int roadPosition, int roadWidth) {
-	float obstacleProbability = 0.0015;
-	float upgradeProbability = 0.0015;
-	float AIcarProbability = 0.0005;
+	float obstacleProbability = 0.0015f;
+	float upgradeProbability = 0.0015f;
+	float AIcarProbability = 0.0005f;
 
 	GameScene* scene = (GameScene*)GameEngine::currentScene;
 	
@@ -97,7 +97,7 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 			//Genera AIcar
 			if (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) {
 				AICar* aicar = new AICar(Point2D(roadPosition + i, -2), this->difficulty * 50);
-				aicar->velocity.y = this->speed * 0.5;
+				aicar->velocity.y = this->speed * 0.5f;
 				aicar->velocity.x = 0;
 
 				//test

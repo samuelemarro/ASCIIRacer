@@ -1,5 +1,8 @@
 #pragma once
 
+/// <summary>	Rappresenta un colore ammesso dalla
+/// 			console Windows. </summary>
+
 enum class Color {
 	No_Color = -1,
 	Black = 0,

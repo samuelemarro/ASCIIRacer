@@ -71,8 +71,8 @@ void MenuScene::onGraphics() {
 		}
 	}
 
-	int textOffsetX = (Graphics::screenSize.width - maxLength) / 2;
-	int textOffsetY = r.position.y + r.size.height;
+	float textOffsetX = (Graphics::screenSize.width - maxLength) / 2;
+	float textOffsetY = r.position.y + r.size.height;
 	
 	drawMenu(textOffsetX, textOffsetY);
 	//Graphics::write((float)marginX - 1, (float)marginY + (this->cursor + 1) * (float)distanceY, " ");

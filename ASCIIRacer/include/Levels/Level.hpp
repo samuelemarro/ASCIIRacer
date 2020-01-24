@@ -16,7 +16,7 @@ private:
 public:
 	int pointsToNextLevel;
 	int pointsToPrevLevel;
-	double speed;    // forse meglio che sia un int? da capire
+	float speed;    // forse meglio che sia un int? da capire
 	int difficulty;
 
 	vector<int> removedIds;
@@ -27,7 +27,7 @@ public:
 
 
 	Level();
-	Level(int ptn, int ptp, double s, int d);
+	Level(int ptn, int ptp, float s, int d);
 
 	void prepareLevel();
 	Level* newLevel(int player_points);

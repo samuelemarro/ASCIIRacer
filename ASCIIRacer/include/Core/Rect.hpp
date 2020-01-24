@@ -5,7 +5,12 @@
 
 class Rect {
 public:
+
+	/// <summary>	La posizione del vertice in alto
+	/// 			a sinistra. </summary>
 	Point2D position;
+
+	/// <summary>	La dimensione. </summary>
 	Size size;
 
 	Rect();

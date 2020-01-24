@@ -9,7 +9,6 @@
 #include "Engine/Graphics.hpp"
 #include "Engine/System.hpp"
 #include "GameObjects/GameObject.hpp"
-#include "Core/Utilities.hpp"
 
 using std::chrono::milliseconds;
 using std::chrono::milliseconds;
@@ -19,7 +18,7 @@ using std::this_thread::sleep_for;
 using std::string;
 
 std::chrono::time_point<std::chrono::steady_clock> GameEngine::lastLoopTime_;
-int GameEngine::fps;
+int GameEngine::maxFps;
 ptr_Scene GameEngine::currentScene;
 ptr_Scene GameEngine::nextScene;
 //Fetch delle Scenes
@@ -33,7 +32,7 @@ void GameEngine::start(ptr_Scene firstScene) {
 	GameEngine::lastLoopTime_ = high_resolution_clock::now();
 	GameEngine::currentScene = firstScene;
 	GameEngine::nextScene = NULL;
-	GameEngine::deltaTime_ = 1 / GameEngine::fps;
+	GameEngine::deltaTime_ = 1 / (float)GameEngine::maxFps;
 }
 
 void GameEngine::changeScene(string name)
@@ -89,7 +88,7 @@ void GameEngine::loop()
 
 	//Sincronizza con il clock di fps
 
-	float expectedDeltaTime = 1 / (float)GameEngine::fps;
+	float expectedDeltaTime = 1 / (float)GameEngine::maxFps;
 
 	float clockPrecision = (float)std::chrono::high_resolution_clock::period::num
 		/ std::chrono::high_resolution_clock::period::den;

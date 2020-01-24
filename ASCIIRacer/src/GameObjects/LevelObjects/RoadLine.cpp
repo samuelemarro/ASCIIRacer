@@ -1,6 +1,5 @@
 #include "GameObjects/LevelObjects/RoadLine.hpp"
 #include "Engine/Graphics.hpp"
-#include "Core/Utilities.hpp"
 #include "Levels/Level.hpp"
 
 #include "Engine/System.hpp"

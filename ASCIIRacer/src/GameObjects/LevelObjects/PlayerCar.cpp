@@ -3,7 +3,6 @@
 #include "GameObjects/LevelObjects/Obstacle.hpp"
 #include "GameObjects/LevelObjects/AICar.hpp"
 #include "Engine/Graphics.hpp"
-#include "Core/Utilities.hpp"
 
 #include "Engine/System.hpp"
 #include "Engine/Keyboard.hpp"
@@ -38,23 +37,31 @@ void PlayerCar::onUpdate() {
 }
 void PlayerCar::onCollision(CollisionInfo collisionInfo) {
 	ptr_GameObject collider = collisionInfo.collider;
-
-	if (collider->solid) {
-		if (collisionInfo.future.left || collisionInfo.future.right || collisionInfo.future.top) {
-			this->velocity.x = 0;
-		}
-
-		if (collisionInfo.present.top) {
+	if (collisionInfo.future.any) {
+		this->velocity.x = 0;
+	}
+	if (collider->name == "Road") {
+		if (collisionInfo.future.any && collisionInfo.present.any) {
 			//Scontro verticale
-			//TODO: Non è garantito che questo controllo sia corretto
-			if (this->rect.position.x + this->rect.size.width > 40) { 
+			if (collisionInfo.present.left) { 
+				this->rect.position.x++;
+			}
+			else{ 
+				this->rect.position.x--; 
+			}
+		}
+	}
+	else if (collider->name == "AICar") {
+		if (collisionInfo.future.any && collisionInfo.present.any) {
+			//Collisione verticale
+			if (collisionInfo.future.left) {
+				this->rect.position.x++;
+				((AICar*)collisionInfo.collider)->rect.position.x--;
+			}
+			else {
 				this->rect.position.x--;
+				((AICar*)collisionInfo.collider)->rect.position.x++;
 			}
-			else if (this->rect.position.x <= 30) { 
-				this->rect.position.x++; 
-			}
-
-			this->velocity.x = 0;
 		}
 	}
 
@@ -68,17 +75,17 @@ void PlayerCar::onCollision(CollisionInfo collisionInfo) {
 	}
 	else if (collider->name == "Obstacle") { 
 		Obstacle* obs = dynamic_cast<Obstacle*>(collider);
-		this->points -= obs->damage; 
+		//this->points -= obs->damage; 
 		collider->toBeDestroyed = true; 
 
 		obs->parentLevel->removedIds.push_back(obs->generationId);
 	}
 	else if (collider->name == "Road") {
 		GameScene* scene = (GameScene*)GameEngine::currentScene;
-		this->points -= 15 * scene->currentLevel->difficulty;
+		//this->points -= 15 * scene->currentLevel->difficulty;
 	}
 	else if (collider->name == "AICar") {
 		AICar* aicar = dynamic_cast<AICar*>(collider);
-		this->points -= aicar->damage;
+		//this->points -= aicar->damage;
 	}
 }

@@ -8,17 +8,25 @@
 class Keyboard
 {
 private:
+
+	/// <summary>	Restituisce le chiavi virtuali
+	/// 			al momento premute. </summary>
+	///
+	/// <returns>	Il vettore di chiavi virtuali. </returns>
+
 	static std::vector<Key> getDownKeys();
 
 	Keyboard();
 
 public:
-	/**
-	 * @brief La mappa da caratteri a tasto.
-	 * Usiamo stringhe perché alcuni tasti (es. frecce)
-	 * vengono espresse come sequenza di caratteri.
-	 */
+
+	/// <summary>	Lo stato attuale della tastiera. </summary>
 	static KeyboardStatus currentStatus;
+
+	/// <summary>	I binding tra tasti fisici e tasti virtuali. </summary>
 	static std::map<int, Key> keyBindings;
+
+	/// <summary>	Aggiorna lo stato della tastiera. </summary>
+
 	static void updateStatus();
 };

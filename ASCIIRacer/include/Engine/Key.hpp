@@ -1,5 +1,7 @@
 #pragma once
 
+/// <summary>	Rappresenta un tasto virtuale. </summary>
+
 enum class Key
 {
 	Up,

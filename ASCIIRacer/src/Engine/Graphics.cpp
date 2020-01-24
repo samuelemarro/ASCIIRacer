@@ -4,7 +4,6 @@
 #include <exception>
 
 #include "Core/Size.hpp"
-#include "Core/Utilities.hpp"
 #include "Engine/Graphics.hpp"
 #include "Engine/System.hpp"
 
@@ -215,7 +214,7 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size) {
 			for (int i = 0; i < height; i++) {
 				for (int j = 0; j < width; j++) {
 					if (lines[i + startingPoint][j] != IGNORE_CHAR_FILE) {
-						sprite[i][j].foreground = (Color)Utilities::hexToNumber(lines[i + startingPoint][j]);
+						sprite[i][j].foreground = Graphics::hexToColor(lines[i + startingPoint][j]);
 					}
 				}
 			}
@@ -226,7 +225,7 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size) {
 			for (int i = 0; i < height; i++) {
 				for (int j = 0; j < width; j++) {
 					if (lines[i + startingPoint][j] != IGNORE_CHAR_FILE) {
-						sprite[i][j].background = (Color)Utilities::hexToNumber(lines[i + startingPoint][j]);
+						sprite[i][j].background = Graphics::hexToColor(lines[i + startingPoint][j]);
 					}
 				}
 			}
@@ -238,6 +237,21 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size) {
 	}
 
 	return sprite;
+}
+
+Color Graphics::hexToColor(char hex)
+{
+	int value = -1;
+	hex = tolower(hex);
+
+	if (hex >= 'a' && hex <= 'f') {
+		value = (hex - 'a') + 10;
+	}
+	else if (hex >= '0' && hex <= '9') {
+		value = hex - '0';
+	}
+
+	return (Color)value;
 }
 
 Sprite Graphics::loadSpriteFromFile(string path, Size& size) {

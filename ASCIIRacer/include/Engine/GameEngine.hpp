@@ -27,15 +27,35 @@ private:
 	static float deltaTime_;
 
 public:
+
+	/// <summary>	La scena attuale. </summary>
 	static ptr_Scene currentScene;
 
-	static int fps;
+	/// <summary>	Gli FPS massimi. </summary>
+	static int maxFps;
 
-	static void start(ptr_Scene firstScene);
+	/// <summary>	Avvia il motore. </summary>
+	///
+	/// <param name="firstScene"> La prima scena. </param>
 	
+	static void start(ptr_Scene firstScene);
+
+	/// <summary>	Cambia la scena. </summary>
+	///
+	/// <remarks>	Il cambio non è istantaneo: il motore
+	/// 			finisce prima il ciclo corrente. </remarks>
+	///
+	/// <param name="name">	Il nome della scena da caricare. </param>
+
 	static void changeScene(std::string name);
+
+	/// <summary>	Il ciclo principale del motore. </summary>
 
 	static void loop();
 
+	/// <summary>	Restituisce il tempo (in secondi) trascorso dall'ultimo ciclo. </summary>
+	///
+	/// <returns>	Il tempo in secondi dall'ultimo ciclo completato. </returns>
+	
 	static float deltaTime();
 };
