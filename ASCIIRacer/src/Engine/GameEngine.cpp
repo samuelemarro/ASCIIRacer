@@ -52,10 +52,10 @@ void GameEngine::loop()
 	if (GameEngine::nextScene != NULL) {
 		GameEngine::currentScene = GameEngine::nextScene;
 		GameEngine::nextScene = NULL;
+		System::setTextColor(Color::No_Color, Color::No_Color);
 		Graphics::clearBuffer();
 		Graphics::clearBuffer();
 		System::clearScreen();
-		System::setTextColor(Color::No_Color, Color::No_Color);
 	}
 
 	//Inizializzazione della scena
