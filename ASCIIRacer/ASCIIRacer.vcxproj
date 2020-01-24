@@ -215,6 +215,7 @@
     <Text Include="sprites\TitleScreen.txt" />
     <Text Include="sprites\Upgrade.txt" />
     <Text Include="sprites\Upgrade1.txt" />
+    <Text Include="sprites\Upgrade2.txt" />
     <Text Include="sprites\WeirdWall.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -30,9 +30,6 @@
     <ClCompile Include="src\GameObjects\Popup.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Core\Utilities.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
@@ -141,5 +138,6 @@
     <Text Include="sprites\Upgrade1.txt" />
     <Text Include="sprites\LevelUp.txt" />
     <Text Include="sprites\LevelDown.txt" />
+    <Text Include="sprites\Upgrade2.txt" />
   </ItemGroup>
 </Project>
