@@ -31,7 +31,6 @@ void GameScene::onStart()
 
 	ptr_Level l = new Level(100, -1, 10, 1);  //initial level with difficulty 1
 	this->currentLevel = l;
-	this->currentLevel->prepareLevel();
 
 	PlayerCar* p1 = new PlayerCar(Point2D(30, 27), 60);
 
@@ -39,8 +38,9 @@ void GameScene::onStart()
 	this->playerCar->points=0;
 	Road* road = new Road(Graphics::screenSize, 5, Graphics::screenSize.height);
 	this->road = road;
-	//Obstacle* o = new Obstacle(Point2D(30, 10), 1000);
-	//GameScene::addGameObject(o);
+
+	this->currentLevel->prepareLevel();
+
 
 	for (auto gameObject : getLevelObjects()) {
 		gameObject->velocity.y = currentLevel->speed;
@@ -89,7 +89,7 @@ void GameScene::onLoop() {
 
 		if (this->playerCar->points >= 0) {
 			for (auto gameObject : getLevelObjects()) {
-				gameObject->velocity.y = currentLevel->speed * ((gameObject->name == "AICar") ? 0.5f : 1);
+				gameObject->velocity.y = currentLevel->speed  * ((gameObject->name == "AICar") ? 0.5 : 1);	//put back 0.5 after ?
 			}
 		}
 		else {
@@ -118,10 +118,9 @@ void GameScene::onGraphics()
 	Graphics::write(100, 5, "LEVEL: " + std::to_string(currentLevel->difficulty));
 	if (this->playerCar->points >= 0)Graphics::write(100, 7, "SCORE: " + std::to_string(this->playerCar->points));
 	else GameEngine::changeScene("GameOverScene");
-	/*test printing
-	for (int i = 0; i < getLevelObjects().size(); i++)
-		Graphics::write(100, 9 + i, "OBJECT " + std::to_string(i) + ": " + std::to_string(getLevelObjects()[i]->velocity.y));
-	test printing*/
+	//test printing
+	//Graphics::write(100, 9, to_string(this->currentLevel->currentId));
+	//test printing
 	for (Layer layer : getLayers()) {
 		for (auto gameObject : getGameObjects()) {
 			if (gameObject->layer == layer) {

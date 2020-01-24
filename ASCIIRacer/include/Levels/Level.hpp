@@ -14,6 +14,7 @@ private:
 	int currentId;
 	unsigned int seed;
 
+
 public:
 	int pointsToNextLevel;
 	int pointsToPrevLevel;

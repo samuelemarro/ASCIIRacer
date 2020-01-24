@@ -1,4 +1,8 @@
-6;1
-зббб©
+1;1
+.
 MASK
-.....
+.
+FOREGROUND
+8
+BACKGROUND
+8

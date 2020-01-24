@@ -50,7 +50,7 @@ Level* Level::newLevel(int player_points) {
 		return this->prevLevel;
 	}
 
-	else return 0;		//Caso mai raggiunto poichè precondition: changeLevel == true
+	else return this;		//Caso mai raggiunto poichè precondition: changeLevel == true
 }
 
 
@@ -73,26 +73,41 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 
 		if (r < obstacleCumulative) {
 			//Genera ostacolo
-			if (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) {
-				bool placed = false;
-				for (int j = 1; j <= (sizeof(obstacleProbability) / sizeof(obstacleProbability[0])) && !placed; j++) {
-					if (r < accumulate(obstacleProbability, obstacleProbability + j, 0.0)) {
-						//TODO: define obstacle damage depeding on type (aka j)
-						Obstacle* obstacle = new Obstacle(Point2D(roadPosition + i, 0), this->difficulty * 15, j, this, currentId);    //dato da speed * 2(sec che voglio che mi riduca per dover arrivare al next)
-						obstacle->velocity.y = this->speed;
-						obstacle->velocity.x = 0;
+			bool placed = false;
+			for (int j = 1; j <= (sizeof(obstacleProbability) / sizeof(obstacleProbability[0])) && !placed; j++) {
+				if (r < accumulate(obstacleProbability, obstacleProbability + j, 0.0)) {
+					//TODO: define obstacle damage depeding on type (aka j)
+					Obstacle* obstacle = new Obstacle(Point2D(roadPosition + i, 0), this->difficulty * 15, j, this, currentId);    //dato da speed * 2(sec che voglio che mi riduca per dover arrivare al next)
+					obstacle->velocity.y = this->speed;
+					obstacle->velocity.x = 0;
 
-						//test
-						//obstacle->sprite[0][0].character = '0' + currentId;
-						//test
-						if (i + obstacle->rect.size.width - 1 < roadWidth - 1) {
-							scene->addGameObject(obstacle);
+					//test
+					//obstacle->sprite[0][0].character = '0' + currentId;
+					//test
+					i += obstacle->rect.size.width - 1;   //DA CAPIRE DOVE METTERLO (idem sotto)
+					if ( (i + obstacle->rect.size.width - 1 < roadWidth - 1) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) )
+						scene->addGameObject(obstacle);
+					else
+						delete obstacle;
+
+					placed = true;
+
+					//se era un muro, crea anche fino ad altri 3 muri alla sua destra
+					if (j == 2) {
+						for (int k = 0; k < 4; k++) {
+							currentId++;
+							Obstacle* obstacle = new Obstacle(Point2D(roadPosition + i, 0), this->difficulty * 15, j, this, currentId);    //dato da speed * 2(sec che voglio che mi riduca per dover arrivare al next)
+							obstacle->velocity.y = this->speed;
+							obstacle->velocity.x = 0;
+
 							i += obstacle->rect.size.width - 1;
-						}
-						else
-							delete obstacle;
+							if ((i + obstacle->rect.size.width - 1 < roadWidth - 1) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()))
+								scene->addGameObject(obstacle);
+							else
+								delete obstacle;
 
-						placed = true;
+							i++;
+						}
 					}
 				}
 			}
@@ -100,28 +115,26 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 		}
 		else if (r < obstacleCumulative + upgradeCumulative) {
 			//Genera upgrade
-			if (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) {
-				bool placed = false;
-				for (int j = 1; j <= (sizeof(upgradeProbability) / sizeof(upgradeProbability[0])) && !placed; j++){
-					if (r < obstacleCumulative + accumulate(upgradeProbability, upgradeProbability + j, 0.0)) {
-						//TODO: define upgrade bonus depeding on type (aka j)
-						Upgrade* upgrade = new Upgrade(Point2D(roadPosition + i, 0), this->difficulty * 100, j, this, currentId);
-						upgrade->velocity.y = this->speed;
-						upgrade->velocity.x = 0;
+			bool placed = false;
+			for (int j = 1; j <= (sizeof(upgradeProbability) / sizeof(upgradeProbability[0])) && !placed; j++){
+				if (r < obstacleCumulative + accumulate(upgradeProbability, upgradeProbability + j, 0.0)) {
+					//TODO: define upgrade bonus depeding on type (aka j)
+					Upgrade* upgrade = new Upgrade(Point2D(roadPosition + i, 0), this->difficulty * 100, j, this, currentId);
+					upgrade->velocity.y = this->speed;
+					upgrade->velocity.x = 0;
 
-						//test
-						//upgrade->sprite[0][0].character = '0' + currentId;
-						//test
+					//test
+					//upgrade->sprite[0][0].character = '0' + currentId;
+					//test
 
-						if (i + upgrade->rect.size.width - 1 < roadWidth - 1) {
-							scene->addGameObject(upgrade);
-							i += upgrade->rect.size.width - 1;
-						}
-						else
-							delete upgrade;						
+					i += upgrade->rect.size.width - 1;
+
+					if ( (i + upgrade->rect.size.width - 1 < roadWidth - 1) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) )
+						scene->addGameObject(upgrade);
+					else
+						delete upgrade;						
 						
-						placed = true;
-					}
+					placed = true;
 				}
 			}
 			currentId++;
