@@ -89,7 +89,7 @@ void GameScene::onLoop() {
 
 		if (this->playerCar->points >= 0) {
 			for (auto gameObject : getLevelObjects()) {
-				gameObject->velocity.y = currentLevel->speed  * ((gameObject->name == "AICar") ? 0.5 : 1);	//put back 0.5 after ?
+				gameObject->velocity.y = currentLevel->speed  * ((gameObject->name == "AICar") ? 0.5f : 1);	//put back 0.5 after ?
 			}
 		}
 		else {
