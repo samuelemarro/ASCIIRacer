@@ -190,6 +190,15 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size) {
 			if (lines[currentLine][x] == IGNORE_CHAR_FILE) {
 				row.push_back(Cell(IGNORE_CHAR));
 			}
+			else if (lines[currentLine][x] == SPECIAL_CHAR_FILE) {
+				//Carattere speciale
+				
+				string substr = lines[currentLine].substr(x + 1, x + 4);
+				int code;
+				sscanf_s(substr.c_str(), "%d", &code);
+				row.push_back(Cell(code));
+				x += 3;
+			}
 			else {
 				row.push_back(Cell(lines[currentLine][x]));
 			}

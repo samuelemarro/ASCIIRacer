@@ -1,5 +1,5 @@
 1;1
-Ð
+Š208
 MASK
 .
 FOREGROUND
