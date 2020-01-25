@@ -143,7 +143,8 @@ void Graphics::updateScreen() {
 				}
 
 				//Il metodo più veloce per stampare un carattere
-				_putchar_nolock(buffer[y][x].character);
+				//_putchar_nolock(buffer[y][x].character);
+				cout << buffer[y][x].character;
 			}
 		}
 	}
@@ -192,7 +193,6 @@ Sprite Graphics::parseSprite(vector<string> lines, Size& size) {
 			}
 			else if (lines[currentLine][x] == SPECIAL_CHAR_FILE) {
 				//Carattere speciale
-				
 				string substr = lines[currentLine].substr(x + 1, x + 4);
 				int code;
 				sscanf_s(substr.c_str(), "%d", &code);

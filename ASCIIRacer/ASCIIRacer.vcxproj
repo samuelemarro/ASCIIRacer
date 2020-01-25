@@ -200,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="sprites\AICar.txt" />
+    <Text Include="sprites\GameOverScreen.txt" />
     <Text Include="sprites\LevelDown.txt" />
     <Text Include="sprites\LevelUp.txt" />
     <Text Include="sprites\Obstacle.txt" />

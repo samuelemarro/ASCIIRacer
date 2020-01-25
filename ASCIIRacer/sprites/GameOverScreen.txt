@@ -1,0 +1,22 @@
+112;10
+===============================================================================================================
+   мллллллм     млллллллл   ммлллллллллмм    лллллллллм       мллллллм   ллм    млл   лллллллллм    млллллллл  
+  ллл    ллл   ллл    ллл  лллппплллпппллл   ллл    плл      ллл    ллл  ллл    ллл   ллл    ллл   ллл    ллл  
+  ллл    лп    ллл    ллл  ллл   ллл   ллл   ллл             ллл    ллл  ллл    ллл   ллл          ллл    ллл  
+ мллл          ллл    ллл  ллл   ллл   ллл  млллммм          ллл    ллл  ллл    ллл  млллммм      млллммммллп  
+ппллл ллллм  пллллллллллл  ллл   ллл   ллл пплллппп          ллл    ллл  ллл    ллл пплллппп     пплллллллллм  
+  ллл    ллл   ллл    ллл  ллл   ллл   ллл   ллл             ллл    ллл  ллл    ллл   ллл          ллл    ллл  
+  ллл    ллл   ллл    ллл  ллл   ллл   ллл   ллл    млл      ллл    ллл   пллммллп    ллл    млл   ллл    ллл  
+  ллллллллп    ллл    ллл  ллл   ллл   ллл   лллллллллл       пллллллп      пллп      лллллллллл   ллл    ллл  
+===============================================================================================================
+FOREGROUND
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb

@@ -15,7 +15,7 @@ protected:
 	vector<pair<string, string> > options;
 	int cursor=0;
 	void fetchOptions();
-	void drawMenu();
+	void drawMenu(int xOffset, int yOffset);
 	void moveCursor(bool down);
 	void addOption(string name, string s);
 public:
