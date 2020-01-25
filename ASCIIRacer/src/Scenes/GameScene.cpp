@@ -29,18 +29,17 @@ void GameScene::onStart()
 {
 	srand(time(NULL));
 
-	ptr_Level l = new Level(100, -1, 10, 1);  //initial level with difficulty 1
-	this->currentLevel = l;
+	ptr_Level first_level = new Level(1000, -1, 10, 1);  //initial level with difficulty 1
+	this->currentLevel = first_level;
 
 	PlayerCar* p1 = new PlayerCar(Point2D(30, 27), 60);
-
 	this->playerCar = p1;
-	this->playerCar->points=0;
+	this->playerCar->points = 0;
+	
 	Road* road = new Road(Graphics::screenSize, 5, Graphics::screenSize.height);
 	this->road = road;
 
 	this->currentLevel->prepareLevel();
-
 
 	for (auto gameObject : getLevelObjects()) {
 		gameObject->velocity.y = currentLevel->speed;
@@ -60,6 +59,7 @@ void GameScene::onStart()
 	}
 
 	this->popup = new Popup(Point2D(100, 9));
+
 }
 
 void GameScene::onLoop() {
@@ -89,7 +89,7 @@ void GameScene::onLoop() {
 
 		if (this->playerCar->points >= 0) {
 			for (auto gameObject : getLevelObjects()) {
-				gameObject->velocity.y = currentLevel->speed  * ((gameObject->name == "AICar") ? 0.5f : 1);	//put back 0.5 after ?
+				gameObject->velocity.y = currentLevel->speed  * ((gameObject->name == "AICar") ? 0.5f : 1);
 			}
 		}
 		else {
@@ -97,14 +97,11 @@ void GameScene::onLoop() {
 		}
 	}
 
-	/*Aggiorna la velocità
-	for (auto levelObject : getLevelObjects()) {
-		levelObject->velocity.y = this->currentLevel->speed;    //questo blocco può essere rimosso?
-	}*/
-
 	for (auto gameObject : getGameObjects()) {
 		gameObject->onUpdate();
 	}
+
+	this->increasePoints();
 
 	checkCollisions();
 	for (auto GameObject : getGameObjects()) {
@@ -427,15 +424,14 @@ GameScene::~GameScene() {
 	this->otherObjects.erase(this->otherObjects.begin(), this->otherObjects.end());
 	delete this->nextScene;
 	delete this->playerCar;
-	this->roadIndex = 0;
 }
 
 void GameScene::increasePoints() {
-	this->tilesCount += 1;    //tiene il conto dei quadretti percorsi dall'ultimo increase di punti dovuti all'andare avanti
+	this->travelBonus += GameEngine::deltaTime();    //tiene il conto dei quadretti percorsi dall'ultimo increase di punti dovuti all'andare avanti
 	
 	//ogni 10 quadretti mi dà 1 punto
-	if (tilesCount % 10 == 0) {
-		//this->playerCar->points += 1;
-		this->tilesCount = 0;
+	if (travelBonus >= 1.0) {
+		this->playerCar->points += 5;
+		this->travelBonus = 0;
 	}
 }

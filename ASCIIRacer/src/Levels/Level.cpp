@@ -1,5 +1,4 @@
 #include "Levels/Level.hpp"
-#include "Engine/System.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Scenes/GameScene.hpp"
 #include "GameObjects/LevelObjects/Obstacle.hpp"
@@ -18,6 +17,16 @@ Level::Level(int ptn, int ptp, float s, int d) : Level(){
 	this->pointsToPrevLevel = ptp;
 	this->speed = s;
 	this->difficulty = d;
+
+	for (int i = 0; i < 3); ++i)
+		obstacleProbability[i] = min(obstacleProbability[i] + (this->difficulty - 1) * 0.0001, obstacleProbability[i] / 6 * 10);
+	obstacleCumulative = accumulate(obstacleProbability, obstacleProbability + 3), 0.0);
+
+	for (int i = 0; i < 2); ++i)
+		upgradeProbability[i] = max(upgradeProbability[i] - (this->difficulty - 1) * 0.0001, 0.0);
+	upgradeCumulative = accumulate(upgradeProbability, upgradeProbability + 2), 0.0);
+
+	AIcarProbability = min(0.0005 + 0.0001 * (this->difficulty / 2), 0.0010);
 }
 
 bool Level::changeLevel(int player_points) {
@@ -36,11 +45,11 @@ void Level::prepareLevel()
 Level* Level::newLevel(int player_points) {
 	if (player_points >= this->pointsToNextLevel) {
 		if (this->nextLevel == NULL) {
-			Level* nl = new Level(pointsToNextLevel + 100 * (difficulty + 1), pointsToNextLevel * 0.90, speed + 1, difficulty + 1);
-			this->nextLevel = nl;
-			nl->prevLevel = this;
-			nl->nextLevel = NULL;
-			return nl;
+			Level* new_level = new Level(pointsToNextLevel + 1000, pointsToNextLevel - 100, min(speed + 1, 30), difficulty + 1);
+			this->nextLevel = new_level;
+			new_level->prevLevel = this;
+			new_level->nextLevel = NULL;
+			return new_level;
 		}
 		else
 			return this->nextLevel;
@@ -56,36 +65,24 @@ Level* Level::newLevel(int player_points) {
 
 
 void Level::generateLine(int roadPosition, int roadWidth) {
-	float obstacleProbability[] = { 0.0009, 0.0007, 0.0004 };
-	//TODO: increase object probability as level increase (increase obstacle probability more than upgrade probability)
-	float obstacleCumulative = accumulate(obstacleProbability, obstacleProbability + (sizeof(obstacleProbability) / sizeof(obstacleProbability[0])), 0.0);
-
-	float upgradeProbability[] = { 0.0013, 0.0007 };
-	//IDEM DI SOPRA
-	float upgradeCumulative = accumulate(upgradeProbability, upgradeProbability + (sizeof(upgradeProbability) / sizeof(upgradeProbability[0])), 0.0);
-
-	float AIcarProbability = 0.0005;
 
 	GameScene* scene = (GameScene*)GameEngine::currentScene;
 	
-	for (int i = 1; i < roadWidth - 1; i++) {
+	for (int i = 1; i < roadWidth; i++) {
 		float r = System::randomFloat();
 
 		if (r < obstacleCumulative) {
 			//Genera ostacolo
 			bool placed = false;
-			for (int j = 1; j <= (sizeof(obstacleProbability) / sizeof(obstacleProbability[0])) && !placed; j++) {
+			for (int j = 1; j <= 3) && !placed; j++) {
 				if (r < accumulate(obstacleProbability, obstacleProbability + j, 0.0)) {
-					//TODO: define obstacle damage depeding on type (aka j)
-					Obstacle* obstacle = new Obstacle(Point2D(roadPosition + i, 0), this->difficulty * 15, j, this, currentId);    //dato da speed * 2(sec che voglio che mi riduca per dover arrivare al next)
+					Obstacle* obstacle = new Obstacle(Point2D(roadPosition + i, 0), min(150 + 75 * (3 - j) + 25 * (this->difficulty - 1), 250 + 125 * (3 - j)), j, this, currentId);
 					obstacle->velocity.y = this->speed;
 					obstacle->velocity.x = 0;
 
-					//test
-					//obstacle->sprite[0][0].character = '0' + currentId;
-					//test
-					i += obstacle->rect.size.width - 1;   //DA CAPIRE DOVE METTERLO (idem sotto)
-					if ( (i + obstacle->rect.size.width - 1 < roadWidth - 1) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) )
+					i += obstacle->rect.size.width - 1;
+
+					if ( (i < roadWidth) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) )
 						scene->addGameObject(obstacle);
 					else
 						delete obstacle;
@@ -93,15 +90,15 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 					placed = true;
 
 					//se era un muro, crea anche fino ad altri 3 muri alla sua destra
-					if (j == 2) {
+					if (j == 3) {
 						for (int k = 0; k < 4; k++) {
 							currentId++;
-							Obstacle* obstacle = new Obstacle(Point2D(roadPosition + i, 0), this->difficulty * 15, j, this, currentId);    //dato da speed * 2(sec che voglio che mi riduca per dover arrivare al next)
+							Obstacle* obstacle = new Obstacle(Point2D(roadPosition + i, 0), min(150 + 75 * (3 - j) + 25 * (this->difficulty - 1), 250 + 125 * (3 - j)), j, this, currentId);
 							obstacle->velocity.y = this->speed;
 							obstacle->velocity.x = 0;
 
 							i += obstacle->rect.size.width - 1;
-							if ((i + obstacle->rect.size.width - 1 < roadWidth - 1) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()))
+							if ((i < roadWidth) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()))
 								scene->addGameObject(obstacle);
 							else
 								delete obstacle;
@@ -116,20 +113,15 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 		else if (r < obstacleCumulative + upgradeCumulative) {
 			//Genera upgrade
 			bool placed = false;
-			for (int j = 1; j <= (sizeof(upgradeProbability) / sizeof(upgradeProbability[0])) && !placed; j++){
+			for (int j = 1; j <= 2) && !placed; j++){
 				if (r < obstacleCumulative + accumulate(upgradeProbability, upgradeProbability + j, 0.0)) {
-					//TODO: define upgrade bonus depeding on type (aka j)
-					Upgrade* upgrade = new Upgrade(Point2D(roadPosition + i, 0), this->difficulty * 100, j, this, currentId);
+					Upgrade* upgrade = new Upgrade(Point2D(roadPosition + i, 0), 150 + 150 * (j - 1), j, this, currentId);
 					upgrade->velocity.y = this->speed;
 					upgrade->velocity.x = 0;
 
-					//test
-					//upgrade->sprite[0][0].character = '0' + currentId;
-					//test
-
 					i += upgrade->rect.size.width - 1;
 
-					if ( (i + upgrade->rect.size.width - 1 < roadWidth - 1) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) )
+					if ( (i < roadWidth) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) )
 						scene->addGameObject(upgrade);
 					else
 						delete upgrade;						
@@ -142,14 +134,11 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 		else if (r < obstacleCumulative + upgradeCumulative + AIcarProbability) {
 			//Genera AIcar
 			if (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) {
-				//TODO: make it impossible for aicar to spawn on top of walls
-				AICar* aicar = new AICar(Point2D(roadPosition + i, -2), this->difficulty * 50);
+				AICar* aicar = new AICar(Point2D(roadPosition + i, -2), min(500 + 50 * (this->difficulty - 1), 1000));
 				aicar->velocity.y = this->speed * 0.5f;
-				aicar->velocity.x = 0;
+				aicar->velocity.x = (rand() % 6) * ((i <= roadWidth/2) ? 1.0f : -1.0f);
 
-				//test
-				aicar->sprite[1][1].character = '0' + currentId;	//maybe this could be a definitive feature?
-				//test
+				aicar->sprite[1][1].character = '0' + rand() % 10;	
 				
 				Color centerColor = (Color)(rand() % 15 + 1);
 				Color borderColor = (Color)(rand() % 15 + 1);
@@ -164,7 +153,12 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 					}
 				}
 				
-				scene->addGameObject(aicar);
+				i += aicar->rect.size.width - 1;
+
+				if (i < roadWidth)
+					scene->addGameObject(aicar);
+				else
+					delete aicar;
 			}
 			currentId++;
 		}

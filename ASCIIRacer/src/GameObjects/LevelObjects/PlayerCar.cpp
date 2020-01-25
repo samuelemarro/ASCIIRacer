@@ -35,6 +35,7 @@ void PlayerCar::onUpdate() {
 	}
 	
 }
+
 void PlayerCar::onCollision(CollisionInfo collisionInfo) {
 	ptr_GameObject collider = collisionInfo.collider;
 	if (collisionInfo.future.any) {
@@ -65,7 +66,6 @@ void PlayerCar::onCollision(CollisionInfo collisionInfo) {
 		}
 	}
 
-	//cast per poter accedere ai rispettivi campi
 	if (collider->name == "Upgrade") { 
 		Upgrade* up = dynamic_cast<Upgrade*>(collider);
 		this->points += up->bonus; 
@@ -81,11 +81,16 @@ void PlayerCar::onCollision(CollisionInfo collisionInfo) {
 		obs->parentLevel->removedIds.push_back(obs->generationId);
 	}
 	else if (collider->name == "Road") {
-		GameScene* scene = (GameScene*)GameEngine::currentScene;
-		this->points -= 15 * scene->currentLevel->difficulty;
+		if (collisionInfo.future.left && collisionInfo.future.right)
+			this->points -= 250;
+		else
+			this->points -= 1000 * GameEngine::deltaTime();
 	}
 	else if (collider->name == "AICar") {
 		AICar* aicar = dynamic_cast<AICar*>(collider);
-		this->points -= aicar->damage;
-	}
+		if (collisionInfo.future.left && collisionInfo.future.right)
+			this->points -= aicar->damage;
+		else 
+			this->points -= aicar->damage * GameEngine::deltaTime();
+	}	
 }

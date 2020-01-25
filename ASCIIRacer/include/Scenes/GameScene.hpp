@@ -13,8 +13,7 @@ private:
 	std::vector<Layer> getLayers();
 
 	PlayerCar* playerCar;
-	double roadIndex = 0;
-	int tilesCount = 0;
+	double travelBonus = 0;
 	Road* road;
 	vector<ptr_GeneratedObject> otherObjects;
 

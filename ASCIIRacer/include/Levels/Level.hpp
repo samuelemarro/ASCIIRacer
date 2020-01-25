@@ -2,6 +2,7 @@
 
 #include "GameObjects/GameObject.hpp"
 #include "GameObjects/Road.hpp"
+#include "Engine/System.hpp"
 
 #include <numeric>
 
@@ -13,7 +14,12 @@ class Level {
 private:
 	int currentId;
 	unsigned int seed;
+	float obstacleProbability[3] = { 0.0012, 0.0024, 0.0024 };
+	float upgradeProbability[2] = { 0.0024, 0.0016 };
 
+	float obstacleCumulative;
+	float upgradeCumulative;
+	float AIcarProbability;
 
 public:
 	int pointsToNextLevel;

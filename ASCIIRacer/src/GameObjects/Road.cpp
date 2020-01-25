@@ -29,7 +29,7 @@ vector<Cell> Road::newLine()
 
 	vector<Cell> roadPiece;
 	for (int i = 0; i < rect.size.width; i++) {
-		if (left && (i == this->roadBeginning || i == this->roadBeginning+this->roadWidth - 1)) {
+		if (left && (i == this->roadBeginning || i == this->roadBeginning + this->roadWidth - 1)) {
 			roadPiece.push_back(Cell('À', true));
 			roadPiece.push_back(Cell('¿', true));
 		}
@@ -45,16 +45,7 @@ vector<Cell> Road::newLine()
 			roadPiece.push_back(Cell(IGNORE_CHAR, !insideRoad));
 		}
 	}
-	// TEST CON STRADA DRITTA (commentare parte sopra)
-	/*vector<Cell> roadPiece;
-	for (int i = 0; i < rect.size.width; i++) {
-		if (i == this->roadBeginning || i == this->roadBeginning + this->roadWidth) {
-			roadPiece.push_back(Cell('³', true));
-		}
-		else {
-			roadPiece.push_back(Cell(IGNORE_CHAR, false));
-		}
-	}*/
+
 	return roadPiece;
 }
 
@@ -85,6 +76,5 @@ void Road::onUpdate() {
 
 		//Chiama la generazione del livello
 		((GameScene*)GameEngine::currentScene)->currentLevel->generateLine(this->roadBeginning, this->roadWidth);
-		((GameScene*)GameEngine::currentScene)->increasePoints();
 	}
 }
