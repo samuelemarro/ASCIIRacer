@@ -19,11 +19,11 @@ Level::Level(int ptn, int ptp, float s, int d) : Level(){
 	this->difficulty = d;
 
 	for (int i = 0; i < 3; ++i)
-		obstacleProbability[i] = min(obstacleProbability[i] + (this->difficulty - 1) * 0.0001, obstacleProbability[i] / 6 * 10);
+		obstacleProbability[i] = min(obstacleProbability[i] + (this->difficulty - 1) * 0.0001, obstacleProbability[i] / 6.0 * 10.0);
 	obstacleCumulative = accumulate(obstacleProbability, obstacleProbability + 3, 0.0);
 
 	for (int i = 0; i < 2; ++i)
-		upgradeProbability[i] = max(upgradeProbability[i] - (this->difficulty - 1) * 0.0001, 0.0);
+		upgradeProbability[i] = max(upgradeProbability[i] - (this->difficulty - 1) * 0.0001, upgradeProbability[i] / 4.0);
 	upgradeCumulative = accumulate(upgradeProbability, upgradeProbability + 2, 0.0);
 
 	AIcarProbability = min(0.0005 + 0.0001 * (this->difficulty / 2), 0.0010);
@@ -76,7 +76,7 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 			bool placed = false;
 			for (int j = 1; j <= 3 && !placed; j++) {
 				if (r < accumulate(obstacleProbability, obstacleProbability + j, 0.0)) {
-					Obstacle* obstacle = new Obstacle(Point2D(roadPosition + i, 0), min(150 + 75 * (3 - j) + 25 * (this->difficulty - 1), 250 + 125 * (3 - j)), j, this, currentId);
+					Obstacle* obstacle = new Obstacle(Point2D(roadPosition + i, -1), min(150 + 75 * (3 - j) + 25 * (this->difficulty - 1), 250 + 125 * (3 - j)), j, this, currentId);
 					obstacle->velocity.y = this->speed;
 					obstacle->velocity.x = 0;
 
@@ -93,7 +93,7 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 					if (j == 3) {
 						for (int k = 0; k < 4; k++) {
 							currentId++;
-							Obstacle* obstacle = new Obstacle(Point2D(roadPosition + i, 0), min(150 + 75 * (3 - j) + 25 * (this->difficulty - 1), 250 + 125 * (3 - j)), j, this, currentId);
+							Obstacle* obstacle = new Obstacle(Point2D(roadPosition + i, -1), min(150 + 75 * (3 - j) + 25 * (this->difficulty - 1), 250 + 125 * (3 - j)), j, this, currentId);
 							obstacle->velocity.y = this->speed;
 							obstacle->velocity.x = 0;
 
@@ -115,7 +115,7 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 			bool placed = false;
 			for (int j = 1; j <= 2 && !placed; j++){
 				if (r < obstacleCumulative + accumulate(upgradeProbability, upgradeProbability + j, 0.0)) {
-					Upgrade* upgrade = new Upgrade(Point2D(roadPosition + i, 0), 150 + 150 * (j - 1), j, this, currentId);
+					Upgrade* upgrade = new Upgrade(Point2D(roadPosition + i, -1), 150 + 150 * (j - 1), j, this, currentId);
 					upgrade->velocity.y = this->speed;
 					upgrade->velocity.x = 0;
 
@@ -134,7 +134,7 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 		else if (r < obstacleCumulative + upgradeCumulative + AIcarProbability) {
 			//Genera AIcar
 			if (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) {
-				AICar* aicar = new AICar(Point2D(roadPosition + i, -2), min(500 + 50 * (this->difficulty - 1), 1000));
+				AICar* aicar = new AICar(Point2D(roadPosition + i, -3), min(500 + 50 * (this->difficulty - 1), 1000));
 				aicar->velocity.y = this->speed * 0.5f;
 				aicar->velocity.x = (rand() % 6) * ((i <= roadWidth/2) ? 1.0f : -1.0f);
 

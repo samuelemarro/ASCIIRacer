@@ -8,7 +8,7 @@
 AICar::AICar(Point2D position, int d) {
 	this->name = "AICar";
 	this->damage = d;
-	this->layer = Layer::Content;
+	this->layer = Layer::Foreground_2;
 	this->velocity = Point2D(0, 1);
 	Size size;
 	std::string directory = System::getExecutableDirectory();
