@@ -8,10 +8,12 @@
 #include "Engine/Keyboard.hpp"
 #include "Engine/GameEngine.hpp"
 
-PlayerCar::PlayerCar(Point2D position, float maxSpeed) {
+PlayerCar::PlayerCar(Point2D position, float baseSpeed, float maxSpeed, float acceleration) {
 	this->name = "PlayerCar";
 	this->layer = Layer::Content;
+	this->baseSpeed = baseSpeed;
 	this->maxSpeed = maxSpeed;
+	this->acceleration = acceleration;
 	this->velocity = Point2D(0, 0);
 	Size size;
 	std::string directory = System::getExecutableDirectory();
@@ -23,10 +25,26 @@ PlayerCar::PlayerCar(Point2D position, float maxSpeed) {
 void PlayerCar::onUpdate() {
 	KeyboardStatus status = Keyboard::currentStatus;
 	if (status.isDown(Key::Right)) {
-		velocity.x = maxSpeed;// max(0, min(maxSpeed, velocity.x + accelleration * GameEngine::deltaTime()));
+		if (velocity.x < baseSpeed) {
+			velocity.x = baseSpeed;
+		}
+
+		velocity.x += acceleration * GameEngine::deltaTime();
+
+		if (velocity.x > maxSpeed) {
+			velocity.x = maxSpeed;
+		}
 	}
 	else if (status.isDown(Key::Left)) {
-		velocity.x = -maxSpeed; // min(0, max(-maxSpeed, velocity.x - accelleration * GameEngine::deltaTime()));
+		if (velocity.x > -baseSpeed) {
+			velocity.x = -baseSpeed;
+		}
+
+		velocity.x -= acceleration * GameEngine::deltaTime();
+
+		if (velocity.x < -maxSpeed) {
+			velocity.x = maxSpeed;
+		}
 	}
 	else {
 		velocity.x = 0;

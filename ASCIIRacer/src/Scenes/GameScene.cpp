@@ -35,7 +35,7 @@ void GameScene::onStart()
 	this->currentLevel = first_level;
 
 	// Inizializzazione della macchinina del giocatore
-	PlayerCar* p1 = new PlayerCar(Point2D(30, 27), 60);
+	PlayerCar* p1 = new PlayerCar(Point2D(30, 27), 40, 60, 20);
 	this->playerCar = p1;
 	
 	// Inizializzazione della strada

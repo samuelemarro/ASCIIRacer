@@ -7,6 +7,8 @@ class PlayerCar : public GameObject
 {
 private:
 	float maxSpeed;
+	float baseSpeed;
+	float acceleration;
 
 public:
 
@@ -27,5 +29,5 @@ public:
 	/// <param name="maxSpeed">	La velocità massima della
 	/// 						PlayerCar. </param>
 
-	PlayerCar(Point2D position, float maxSpeed);
+	PlayerCar(Point2D position, float baseSpeed, float maxSpeed, float acceleration);
 };
