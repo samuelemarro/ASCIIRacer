@@ -23,7 +23,6 @@ public:
 	/// <summary>	La dimensione (in celle) della console. </summary>
 	static Size screenSize;
 
-
 	/// <summary>	La dimensione da usare nel caso in cui non
 	/// 			sia possibile caricare lo sprite. </summary>
 	static const Size errorSize;
@@ -57,7 +56,7 @@ public:
 	static Sprite newSprite(int width, int height, char defaultValue);
 
 	/// <summary>	Prepara il modulo grafico. </summary>
-	
+
 	static void initialise();
 
 	/// <summary>	Svuota il buffer, preparando il modulo
@@ -84,6 +83,8 @@ public:
 	/// <param name="text">	Il testo. </param>
 
 	static void write(float x, float y, std::string text);
+
+	static void writeCentered(float y, std::string text);
 
 	/// <summary>	Ridisegna la schermata. </summary>
 	///

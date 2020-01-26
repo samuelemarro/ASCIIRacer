@@ -134,5 +134,6 @@
     <Text Include="sprites\LevelDown.txt" />
     <Text Include="sprites\Upgrade2.txt" />
     <Text Include="sprites\GameOverScreen.txt" />
+    <Text Include="README.txt" />
   </ItemGroup>
 </Project>

@@ -11,7 +11,7 @@ Popup::Popup(Point2D position) {
 void Popup::onUpdate() {
 	if (active) {
 		shownTime += GameEngine::deltaTime();
-		
+
 		if (shownTime > currentDuration) {
 			this->rect.size = Size(0, 0);
 			active = false;

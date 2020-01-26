@@ -193,6 +193,7 @@
     <ClInclude Include="include\Core\Color.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="README.txt" />
     <Text Include="sprites\AICar.txt" />
     <Text Include="sprites\GameOverScreen.txt" />
     <Text Include="sprites\LevelDown.txt" />

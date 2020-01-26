@@ -33,10 +33,10 @@ vector<Cell> Road::newLine()
 			roadPiece.push_back(Cell('À', true));
 			roadPiece.push_back(Cell('¿', true));
 		}
-		else if(!left && !right && (i == this->roadBeginning || i == this->roadBeginning + this->roadWidth)) {
+		else if (!left && !right && (i == this->roadBeginning || i == this->roadBeginning + this->roadWidth)) {
 			roadPiece.push_back(Cell('³', true));
 		}
-		else if (right && (i == this->roadBeginning-1 || i == this->roadBeginning + this->roadWidth - 2)) {
+		else if (right && (i == this->roadBeginning - 1 || i == this->roadBeginning + this->roadWidth - 2)) {
 			roadPiece.push_back(Cell('Ú', true));
 			roadPiece.push_back(Cell('Ù', true));
 		}

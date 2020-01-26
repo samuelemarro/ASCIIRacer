@@ -1,8 +1,8 @@
 #include <algorithm>
 #include <utility>
 #include <stdio.h>
-#include <stdlib.h> 
-#include <time.h>  
+#include <stdlib.h>
+#include <time.h>
 
 #include "Scenes/GameScene.hpp"
 #include "Scenes/GameOverScene.hpp"
@@ -26,6 +26,9 @@ void GameScene::onStart()
 {
 	// Inizializzazione del seed col tempo attuale
 	srand(time(NULL));
+
+	// Inizializzazione del punteggio migliore
+	this->bestScore = 0;
 
 	// Inizializzazione del primo livello
 	ptr_Level first_level = new Level(1000, -1, 10, 1);
@@ -60,40 +63,44 @@ void GameScene::onStart()
 
 	// Inizializzazione del Popup (LevelUp e LevelDown)
 	this->popup = new Popup(Point2D(100, 9));
-
 }
 
 void GameScene::onLoop() {
+	// Se si ha migliorato lo score, memorizzarlo
+	if (this->playerCar->points > this->bestScore) {
+		this->bestScore = this->playerCar->points;
+	}
 
-	// Se bisogna cambiare il livello
-	if (currentLevel->changeLevel(this->playerCar->points)) {
-		int oldDifficulty = currentLevel->difficulty;
+	// Se il gioco continua dopo il cambio di livello
+	if (this->playerCar->points >= 0) {
+		// Se bisogna cambiare il livello
+		if (currentLevel->changeLevel(this->playerCar->points)) {
+			int oldDifficulty = currentLevel->difficulty;
 
-		// Effettua transizione e prepara il livello
-		this->currentLevel = currentLevel->newLevel(this->playerCar->points);
-		this->currentLevel->prepareLevel();
+			// Effettua transizione e prepara il livello
+			this->currentLevel = currentLevel->newLevel(this->playerCar->points);
+			this->currentLevel->prepareLevel();
 
-		string directory = System::getExecutableDirectory();
+			string directory = System::getExecutableDirectory();
 
-		// Animazione del Popup
-		if (currentLevel->difficulty > oldDifficulty) {
-			this->popup->notify(directory + "/sprites/LevelUp.txt", 0.5);
-		}
-		else {
-			this->popup->notify(directory + "/sprites/LevelDown.txt", 0.5);
-		}
+			// Animazione del Popup
+			if (currentLevel->difficulty > oldDifficulty) {
+				this->popup->notify(directory + "/sprites/LevelUp.txt", 0.5);
+			}
+			else {
+				this->popup->notify(directory + "/sprites/LevelDown.txt", 0.5);
+			}
 
-		// Se il gioco continua dopo il cambio di livello
-		if (this->playerCar->points >= 0) {
-			// Sincronizza la velocità degli oggetti già presenti con quella del nuovo livello 
+			// Sincronizza la velocità degli oggetti con quella del livello
 			for (auto gameObject : getLevelObjects()) {
-				gameObject->velocity.y = currentLevel->speed  * ((gameObject->name == "AICar") ? 0.5f : 1);
+				gameObject->velocity.y = currentLevel->speed * ((gameObject->name == "AICar") ? 0.5f : 1);
 			}
 		}
-		// Altrimenti passa a scena di GameOver
-		else {
-			GameEngine::changeScene("GameOverScene");
-		}
+	}
+	// Altrimenti passa a scena di GameOver
+	else {
+		GameEngine::gameOverScene->bestScore = this->bestScore;
+		GameEngine::changeScene("GameOverScene");
 	}
 
 	// Aggiorna tutti gli oggetti
@@ -118,10 +125,9 @@ void GameScene::onGraphics()
 {
 	// Disegna numero del livello e punteggio
 	Graphics::write(100, 5, "LEVEL: " + std::to_string(currentLevel->difficulty));
-	if (this->playerCar->points >= 0)
+	if (this->playerCar->points >= 0) {
 		Graphics::write(100, 7, "SCORE: " + std::to_string(this->playerCar->points));
-	else 
-		GameEngine::changeScene("GameOverScene");
+	}
 
 	// Disegna tutti gli oggetti rispettando la precedenza dei layers
 	for (Layer layer : getLayers()) {
@@ -135,7 +141,7 @@ void GameScene::onGraphics()
 
 void GameScene::onEndLoop()
 {
-	// Segna come da distruggere gli oggetti non più da visualizzare su schermo
+	// Elimina gli oggetti non più necessari
 	for (auto gameObject : getGameObjects()) {
 		if (gameObject->rect.position.y > Graphics::screenSize.height) {
 			gameObject->toBeDestroyed = true;
@@ -303,7 +309,7 @@ std::vector<std::pair<ptr_GameObject, CollisionType>> GameScene::getCollisionPai
 
 std::vector<CollisionInfo> GameScene::getCollisionInfos(ptr_GameObject gameObject)
 {
-	vector<pair<ptr_GameObject, CollisionType>> presentPairs = getCollisionPairs(gameObject, false);
+	auto presentPairs = getCollisionPairs(gameObject, false);
 	vector<pair<ptr_GameObject, CollisionType>> futurePairs;
 
 	if (gameObject->velocity.magnitude() == 0) {
@@ -405,7 +411,6 @@ std::vector<ptr_GameObject> GameScene::getLevelObjects()
 
 	return collisionGameObjects;
 }
-
 
 vector<Layer> GameScene::getLayers()
 {

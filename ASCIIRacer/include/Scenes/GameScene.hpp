@@ -17,8 +17,10 @@ private:
 	Road* road;
 	vector<ptr_GeneratedObject> otherObjects;
 
+	float bestScore;
+
 	ptr_Popup popup;
-	
+
 	void removeToBeDestroyed();
 
 	std::vector<std::vector<ptr_GameObject>> collisionBuffer;

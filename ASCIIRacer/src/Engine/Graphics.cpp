@@ -74,7 +74,7 @@ void Graphics::draw(Rect rect, Sprite sprite) {
 			if (sprite[y][x].foreground != Color::No_Color) {
 				buffer[screenY][screenX].foreground = sprite[y][x].foreground;
 			}
-			
+
 			if (sprite[y][x].background != Color::No_Color) {
 				buffer[screenY][screenX].background = sprite[y][x].background;
 			}
@@ -86,7 +86,6 @@ void Graphics::draw(ptr_GameObject gameObject) {
 	draw(gameObject->rect, gameObject->sprite);
 }
 
-
 void Graphics::write(float x, float y, std::string text)
 {
 	//Crea uno sprite di larghezza text.length() e altezza 1
@@ -97,9 +96,14 @@ void Graphics::write(float x, float y, std::string text)
 		s[0].push_back(Cell(text[i]));
 	}
 
-
 	Rect rect = Rect(x, y, text.length(), 1);
 	Graphics::draw(rect, s);
+}
+
+void Graphics::writeCentered(float y, std::string text)
+{
+	float x = (Graphics::screenSize.width - text.size()) / 2;
+	Graphics::write(x, y, text);
 }
 
 void Graphics::redrawScreen() {
@@ -119,7 +123,6 @@ void Graphics::updateScreen() {
 	bool setColor = false;
 	Color lastForeground = Color::No_Color;
 	Color lastBackground = Color::No_Color;
-
 
 	for (int y = 0; y < screenSize.height; y++) {
 		bool redraw = false;
@@ -273,13 +276,11 @@ Sprite Graphics::loadSpriteFromFile(string path, Size& size) {
 	catch (exception e) {
 #ifdef _DEBUG
 		cout << e.what();
-#else 
+#else
 		//Non interrompere l'esecuzione del codice, usa lo sprite di errore
 		size = errorSize;
 		sprite = Graphics::errorSprite;
 #endif
-
-
 	}
 
 	return sprite;

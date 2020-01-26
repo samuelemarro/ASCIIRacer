@@ -62,6 +62,5 @@ void Keyboard::updateStatus()
 		}
 	}
 
-
 	Keyboard::currentStatus = KeyboardStatus(pressed, down, released);
 }

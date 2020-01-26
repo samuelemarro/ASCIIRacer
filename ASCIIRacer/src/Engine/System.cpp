@@ -90,7 +90,7 @@ vector<string> System::loadFile(string path) {
 	file.open(path);
 
 	if (!file.is_open()) {
-		throw runtime_error("Impossibile aprire il file. "+path);
+		throw runtime_error("Impossibile aprire il file. " + path);
 	}
 
 	string str;

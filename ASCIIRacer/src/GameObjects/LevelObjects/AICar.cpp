@@ -25,7 +25,6 @@ void AICar::onCollision(CollisionInfo collisionInfo)
 	if (collider->name == "Road") {
 		if (collisionInfo.future.any && collisionInfo.present.any) {
 			//Scontro verticale
-			//TODO: Non è garantito che questo controllo sia corretto
 			if (collisionInfo.future.left) {
 				this->rect.position.x++;
 			}
@@ -39,11 +38,9 @@ void AICar::onCollision(CollisionInfo collisionInfo)
 	else if (collider->name == "AICar" && collisionInfo.future.any && collisionInfo.present.any) {
 		if (collisionInfo.future.left) {
 			this->rect.position.x++;
-			//((AICar*)collisionInfo.collider)->rect.position.x--;
 		}
 		else {
 			this->rect.position.x--;
-			//((AICar*)collisionInfo.collider)->rect.position.x++;
 		}
 	}
 }

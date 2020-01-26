@@ -70,8 +70,16 @@ void GameOverScene::onGraphics() {
 		}
 	}
 
+	float scoreOffsetY = r.position.y + r.size.height + 1;
+	Graphics::writeCentered(scoreOffsetY, "Best Score:");
+	string scoreText = std::to_string(this->bestScore);
+	if (scoreText.size() % 2 == 0) {
+		scoreText += " ";
+	}
+	Graphics::writeCentered(scoreOffsetY + 2, scoreText);
+
 	float textOffsetX = (Graphics::screenSize.width - maxLength) / 2;
-	float textOffsetY = r.position.y + r.size.height;
+	float textOffsetY = scoreOffsetY + 4;
 
 	drawMenu(textOffsetX, textOffsetY);
 	//Graphics::write((float)marginX - 1, (float)marginY + (this->cursor + 1) * (float)distanceY, " ");

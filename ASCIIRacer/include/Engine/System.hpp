@@ -44,7 +44,7 @@ public:
 	/// <summary>	Imposta il colore del testo. </summary>
 	///
 	/// <remarks>	Color::No_Color viene interpretato come
-	/// 			Color::White per foreground, come 
+	/// 			Color::White per foreground, come
 	/// 			Color::Black per background. </remarks>
 	///
 	/// <param name="foreground">	Il colore del testo. </param>

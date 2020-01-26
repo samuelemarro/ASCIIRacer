@@ -42,8 +42,12 @@ void GameEngine::changeScene(string name)
 		gameScene = new GameScene();
 		GameEngine::nextScene = gameScene;
 	}
-	else if(name == "MenuScene") GameEngine::nextScene = menuScene;
-	else if(name == "GameOverScene") GameEngine::nextScene = gameOverScene;
+	else if (name == "MenuScene") {
+		GameEngine::nextScene = menuScene;
+	}
+	else if (name == "GameOverScene") {
+		GameEngine::nextScene = gameOverScene;
+	}
 }
 
 void GameEngine::loop()
@@ -77,14 +81,13 @@ void GameEngine::loop()
 	if (GameEngine::currentScene != NULL) {
 		GameEngine::currentScene->onGraphics();
 	}
-	
+
 	Graphics::updateScreen();
 	//Graphics::redrawScreen();
 
 	if (GameEngine::currentScene != NULL) {
 		GameEngine::currentScene->onEndLoop();
 	}
-
 
 	//Sincronizza con il clock di fps
 

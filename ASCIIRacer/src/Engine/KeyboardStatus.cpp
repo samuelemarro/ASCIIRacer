@@ -6,8 +6,10 @@
 using std::vector;
 using std::find;
 
-KeyboardStatus::KeyboardStatus() : pressedKeys(vector<Key>()), downKeys(vector<Key>()), releasedKeys(vector<Key>()) {
-
+KeyboardStatus::KeyboardStatus() {
+	this->pressedKeys = vector<Key>();
+	this->downKeys = vector<Key>();
+	this->releasedKeys = vector<Key>();
 }
 
 KeyboardStatus::KeyboardStatus(vector<Key> pressedKeys, vector<Key> downKeys, vector<Key> releasedKeys) : pressedKeys(pressedKeys), downKeys(downKeys), releasedKeys(releasedKeys)
