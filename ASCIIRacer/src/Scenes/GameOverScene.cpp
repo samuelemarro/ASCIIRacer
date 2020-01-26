@@ -1,16 +1,8 @@
 #include "Scenes/GameOverScene.hpp"
-#include "Scenes/MenuScene.hpp"
 #include "Engine/Keyboard.hpp"
-#include "Engine/System.hpp"
-#include "Scenes/Scene.hpp"
-#include "Scenes/GameScene.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Graphics.hpp"
 
-#include "windows.h"
-#include <utility>
-#include <cstdlib>
-#include <iostream>
 
 using namespace std;
 typedef pair<string, string> pss;

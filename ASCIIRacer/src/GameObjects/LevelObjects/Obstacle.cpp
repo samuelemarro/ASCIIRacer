@@ -1,7 +1,6 @@
 #include "GameObjects/LevelObjects/Obstacle.hpp"
 
 #include "Engine/Graphics.hpp"
-#include "Engine/System.hpp"
 
 Obstacle::Obstacle(Point2D position, int damage, int type, ptr_Level parentLevel, int generationId) {
 	this->name = "Obstacle";

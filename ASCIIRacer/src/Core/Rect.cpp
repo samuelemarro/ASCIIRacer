@@ -1,5 +1,4 @@
 #include "Core/Rect.hpp"
-#include <cmath>
 #include <vector>
 
 using std::vector;

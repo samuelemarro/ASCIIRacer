@@ -1,6 +1,5 @@
 #include "GameObjects/Popup.hpp"
 #include "Engine/GameEngine.hpp"
-#include "Engine/System.hpp"
 #include "Engine/Graphics.hpp"
 
 Popup::Popup(Point2D position) {

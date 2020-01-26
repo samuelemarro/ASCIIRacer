@@ -1,13 +1,8 @@
 #include <map>
-#include <string>
 
 #include "Engine/System.hpp"
-#include "Engine/Key.hpp"
 #include "Engine/Keyboard.hpp"
-#include "Engine/KeyboardStatus.hpp"
 
-#include <algorithm>
-#include <iostream>
 #include <Windows.h>
 
 using std::map;

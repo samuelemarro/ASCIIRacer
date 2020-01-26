@@ -1,7 +1,6 @@
 #include "GameObjects/LevelObjects/Upgrade.hpp"
 
 #include "Engine/Graphics.hpp"
-#include "Engine/System.hpp"
 
 Upgrade::Upgrade(Point2D position, int bonus, int type, ptr_Level parentLevel, int generationId) {
 	this->name = "Upgrade";

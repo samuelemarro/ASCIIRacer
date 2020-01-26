@@ -1,9 +1,6 @@
 #include "GameObjects/LevelObjects/AICar.hpp"
 #include "Engine/Graphics.hpp"
 
-#include "Engine/System.hpp"
-#include "Engine/Keyboard.hpp"
-#include "Engine/GameEngine.hpp"
 
 AICar::AICar(Point2D position, int damage) {
 	this->name = "AICar";
@@ -31,16 +28,19 @@ void AICar::onCollision(CollisionInfo collisionInfo)
 			else {
 				this->rect.position.x--;
 			}
-
-			this->velocity.x = 0;
 		}
 	}
-	else if (collider->name == "AICar" && collisionInfo.future.any && collisionInfo.present.any) {
-		if (collisionInfo.future.left) {
-			this->rect.position.x++;
-		}
-		else {
-			this->rect.position.x--;
+	else if (collider->name == "AICar"){
+		this->velocity.x = 0;
+		collider->velocity.x = 0;
+
+		if (collisionInfo.future.any && collisionInfo.present.any) {
+			if (collisionInfo.future.left) {
+				this->rect.position.x++;
+			}
+			else {
+				this->rect.position.x--;
+			}
 		}
 	}
 }

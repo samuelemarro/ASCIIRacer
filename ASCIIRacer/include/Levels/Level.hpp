@@ -16,8 +16,8 @@ private:
 	unsigned int seed;
 
 	/// <summary>	Probabilità di generazione di ogni tipo di oggetto per quadretto  </summary>
-	float obstacleProbability[3] = { 0.001, 0.002, 0.002 };
-	float upgradeProbability[2] = { 0.002, 0.001 };
+	float obstacleProbability[3] = { 0.001f, 0.002f, 0.002f };
+	float upgradeProbability[2] = { 0.002f, 0.001f };
 
 	/// <summary>	Probabilità di generazione cumulative di quella classe di oggetto  </summary>
 	float obstacleCumulative;

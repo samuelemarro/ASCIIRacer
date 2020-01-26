@@ -1,30 +1,24 @@
 #include <iostream>
-#include "stdlib.h"
 
-#include "Core/Layer.hpp"
-#include "Engine/Key.hpp"
-#include "Engine/Keyboard.hpp"
-#include "Engine/KeyboardStatus.hpp"
 #include "Engine/Graphics.hpp"
-#include "Engine/System.hpp"
-#include "GameObjects/LevelObjects/PlayerCar.hpp"
 #include "Engine/GameEngine.hpp"
-#include "Scenes/GameScene.hpp"
-#include "Scenes/MenuScene.hpp"
 
-#include "windows.h"
+/// <summary>	Il punto di ingresso principale per
+/// 			l'applicazione. </summary>
+///
+/// <returns>	L'Exit Code (0 se il programma è
+/// 			stato eseguito correttamente). </returns>
 
 int main()
 {
 	System::initialise();
 	Graphics::initialise();
 	MenuScene menuScene;
-	int fps = 60;
-	GameEngine::maxFps = fps;
+	GameEngine::maxFps = 60;
 	GameEngine::start(&menuScene);
+
 	while (true)
 	{
-		//sleep_for(milliseconds(1000 / fps));
 		GameEngine::loop();
 	}
 

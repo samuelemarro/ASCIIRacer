@@ -1,9 +1,6 @@
 #include <algorithm>
 #include <iostream>
-#include <cstdio>
-#include <exception>
 
-#include "Core/Size.hpp"
 #include "Engine/Graphics.hpp"
 #include "Engine/System.hpp"
 
@@ -137,7 +134,6 @@ void Graphics::updateScreen() {
 				}
 
 				//Il metodo più veloce per stampare un carattere
-				//_putchar_nolock(buffer[y][x].character);
 				cout << buffer[y][x].character;
 			}
 		}

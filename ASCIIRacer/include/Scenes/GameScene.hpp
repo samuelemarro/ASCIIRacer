@@ -35,7 +35,7 @@ private:
 
 	/// <summary>	Il punteggio più alto ottenuto
 	/// 			nella partita attuale. </summary>
-	float bestScore;
+	int bestScore;
 
 	/// <summary>	Il puntatore al Popup della
 	/// 			scena. </summary>

@@ -1,7 +1,6 @@
 #include "Engine/GameEngine.hpp"
 #include "Engine/Graphics.hpp"
 #include "GameObjects/GameObject.hpp"
-#include "Core/Rect.hpp"
 
 GameObject::GameObject() {
 	this->layer = Layer::Content;

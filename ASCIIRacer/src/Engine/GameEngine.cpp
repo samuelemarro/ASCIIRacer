@@ -1,14 +1,8 @@
 #include <thread>
 
-#include "Scenes/GameOverScene.hpp"
-#include "Scenes/GameScene.hpp"
-#include "Scenes/MenuScene.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Keyboard.hpp"
-#include "Engine/KeyboardStatus.hpp"
 #include "Engine/Graphics.hpp"
-#include "Engine/System.hpp"
-#include "GameObjects/GameObject.hpp"
 
 using std::chrono::milliseconds;
 using std::chrono::milliseconds;

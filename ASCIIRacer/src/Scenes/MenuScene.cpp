@@ -1,15 +1,8 @@
 #include "Scenes/MenuScene.hpp"
 #include "Engine/Keyboard.hpp"
-#include "Engine/System.hpp"
-#include "Scenes/Scene.hpp"
-#include "Scenes/GameScene.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Graphics.hpp"
 
-#include "windows.h"
-#include <utility>
-#include <cstdlib>
-#include <iostream>
 
 using namespace std;
 typedef pair<string, string> pss;
@@ -48,7 +41,7 @@ void MenuScene::onStart() {
 	this->titleSprite = Graphics::loadSpriteFromFile(System::getExecutableDirectory() + "/sprites/TitleScreen.txt", size);
 
 	int titleOffset = (Graphics::screenSize.width - size.width) / 2;
-	Rect rect = Rect(Point2D(titleOffset, 1), size);
+	Rect rect = Rect(Point2D(titleOffset, 1.0f), size);
 
 	this->titleRect = rect;
 }

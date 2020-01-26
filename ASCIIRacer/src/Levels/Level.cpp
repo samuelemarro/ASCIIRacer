@@ -1,9 +1,6 @@
 #include "Levels/Level.hpp"
 
 #include "Engine/GameEngine.hpp"
-#include "Scenes/GameScene.hpp"
-#include "GameObjects/GameObject.hpp"
-#include "GameObjects/Road.hpp"
 #include "GameObjects/LevelObjects/Obstacle.hpp"
 #include "GameObjects/LevelObjects/Upgrade.hpp"
 #include "GameObjects/LevelObjects/AICar.hpp"
@@ -27,14 +24,14 @@ Level::Level(int ptn, int ptp, float s, int d) : Level() {
 
 	// Aggiustamento delle probabilità di generazione in base alla difficoltà
 	for (int i = 0; i < 3; ++i)
-		obstacleProbability[i] = min(obstacleProbability[i] + (this->difficulty - 1) * 0.000025, obstacleProbability[i] / 5.0 * 7.0);
-	obstacleCumulative = accumulate(obstacleProbability, obstacleProbability + 3, 0.0);
+		obstacleProbability[i] = min(obstacleProbability[i] + (this->difficulty - 1) * 0.000025f, obstacleProbability[i] / 5.0f * 7.0f);
+	obstacleCumulative = accumulate(obstacleProbability, obstacleProbability + 3, 0.0f);
 
 	for (int i = 0; i < 2; ++i)
-		upgradeProbability[i] = max(upgradeProbability[i] - (this->difficulty - 1) * 0.000025, upgradeProbability[i] / 3.0);
-	upgradeCumulative = accumulate(upgradeProbability, upgradeProbability + 2, 0.0);
+		upgradeProbability[i] = max(upgradeProbability[i] - (this->difficulty - 1) * 0.000025f, upgradeProbability[i] / 3.0f);
+	upgradeCumulative = accumulate(upgradeProbability, upgradeProbability + 2, 0.0f);
 
-	AIcarProbability = min(0.0005 + 0.000025 * this->difficulty, 0.001);
+	AIcarProbability = min(0.0005f + 0.000025f * this->difficulty, 0.001f);
 
 	//	Aggiustamento dei danni degli ostacoli e macchine in base alla difficoltà
 	for (int i = 0; i < 3; ++i)
@@ -106,9 +103,13 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 
 					// Se non esce dalla strada e non è stato precedentemente rimosso, aggiungilo alla scena
 					if ((i < roadWidth) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()))
+					{
 						scene->addGameObject(obstacle);
+					}
 					else
+					{
 						delete obstacle;
+					}
 
 					placed = true;
 

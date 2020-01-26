@@ -1,20 +1,8 @@
-#include <algorithm>
-#include <utility>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
 #include "Scenes/GameScene.hpp"
-#include "Scenes/GameOverScene.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Graphics.hpp"
-#include "Engine/System.hpp"
-#include "GameObjects/LevelObjects/PlayerCar.hpp"
 #include "GameObjects/LevelObjects/AICar.hpp"
-#include "GameObjects/LevelObjects/Obstacle.hpp"
-#include "GameObjects/LevelObjects/Upgrade.hpp"
-#include "Levels/Level.hpp"
-#include "GameObjects/Road.hpp"
+#include <algorithm>
 
 using std::max;
 using std::min;
@@ -213,8 +201,8 @@ vector<vector<ptr_GameObject>> GameScene::getCollisionMatrix(ptr_GameObject game
 		positionY = (int)(gameObject->futurePosition().y);
 	}
 	else {
-		positionX = (int)(gameObject->rect.position.x);
-		positionY = (int)(gameObject->rect.position.y);
+		positionX = (int)gameObject->rect.position.x;
+		positionY = (int)gameObject->rect.position.y;
 	}
 
 	vector<vector<ptr_GameObject>> collisionMatrix;
@@ -309,6 +297,7 @@ std::vector<std::pair<ptr_GameObject, CollisionType>> GameScene::getCollisionPai
 
 std::vector<CollisionInfo> GameScene::getCollisionInfos(ptr_GameObject gameObject)
 {
+	//Ottieni le coppie (collider, tipo di collisione)
 	auto presentPairs = getCollisionPairs(gameObject, false);
 	vector<pair<ptr_GameObject, CollisionType>> futurePairs;
 

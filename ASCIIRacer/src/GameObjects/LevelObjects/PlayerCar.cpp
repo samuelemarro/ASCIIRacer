@@ -4,7 +4,6 @@
 #include "GameObjects/LevelObjects/AICar.hpp"
 #include "Engine/Graphics.hpp"
 
-#include "Engine/System.hpp"
 #include "Engine/Keyboard.hpp"
 #include "Engine/GameEngine.hpp"
 

@@ -1,8 +1,6 @@
 #include "Engine/System.hpp"
-#include "stdlib.h"
 #include "windows.h"
 
-#include <exception>
 #include <fstream>
 
 using std::string;
@@ -53,7 +51,7 @@ void System::setTextColor(Color foreground, Color background)
 {
 	Color trueForeground, trueBackground;
 	if (foreground == Color::No_Color) {
-		trueForeground = Color::White;
+		trueForeground = Color::Bright_White;
 	}
 	else {
 		trueForeground = foreground;
