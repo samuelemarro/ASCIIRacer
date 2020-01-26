@@ -31,7 +31,7 @@ void GameScene::onStart()
 	ptr_Level first_level = new Level(1000, -1, 10, 1);  //initial level with difficulty 1
 	this->currentLevel = first_level;
 
-	PlayerCar* p1 = new PlayerCar(Point2D(30, 27), 60);
+	PlayerCar* p1 = new PlayerCar(Point2D(30, 27), 40, 60, 20);
 	this->playerCar = p1;
 	this->playerCar->points = 0;
 
