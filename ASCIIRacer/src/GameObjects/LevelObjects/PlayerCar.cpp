@@ -40,6 +40,12 @@ void PlayerCar::onCollision(CollisionInfo collisionInfo) {
 		this->velocity.x = 0;
 	}
 
+	/** Effetto della collisione in base al tipo di oggetto:
+	 *	- aumenta o diminuisci i punti 
+	 *	- segna come da distruggere se è un oggetto
+	 *	- aggiungi il suo id all'insieme degli id degli oggetti 
+	 *	  da distruggere del livello a cui appartiene
+	 */
 	if (collider->name == "Upgrade") {
 		Upgrade* up = dynamic_cast<Upgrade*>(collider);
 		this->points += up->bonus;
