@@ -11,9 +11,6 @@
 #include "Engine/System.hpp"
 #include "GameObjects/LevelObjects/PlayerCar.hpp"
 #include "GameObjects/LevelObjects/AICar.hpp"
-#include "GameObjects/LevelObjects/WeirdWall.hpp"
-#include "GameObjects/LevelObjects/RoadLine.hpp"
-#include "GameObjects/LevelObjects/Border.hpp"
 #include "GameObjects/LevelObjects/Obstacle.hpp"
 #include "GameObjects/LevelObjects/Upgrade.hpp"
 #include "Levels/Level.hpp"
@@ -36,7 +33,7 @@ void GameScene::onStart()
 	this->playerCar = p1;
 	this->playerCar->points = 0;
 	
-	Road* road = new Road(Graphics::screenSize, 5, Graphics::screenSize.height);
+	Road* road = new Road(Graphics::screenSize, 5, 0);
 	this->road = road;
 
 	this->currentLevel->prepareLevel();
@@ -63,14 +60,6 @@ void GameScene::onStart()
 }
 
 void GameScene::onLoop() {
-
-	//Inizializzazione dei gameObject
-	for (auto gameObject : getGameObjects()) {
-		if (!gameObject->initialised) {
-			gameObject->onStart();
-			gameObject->initialised = true;
-		}
-	}
 
 	if (currentLevel->changeLevel(this->playerCar->points)) {
 		int oldDifficulty = currentLevel->difficulty;

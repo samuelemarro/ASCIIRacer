@@ -10,22 +10,53 @@ using std::to_string;
 
 class GameObject {
 public:
+
+	/// <summary>	Il nome del GameObject. </summary>
 	string name;
+
+	/// <summary>	Il rettangolo del GameObject. </summary>
 	Rect rect;
+
+	/// <summary>	Il layer del GameObject, corrispondente
+	/// 			alla posizione "z" </summary>
 	Layer layer;
+
+	/// <summary>	Lo sprite del GameObject. </summary>
 	Sprite sprite;
-	bool initialised;
+
+	/// <summary>	Vero se il GameObject va eliminato alla fine
+	/// 			del ciclo corrente. </summary>
 	bool toBeDestroyed;
 
+	/// <summary>	Vero se il GameObject "ferma" gli altri oggetti
+	/// 			durante le collisioni. </summary>
 	bool solid;
+
+	/// <summary>	Il vettore velocità del GameObject. </summary>
 	Point2D velocity;
 
-	virtual void onStart();
+	/// <summary>	Eseguito ogni ciclo del motore di gioco. </summary>
+
 	virtual void onUpdate();
+
+	/// <summary>	Distrugge questo GameObject. </summary>
+	///
+	/// <remarks>	L'oggetto viene effettivamente distrutto solo
+	/// 			alla fine dell'esecuzione del ciclo. </remarks>
 
 	void destroy();
 
+	/// <summary>	La posizione che il GameObject avrà nella prossima
+	/// 			esecuzione del ciclo. </summary>
+	///
+	/// <remarks>	La posizione viene calcolata basandosi su
+	/// 			<see cref="velocity">. </remarks>
+	///
+	/// <returns>	La posizione futura. </returns>
+
 	Point2D futurePosition();
+
+	/// <summary>	Costruttore di default. </summary>
 
 	GameObject();
 };

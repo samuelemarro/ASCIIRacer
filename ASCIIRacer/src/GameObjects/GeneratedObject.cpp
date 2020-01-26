@@ -1,9 +1,5 @@
 #include "GameObjects/GeneratedObject.hpp"
 
-void GeneratedObject::onStart()
-{
-}
-
 void GeneratedObject::onUpdate()
 {
 }

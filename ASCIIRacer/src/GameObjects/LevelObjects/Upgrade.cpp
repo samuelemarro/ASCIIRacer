@@ -3,10 +3,10 @@
 #include "Engine/Graphics.hpp"
 #include "Engine/System.hpp"
 
-Upgrade::Upgrade(Point2D position, int b, int t, ptr_Level parentLevel, int generationId) {
+Upgrade::Upgrade(Point2D position, int bonus, int type, ptr_Level parentLevel, int generationId) {
 	this->name = "Upgrade";
-	this->bonus = b;
-	this->type = t;
+	this->bonus = bonus;
+	this->type = type;
 	this->layer = Layer::Content;
 	this->velocity = Point2D(0, 3);
 	Size size;
@@ -17,6 +17,3 @@ Upgrade::Upgrade(Point2D position, int b, int t, ptr_Level parentLevel, int gene
 	this->parentLevel = parentLevel;
 	this->generationId = generationId;
 }
-
-void Upgrade::onStart() {}
-void Upgrade::onUpdate() {}

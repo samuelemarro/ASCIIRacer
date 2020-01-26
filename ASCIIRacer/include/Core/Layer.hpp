@@ -1,5 +1,10 @@
 #pragma once
 
+/// <summary>	Indica la posizione "z" di un GameObject. </summary>
+///
+/// <remarks>	Un GameObject con un Layer più alto verrà
+/// 			disegnato sopra uno con un layer più basso. </remarks>
+
 enum class Layer
 {
     Overlay = 5,

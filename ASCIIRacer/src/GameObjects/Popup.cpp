@@ -8,10 +8,6 @@ Popup::Popup(Point2D position) {
 	this->sprite = Sprite();
 }
 
-void Popup::onStart()
-{
-}
-
 void Popup::onUpdate() {
 	if (active) {
 		shownTime += GameEngine::deltaTime();

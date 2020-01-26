@@ -3,10 +3,10 @@
 #include "Engine/Graphics.hpp"
 #include "Engine/System.hpp"
 
-Obstacle::Obstacle(Point2D position, int d, int t, ptr_Level parentLevel, int generationId) {
+Obstacle::Obstacle(Point2D position, int damage, int type, ptr_Level parentLevel, int generationId) {
 	this->name = "Obstacle";
-	this->damage = d;
-	this->type = t;
+	this->damage = damage;
+	this->type = type;
 	this->layer = Layer::Content;
 	this->velocity = Point2D(0, 1);
 	Size size;
@@ -17,6 +17,3 @@ Obstacle::Obstacle(Point2D position, int d, int t, ptr_Level parentLevel, int ge
 	this->parentLevel = parentLevel;
 	this->generationId = generationId;
 }
-
-void Obstacle::onStart() {}
-void Obstacle::onUpdate() {}

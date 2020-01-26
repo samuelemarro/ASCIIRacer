@@ -4,7 +4,6 @@
 #include "Core/Rect.hpp"
 
 GameObject::GameObject() {
-	this->initialised = false;
 	this->layer = Layer::Content;
 	this->rect = Rect(Point2D(0, 0), Graphics::errorSize);
 	this->sprite = Graphics::errorSprite;
@@ -26,5 +25,4 @@ Point2D GameObject::futurePosition()
 	return futurePos;
 }
 
-void GameObject::onStart() {}
 void GameObject::onUpdate() {}

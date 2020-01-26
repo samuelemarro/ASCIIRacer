@@ -51,7 +51,7 @@ vector<Cell> Road::newLine()
 
 Road::Road(Size size, float initialSpeed, int memory) {
 	Point2D position = Point2D(0, -1);
-	Size trueSize = Size(size.width, size.height + memory);
+	Size trueSize = Size(size.width, size.height + memory + 1);
 	this->rect = Rect(position, trueSize);
 	this->name = "Road";
 

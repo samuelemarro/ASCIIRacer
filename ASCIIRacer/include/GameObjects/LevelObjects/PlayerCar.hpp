@@ -5,13 +5,27 @@
 
 class PlayerCar : public GameObject
 {
-public:
-	int level = 0;
-	int points = 0;
+private:
 	float maxSpeed;
-	void onStart() override;
-	void onUpdate() override;
+
+public:
+
+	/// <summary>	Il punteggio del giocatore. </summary>
+	int points = 0;
+
+	/// <summary>	Eseguito ogni ciclo del motore di gioco. </summary>
+	void onUpdate();
+
+	/// <summary>	Chiamato in caso di collisione. </summary>
+	///
+	/// <param name="collisionInfo">	Le informazioni sulla collisione. </param>
 	void onCollision(CollisionInfo collisionInfo);
+
+	/// <summary>	Costruttore. </summary>
+	///
+	/// <param name="position">	La posizione iniziale </param>
+	/// <param name="maxSpeed">	La velocità massima della
+	/// 						PlayerCar. </param>
 
 	PlayerCar(Point2D position, float maxSpeed);
 };

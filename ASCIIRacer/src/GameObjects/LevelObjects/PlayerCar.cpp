@@ -19,10 +19,7 @@ PlayerCar::PlayerCar(Point2D position, float maxSpeed) {
 	this->rect = Rect(position, size);
 }
 
-void PlayerCar::onStart() {}
 void PlayerCar::onUpdate() {
-	float speedX = 100;
-	float speedY = 50;
 	KeyboardStatus status = Keyboard::currentStatus;
 	if (status.isDown(Key::Right)) {
 		velocity.x = maxSpeed;// max(0, min(maxSpeed, velocity.x + accelleration * GameEngine::deltaTime()));

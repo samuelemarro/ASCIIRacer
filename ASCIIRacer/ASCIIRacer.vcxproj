@@ -151,12 +151,9 @@
     <ClCompile Include="src\GameObjects\GameObject.cpp" />
     <ClCompile Include="src\GameObjects\GeneratedObject.cpp" />
     <ClCompile Include="src\GameObjects\LevelObjects\AICar.cpp" />
-    <ClCompile Include="src\GameObjects\LevelObjects\Border.cpp" />
     <ClCompile Include="src\GameObjects\LevelObjects\Obstacle.cpp" />
     <ClCompile Include="src\GameObjects\LevelObjects\PlayerCar.cpp" />
-    <ClCompile Include="src\GameObjects\LevelObjects\RoadLine.cpp" />
     <ClCompile Include="src\GameObjects\LevelObjects\Upgrade.cpp" />
-    <ClCompile Include="src\GameObjects\LevelObjects\WeirdWall.cpp" />
     <ClCompile Include="src\GameObjects\Popup.cpp" />
     <ClCompile Include="src\GameObjects\Road.cpp" />
     <ClCompile Include="src\Levels\Level.cpp" />
@@ -180,11 +177,8 @@
     <ClInclude Include="include\Engine\KeyboardStatus.hpp" />
     <ClInclude Include="include\Engine\System.hpp" />
     <ClInclude Include="include\GameObjects\GeneratedObject.hpp" />
-    <ClInclude Include="include\GameObjects\LevelObjects\Border.hpp" />
     <ClInclude Include="include\GameObjects\LevelObjects\Obstacle.hpp" />
-    <ClInclude Include="include\GameObjects\LevelObjects\RoadLine.hpp" />
     <ClInclude Include="include\GameObjects\LevelObjects\Upgrade.hpp" />
-    <ClInclude Include="include\GameObjects\LevelObjects\WeirdWall.hpp" />
     <ClInclude Include="include\GameObjects\LevelObjects\AICar.hpp" />
     <ClInclude Include="include\GameObjects\Popup.hpp" />
     <ClInclude Include="include\GameObjects\Road.hpp" />
