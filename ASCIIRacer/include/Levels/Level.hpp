@@ -20,21 +20,27 @@ private:
 	float obstacleCumulative;
 	float upgradeCumulative;
 	float AIcarProbability;
-
-public:
 	int pointsToNextLevel;
 	int pointsToPrevLevel;
+
+public:
 	float speed;    // forse meglio che sia un int? da capire
 	int difficulty;
 
+	/// <summary>	I generationId dei GeneratedObject
+	/// 			rimossi dal giocatore. </summary>
 	vector<int> removedIds;
 
-
+	/// <summary>	Il livello precedente. </summary>
 	Level* prevLevel;
+
+	/// <summary>	Il livello successivo. </summary>
 	Level* nextLevel;
 
+	/// <summary>	Costruttore di default. </summary>
 
 	Level();
+
 	Level(int ptn, int ptp, float s, int d);
 
 	void prepareLevel();
@@ -42,7 +48,6 @@ public:
 	bool changeLevel(int player_points);
 
 	void generateLine(int roadPosition, int roadWidth);
-
 };
 
 typedef Level* ptr_Level;

@@ -4,12 +4,14 @@
 
 using std::vector;
 
-Rect::Rect(Point2D position, Size size) : position(position), size(size) {
-
+Rect::Rect(Point2D position, Size size) {
+	this->position = position;
+	this->size = size;
 }
 
-Rect::Rect(float positionX, float positionY, int width, int height) : position(Point2D(positionX, positionY)), size(Size(width, height)) {
-
+Rect::Rect(float positionX, float positionY, int width, int height) {
+	this->position = Point2D(positionX, positionY);
+	this->size = Size(width, height);
 }
 
 bool Rect::containsPoint(Point2D point, bool snap)
@@ -33,5 +35,4 @@ bool Rect::containsPoint(float x, float y, bool snap)
 }
 
 Rect::Rect() {
-
 }

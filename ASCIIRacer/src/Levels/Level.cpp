@@ -12,9 +12,9 @@ Level::Level() {
 	this->seed = -1;
 }
 
-Level::Level(int ptn, int ptp, float s, int d) : Level(){
-	this->pointsToNextLevel = ptn;
-	this->pointsToPrevLevel = ptp;
+Level::Level(int pointsToNextLevel, int pointsToPreviousLevel, float s, int d) : Level() {
+	this->pointsToNextLevel = pointsToNextLevel;
+	this->pointsToPrevLevel = pointsToPreviousLevel;
 	this->speed = s;
 	this->difficulty = d;
 
@@ -62,12 +62,9 @@ Level* Level::newLevel(int player_points) {
 	else return this;		//Caso mai raggiunto poichè precondition: changeLevel == true
 }
 
-
-
 void Level::generateLine(int roadPosition, int roadWidth) {
-
 	GameScene* scene = (GameScene*)GameEngine::currentScene;
-	
+
 	for (int i = 1; i < roadWidth; i++) {
 		float r = System::randomFloat();
 
@@ -82,7 +79,7 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 
 					i += obstacle->rect.size.width - 1;
 
-					if ( (i < roadWidth) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) )
+					if ((i < roadWidth) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()))
 						scene->addGameObject(obstacle);
 					else
 						delete obstacle;
@@ -113,7 +110,7 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 		else if (r < obstacleCumulative + upgradeCumulative) {
 			//Genera upgrade
 			bool placed = false;
-			for (int j = 1; j <= 2 && !placed; j++){
+			for (int j = 1; j <= 2 && !placed; j++) {
 				if (r < obstacleCumulative + accumulate(upgradeProbability, upgradeProbability + j, 0.0)) {
 					Upgrade* upgrade = new Upgrade(Point2D(roadPosition + i, -1), 150 + 150 * (j - 1), j, this, currentId);
 					upgrade->velocity.y = this->speed;
@@ -121,11 +118,11 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 
 					i += upgrade->rect.size.width - 1;
 
-					if ( (i < roadWidth) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) )
+					if ((i < roadWidth) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()))
 						scene->addGameObject(upgrade);
 					else
-						delete upgrade;						
-						
+						delete upgrade;
+
 					placed = true;
 				}
 			}
@@ -136,10 +133,10 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 			if (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) {
 				AICar* aicar = new AICar(Point2D(roadPosition + i, -3), min(500 + 50 * (this->difficulty - 1), 1000));
 				aicar->velocity.y = this->speed * 0.5f;
-				aicar->velocity.x = (rand() % 6) * ((i <= roadWidth/2) ? 1.0f : -1.0f);
+				aicar->velocity.x = (rand() % 6) * ((i <= roadWidth / 2) ? 1.0f : -1.0f);
 
-				aicar->sprite[1][1].character = '0' + rand() % 10;	
-				
+				aicar->sprite[1][1].character = '0' + rand() % 10;
+
 				Color centerColor = (Color)(rand() % 15 + 1);
 				Color borderColor = (Color)(rand() % 15 + 1);
 				for (int y = 0; y < 3; y++) {
@@ -152,7 +149,7 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 						}
 					}
 				}
-				
+
 				i += aicar->rect.size.width - 1;
 
 				if (i < roadWidth)

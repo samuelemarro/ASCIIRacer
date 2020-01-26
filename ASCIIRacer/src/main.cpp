@@ -14,15 +14,10 @@
 
 #include "windows.h"
 
-using namespace std;
-
-#include <chrono>
-#include <thread>
-
-using namespace std::this_thread;
-using namespace std::chrono;
-
-void sceneTest() {
+int main()
+{
+	System::initialise();
+	Graphics::initialise();
 	MenuScene menuScene;
 	int fps = 60;
 	GameEngine::maxFps = fps;
@@ -31,15 +26,7 @@ void sceneTest() {
 	{
 		//sleep_for(milliseconds(1000 / fps));
 		GameEngine::loop();
-
 	}
-}
-
-int main()
-{
-	System::initialise();
-	Graphics::initialise();
-	sceneTest();
 
 	return 0;
 }

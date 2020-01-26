@@ -30,7 +30,6 @@ void PlayerCar::onUpdate() {
 	else {
 		velocity.x = 0;
 	}
-	
 }
 
 void PlayerCar::onCollision(CollisionInfo collisionInfo) {
@@ -41,11 +40,11 @@ void PlayerCar::onCollision(CollisionInfo collisionInfo) {
 	if (collider->name == "Road") {
 		if (collisionInfo.future.any && collisionInfo.present.any) {
 			//Scontro verticale
-			if (collisionInfo.present.left) { 
+			if (collisionInfo.present.left) {
 				this->rect.position.x++;
 			}
-			else{ 
-				this->rect.position.x--; 
+			else {
+				this->rect.position.x--;
 			}
 		}
 	}
@@ -63,17 +62,17 @@ void PlayerCar::onCollision(CollisionInfo collisionInfo) {
 		}
 	}
 
-	if (collider->name == "Upgrade") { 
+	if (collider->name == "Upgrade") {
 		Upgrade* up = dynamic_cast<Upgrade*>(collider);
-		this->points += up->bonus; 
-		collider->toBeDestroyed = true; 
+		this->points += up->bonus;
+		collider->toBeDestroyed = true;
 
 		up->parentLevel->removedIds.push_back(up->generationId);
 	}
-	else if (collider->name == "Obstacle") { 
+	else if (collider->name == "Obstacle") {
 		Obstacle* obs = dynamic_cast<Obstacle*>(collider);
-		this->points -= obs->damage; 
-		collider->toBeDestroyed = true; 
+		this->points -= obs->damage;
+		collider->toBeDestroyed = true;
 
 		obs->parentLevel->removedIds.push_back(obs->generationId);
 	}
@@ -87,7 +86,7 @@ void PlayerCar::onCollision(CollisionInfo collisionInfo) {
 		AICar* aicar = dynamic_cast<AICar*>(collider);
 		if (collisionInfo.future.left && collisionInfo.future.right)
 			this->points -= aicar->damage;
-		else 
+		else
 			this->points -= aicar->damage * GameEngine::deltaTime();
-	}	
+	}
 }

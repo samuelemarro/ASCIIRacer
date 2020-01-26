@@ -1,8 +1,8 @@
 #include <algorithm>
 #include <utility>
 #include <stdio.h>
-#include <stdlib.h> 
-#include <time.h>  
+#include <stdlib.h>
+#include <time.h>
 
 #include "Scenes/GameScene.hpp"
 #include "Scenes/GameOverScene.hpp"
@@ -26,13 +26,15 @@ void GameScene::onStart()
 {
 	srand(time(NULL));
 
+	this->bestScore = 0;
+
 	ptr_Level first_level = new Level(1000, -1, 10, 1);  //initial level with difficulty 1
 	this->currentLevel = first_level;
 
 	PlayerCar* p1 = new PlayerCar(Point2D(30, 27), 60);
 	this->playerCar = p1;
 	this->playerCar->points = 0;
-	
+
 	Road* road = new Road(Graphics::screenSize, 5, 0);
 	this->road = road;
 
@@ -56,34 +58,37 @@ void GameScene::onStart()
 	}
 
 	this->popup = new Popup(Point2D(100, 9));
-
 }
 
 void GameScene::onLoop() {
+	if (this->playerCar->points > this->bestScore) {
+		this->bestScore = this->playerCar->points;
+	}
 
-	if (currentLevel->changeLevel(this->playerCar->points)) {
-		int oldDifficulty = currentLevel->difficulty;
+	if (this->playerCar->points >= 0) {
+		if (currentLevel->changeLevel(this->playerCar->points)) {
+			int oldDifficulty = currentLevel->difficulty;
 
-		this->currentLevel = currentLevel->newLevel(this->playerCar->points);
-		this->currentLevel->prepareLevel();
+			this->currentLevel = currentLevel->newLevel(this->playerCar->points);
+			this->currentLevel->prepareLevel();
 
-		string directory = System::getExecutableDirectory();
+			string directory = System::getExecutableDirectory();
 
-		if (currentLevel->difficulty > oldDifficulty) {
-			this->popup->notify(directory + "/sprites/LevelUp.txt", 0.5);
-		}
-		else {
-			this->popup->notify(directory + "/sprites/LevelDown.txt", 0.5);
-		}
+			if (currentLevel->difficulty > oldDifficulty) {
+				this->popup->notify(directory + "/sprites/LevelUp.txt", 0.5);
+			}
+			else {
+				this->popup->notify(directory + "/sprites/LevelDown.txt", 0.5);
+			}
 
-		if (this->playerCar->points >= 0) {
 			for (auto gameObject : getLevelObjects()) {
-				gameObject->velocity.y = currentLevel->speed  * ((gameObject->name == "AICar") ? 0.5f : 1);
+				gameObject->velocity.y = currentLevel->speed * ((gameObject->name == "AICar") ? 0.5f : 1);
 			}
 		}
-		else {
-			GameEngine::changeScene("GameOverScene");
-		}
+	}
+	else {
+		GameEngine::gameOverScene->bestScore = this->bestScore;
+		GameEngine::changeScene("GameOverScene");
 	}
 
 	for (auto gameObject : getGameObjects()) {
@@ -102,11 +107,10 @@ void GameScene::onLoop() {
 void GameScene::onGraphics()
 {
 	Graphics::write(100, 5, "LEVEL: " + std::to_string(currentLevel->difficulty));
-	if (this->playerCar->points >= 0)Graphics::write(100, 7, "SCORE: " + std::to_string(this->playerCar->points));
-	else GameEngine::changeScene("GameOverScene");
-	//test printing
-	//Graphics::write(100, 9, to_string(this->currentLevel->currentId));
-	//test printing
+	if (this->playerCar->points >= 0) {
+		Graphics::write(100, 7, "SCORE: " + std::to_string(this->playerCar->points));
+	}
+
 	for (Layer layer : getLayers()) {
 		for (auto gameObject : getGameObjects()) {
 			if (gameObject->layer == layer) {
@@ -118,6 +122,7 @@ void GameScene::onGraphics()
 
 void GameScene::onEndLoop()
 {
+	//Elimina gli oggetti non più necessari
 	for (auto gameObject : getGameObjects()) {
 		if (gameObject->rect.position.y > Graphics::screenSize.height) {
 			gameObject->toBeDestroyed = true;
@@ -285,7 +290,7 @@ std::vector<std::pair<ptr_GameObject, CollisionType>> GameScene::getCollisionPai
 
 std::vector<CollisionInfo> GameScene::getCollisionInfos(ptr_GameObject gameObject)
 {
-	vector<pair<ptr_GameObject, CollisionType>> presentPairs = getCollisionPairs(gameObject, false);
+	auto presentPairs = getCollisionPairs(gameObject, false);
 	vector<pair<ptr_GameObject, CollisionType>> futurePairs;
 
 	if (gameObject->velocity.magnitude() == 0) {
@@ -386,7 +391,6 @@ std::vector<ptr_GameObject> GameScene::getLevelObjects()
 	return collisionGameObjects;
 }
 
-
 vector<Layer> GameScene::getLayers()
 {
 	vector<Layer> layers;
@@ -417,7 +421,7 @@ GameScene::~GameScene() {
 
 void GameScene::increasePoints() {
 	this->travelBonus += GameEngine::deltaTime();    //tiene il conto dei quadretti percorsi dall'ultimo increase di punti dovuti all'andare avanti
-	
+
 	//ogni 10 quadretti mi dà 1 punto
 	if (travelBonus >= 1.0) {
 		this->playerCar->points += 5;

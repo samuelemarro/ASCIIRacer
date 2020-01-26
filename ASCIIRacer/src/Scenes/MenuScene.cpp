@@ -22,8 +22,6 @@ void MenuScene::addOption(string name, string s) {
 
 void MenuScene::fetchOptions() {
 	addOption("PLAY", "GameScene");
-	addOption("OPTIONS", " ");
-	addOption("CREDITS", " ");
 	//EXIT opzione deve essere ultima aggiunta
 	addOption("EXIT", " ");
 }
@@ -36,12 +34,23 @@ void MenuScene::drawMenu(int xOffset, int yOffset) {
 }
 
 void MenuScene::moveCursor(bool down) {
-	if (down && (this->cursor< this->options.size()-1)) this->cursor++;
-	else if(!down && this->cursor>0) this->cursor--;
+	if (down && (this->cursor < this->options.size() - 1)) {
+		this->cursor++;
+	}
+	else if (!down && this->cursor > 0) {
+		this->cursor--;
+	}
 }
 
-void MenuScene::onStart(){
+void MenuScene::onStart() {
 	fetchOptions();
+	Size size;
+	this->titleSprite = Graphics::loadSpriteFromFile(System::getExecutableDirectory() + "/sprites/TitleScreen.txt", size);
+
+	int titleOffset = (Graphics::screenSize.width - size.width) / 2;
+	Rect rect = Rect(Point2D(titleOffset, 1), size);
+
+	this->titleRect = rect;
 }
 
 void MenuScene::onLoop() {
@@ -56,13 +65,9 @@ void MenuScene::onLoop() {
 }
 
 void MenuScene::onGraphics() {
+	Graphics::draw(this->titleRect, this->titleSprite);
 
-	Size size;
-	Sprite s = Graphics::loadSpriteFromFile(System::getExecutableDirectory() + "/sprites/TitleScreen.txt", size);
-	int titleOffset = (Graphics::screenSize.width - size.width) / 2;
-	Rect r = Rect(Point2D(titleOffset, 0), size);
-	Graphics::draw(r, s);
-
+	//Menu
 	int maxLength = -1;
 
 	for (pss pair : this->options) {
@@ -71,14 +76,28 @@ void MenuScene::onGraphics() {
 		}
 	}
 
-	float textOffsetX = (Graphics::screenSize.width - maxLength) / 2;
-	float textOffsetY = r.position.y + r.size.height;
-	
+	int textOffsetX = (Graphics::screenSize.width - maxLength) / 2;
+	float textOffsetY = this->titleRect.position.y + this->titleRect.size.height;
+
 	drawMenu(textOffsetX, textOffsetY);
-	//Graphics::write((float)marginX - 1, (float)marginY + (this->cursor + 1) * (float)distanceY, " ");
 	Graphics::write((float)textOffsetX - 1, (float)textOffsetY + (this->cursor + 1) * (float)distanceY, ">");
+
+	//Crediti
+	float creditsY = Graphics::screenSize.height - 2;
+
+	string name1 = "Samuele Marro";
+	string name2 = "Edoardo Merli";
+	string name3 = "Filip Radovic";
+
+	int nameOffset1 = (Graphics::screenSize.width / 4) - (name1.size() / 2);
+	Graphics::write(nameOffset1, creditsY, name1);
+
+	int nameOffset2 = (Graphics::screenSize.width / 2) - (name2.size() / 2);
+	Graphics::write(nameOffset2, creditsY, name2);
+
+	int nameOffset3 = (Graphics::screenSize.width * 3 / 4) - (name3.size() / 2);
+	Graphics::write(nameOffset3, creditsY, name3);
 }
 
 void MenuScene::onEndLoop() {
-
 }

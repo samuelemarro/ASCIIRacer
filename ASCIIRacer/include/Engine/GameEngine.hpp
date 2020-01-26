@@ -11,13 +11,9 @@
 #include "GameObjects/GameObject.hpp"
 #include "Scenes/Scene.hpp"
 
-
 class GameEngine
 {
 private:
-	static GameScene* gameScene;
-	static GameOverScene* gameOverScene;
-	static MenuScene* menuScene;
 
 	GameEngine();
 	static std::chrono::time_point<std::chrono::steady_clock> lastLoopTime_;
@@ -27,6 +23,9 @@ private:
 	static float deltaTime_;
 
 public:
+	static GameScene* gameScene;
+	static GameOverScene* gameOverScene;
+	static MenuScene* menuScene;
 
 	/// <summary>	La scena attuale. </summary>
 	static ptr_Scene currentScene;
@@ -37,7 +36,7 @@ public:
 	/// <summary>	Avvia il motore. </summary>
 	///
 	/// <param name="firstScene"> La prima scena. </param>
-	
+
 	static void start(ptr_Scene firstScene);
 
 	/// <summary>	Cambia la scena. </summary>
@@ -56,6 +55,6 @@ public:
 	/// <summary>	Restituisce il tempo (in secondi) trascorso dall'ultimo ciclo. </summary>
 	///
 	/// <returns>	Il tempo in secondi dall'ultimo ciclo completato. </returns>
-	
+
 	static float deltaTime();
 };
