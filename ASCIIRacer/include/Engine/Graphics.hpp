@@ -84,6 +84,12 @@ public:
 
 	static void write(float x, float y, std::string text);
 
+	/// <summary>	Scrive del testo centrato rispetto
+	/// 			allo schermo. </summary>
+	///
+	/// <param name="y">   	La coordinata y del testo. </param>
+	/// <param name="text">	Il testo. </param>
+
 	static void writeCentered(float y, std::string text);
 
 	/// <summary>	Ridisegna la schermata. </summary>

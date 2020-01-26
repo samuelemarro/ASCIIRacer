@@ -11,7 +11,7 @@ private:
 	/// <summary>	L'identificativo del prossimo oggetto da generare  </summary>
 	int currentId;
 
-	/// <summary>	il seed con cui inizializzare il generatore 
+	/// <summary>	il seed con cui inizializzare il generatore
 	///				pseudo-random quando si passa a questo livello	</summary>
 	unsigned int seed;
 
@@ -42,7 +42,7 @@ public:
 	/// <summary>	Difficoltà del livello  </summary>
 	int difficulty;
 
-	/// <summary>	Insieme degli identificativi degli oggetti che 
+	/// <summary>	Insieme degli identificativi degli oggetti che
 	///				sono stati raccolti/urtati in questo livello finora  </summary>
 	vector<int> removedIds;
 
@@ -66,12 +66,12 @@ public:
 
 	/// <summary>	Ritorna il livello verso cui bisogna fare la transizione,
 	///				se necessario lo genera	 </summary>
-	/// 
+	///
 	/// <param name="player_points">	I punti attuali del giocatore  </param>
 	Level* newLevel(int player_points);
 
 	/// <summary>	Ritorna true se si deve cambiare livello, false altrimenti  </summary>
-	/// 
+	///
 	/// <param name="player_points">	I punti attuali del giocatore  </param>
 	bool changeLevel(int player_points);
 
@@ -81,7 +81,6 @@ public:
 	///									della strada  </param>
 	/// <param name="roadWidth">		Larghezza della strada	</param>
 	void generateLine(int roadPosition, int roadWidth);
-
 };
 
 typedef Level* ptr_Level;

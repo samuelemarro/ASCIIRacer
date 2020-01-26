@@ -68,15 +68,7 @@ void Graphics::draw(Rect rect, Sprite sprite) {
 			int screenPosition = screenY * screenSize.width + screenX;
 
 			if (sprite[y][x].character != IGNORE_CHAR) {
-				buffer[screenY][screenX].character = sprite[y][x].character;
-			}
-
-			if (sprite[y][x].foreground != Color::No_Color) {
-				buffer[screenY][screenX].foreground = sprite[y][x].foreground;
-			}
-
-			if (sprite[y][x].background != Color::No_Color) {
-				buffer[screenY][screenX].background = sprite[y][x].background;
+				buffer[screenY][screenX] = sprite[y][x];
 			}
 		}
 	}
@@ -120,9 +112,9 @@ void Graphics::redrawScreen() {
 }
 
 void Graphics::updateScreen() {
-	bool setColor = false;
 	Color lastForeground = Color::No_Color;
 	Color lastBackground = Color::No_Color;
+	System::setTextColor(Color::No_Color, Color::No_Color);
 
 	for (int y = 0; y < screenSize.height; y++) {
 		bool redraw = false;
@@ -138,9 +130,8 @@ void Graphics::updateScreen() {
 				}
 				redraw = true;
 
-				if (!setColor || buffer[y][x].foreground != lastForeground || buffer[y][x].background != lastBackground) {
+				if (buffer[y][x].foreground != lastForeground || buffer[y][x].background != lastBackground) {
 					System::setTextColor(buffer[y][x].foreground, buffer[y][x].background);
-					setColor = true;
 					lastForeground = buffer[y][x].foreground;
 					lastBackground = buffer[y][x].background;
 				}

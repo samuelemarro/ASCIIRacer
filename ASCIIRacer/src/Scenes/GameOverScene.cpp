@@ -19,8 +19,8 @@ const int marginY = 2;
 const int marginX = 30;
 const int distanceY = 2;
 
-void GameOverScene::addOption(string name, string s) {
-	this->options.push_back(pss(name, s));
+void GameOverScene::addOption(string name, string scene) {
+	this->options.push_back(pss(name, scene));
 }
 
 void GameOverScene::fetchOptions() {
@@ -42,25 +42,35 @@ void GameOverScene::moveCursor(bool down) {
 
 void GameOverScene::onStart() {
 	fetchOptions();
+	Size size;
+	this->gameOverSprite = Graphics::loadSpriteFromFile(System::getExecutableDirectory() + "/sprites/GameOverScreen.txt", size);
+	int titleXOffset = (Graphics::screenSize.width - size.width) / 2;
+	int titleYOffset = 3;
+
+	this->gameOverRect = Rect(Point2D(titleXOffset, titleYOffset), size);
 }
 
 void GameOverScene::onLoop() {
-	if (this->status.isPressed(Key::Down)) moveCursor(true);
-	else if (this->status.isPressed(Key::Up)) moveCursor(false);
+	auto status = Keyboard::currentStatus;
 
-	this->status = Keyboard::currentStatus;
+	if (status.isPressed(Key::Down)) {
+		moveCursor(true);
+	}
+	else if (status.isPressed(Key::Up)) {
+		moveCursor(false);
+	}
+
 	bool change = false;
-	if (this->status.isPressed(Key::Confirm)) change = true;
-	if (this->options[this->cursor].second != " " && change) GameEngine::changeScene(this->options[this->cursor].second);
+	if (status.isPressed(Key::Confirm)) {
+		change = true;
+	}
+	if (this->options[this->cursor].second != " " && change) {
+		GameEngine::changeScene(this->options[this->cursor].second);
+	}
 }
 
 void GameOverScene::onGraphics() {
-	Size size;
-	Sprite s = Graphics::loadSpriteFromFile(System::getExecutableDirectory() + "/sprites/GameOverScreen.txt", size);
-	int titleXOffset = (Graphics::screenSize.width - size.width) / 2;
-	int titleYOffset = 3;
-	Rect r = Rect(Point2D(titleXOffset, titleYOffset), size);
-	Graphics::draw(r, s);
+	Graphics::draw(this->gameOverRect, this->gameOverSprite);
 
 	int maxLength = -1;
 
@@ -70,7 +80,7 @@ void GameOverScene::onGraphics() {
 		}
 	}
 
-	float scoreOffsetY = r.position.y + r.size.height + 1;
+	float scoreOffsetY = this->gameOverRect.position.y + this->gameOverRect.size.height + 1;
 	Graphics::writeCentered(scoreOffsetY, "Best Score:");
 	string scoreText = std::to_string(this->bestScore);
 	if (scoreText.size() % 2 == 0) {
@@ -82,9 +92,5 @@ void GameOverScene::onGraphics() {
 	float textOffsetY = scoreOffsetY + 4;
 
 	drawMenu(textOffsetX, textOffsetY);
-	//Graphics::write((float)marginX - 1, (float)marginY + (this->cursor + 1) * (float)distanceY, " ");
 	Graphics::write((float)textOffsetX - 1, (float)textOffsetY + (this->cursor + 1) * (float)distanceY, ">");
-}
-
-void GameOverScene::onEndLoop() {
 }

@@ -54,12 +54,12 @@ void MenuScene::onStart() {
 }
 
 void MenuScene::onLoop() {
-	if (this->status.isPressed(Key::Down)) moveCursor(true);
-	else if (this->status.isPressed(Key::Up)) moveCursor(false);
+	auto status = Keyboard::currentStatus;
+	if (status.isPressed(Key::Down)) moveCursor(true);
+	else if (status.isPressed(Key::Up)) moveCursor(false);
 
-	this->status = Keyboard::currentStatus;
 	bool change = false;
-	if (this->status.isPressed(Key::Confirm)) change = true;
+	if (status.isPressed(Key::Confirm)) change = true;
 	if (this->options[this->cursor].second != " " && change) GameEngine::changeScene(this->options[this->cursor].second);
 	else if (this->cursor == this->options.size() - 1 && change) exit(EXIT_SUCCESS);
 }
@@ -85,19 +85,10 @@ void MenuScene::onGraphics() {
 	//Crediti
 	float creditsY = Graphics::screenSize.height - 2;
 
-	string name1 = "Samuele Marro";
-	string name2 = "Edoardo Merli";
-	string name3 = "Filip Radovic";
+	vector<string> names = { "Samuele Marro", "Edoardo Merli", "Filip Radovic" };
 
-	int nameOffset1 = (Graphics::screenSize.width / 4) - (name1.size() / 2);
-	Graphics::write(nameOffset1, creditsY, name1);
-
-	int nameOffset2 = (Graphics::screenSize.width / 2) - (name2.size() / 2);
-	Graphics::write(nameOffset2, creditsY, name2);
-
-	int nameOffset3 = (Graphics::screenSize.width * 3 / 4) - (name3.size() / 2);
-	Graphics::write(nameOffset3, creditsY, name3);
-}
-
-void MenuScene::onEndLoop() {
+	for (int i = 0; i < 3; i++) {
+		int nameOffset = (Graphics::screenSize.width * (i + 1) / 4) - (names[i].size() / 2);
+		Graphics::write(nameOffset, creditsY, names[i]);
+	}
 }

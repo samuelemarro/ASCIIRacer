@@ -84,9 +84,8 @@ Level* Level::newLevel(int player_points) {
 }
 
 void Level::generateLine(int roadPosition, int roadWidth) {
-
 	GameScene* scene = (GameScene*)GameEngine::currentScene;
-	
+
 	// Per ogni quadretto della strada
 	for (int i = 1; i < roadWidth; i++) {
 		// Genero un numero random fra 0 e 1
@@ -106,7 +105,7 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 					i += obstacle->rect.size.width - 1;
 
 					// Se non esce dalla strada e non è stato precedentemente rimosso, aggiungilo alla scena
-					if ( (i < roadWidth) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) )
+					if ((i < roadWidth) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()))
 						scene->addGameObject(obstacle);
 					else
 						delete obstacle;
@@ -123,7 +122,7 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 							obstacle->velocity.x = 0;
 
 							i += obstacle->rect.size.width - 1;
-							if ( (i < roadWidth) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) )
+							if ((i < roadWidth) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()))
 								scene->addGameObject(obstacle);
 							else
 								delete obstacle;
@@ -139,7 +138,7 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 						obstacle->velocity.x = 0;
 
 						i += obstacle->rect.size.width - 1;
-						if ( (i < roadWidth) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) )
+						if ((i < roadWidth) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()))
 							scene->addGameObject(obstacle);
 						else
 							delete obstacle;
@@ -156,7 +155,7 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 			bool placed = false;
 
 			// Genera upgrade in base al tipo
-			for (int j = 1; j <= 2 && !placed; j++){
+			for (int j = 1; j <= 2 && !placed; j++) {
 				if (r < obstacleCumulative + accumulate(upgradeProbability, upgradeProbability + j, 0.0)) {
 					Upgrade* upgrade = new Upgrade(Point2D(roadPosition + i, -1), 150 + 150 * (j - 1), j, this, currentId);
 					upgrade->velocity.y = this->speed;
@@ -165,11 +164,11 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 					i += upgrade->rect.size.width - 1;
 
 					// Se non esce dalla strada e non è stato precedentemente rimosso, aggiungilo alla scena
-					if ( (i < roadWidth) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()) )
+					if ((i < roadWidth) && (find(this->removedIds.begin(), this->removedIds.end(), this->currentId) == this->removedIds.end()))
 						scene->addGameObject(upgrade);
 					else
-						delete upgrade;						
-						
+						delete upgrade;
+
 					placed = true;
 				}
 			}
@@ -184,11 +183,11 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 
 			// Velocità di scorrimento minore di quella della strada, e movimento orizzontale casuale
 			aicar->velocity.y = this->speed * 0.5f;
-			aicar->velocity.x = (rand() % 6) * ((i <= roadWidth/2) ? 1.0f : -1.0f);
+			aicar->velocity.x = (rand() % 6) * ((i <= roadWidth / 2) ? 1.0f : -1.0f);
 
 			// Numero casuale al centro dello sprite
-			aicar->sprite[1][1].character = '0' + rand() % 10;	
-				
+			aicar->sprite[1][1].character = '0' + rand() % 10;
+
 			// Colore casuale per bordi e numero al centro
 			Color centerColor = (Color)(rand() % 15 + 1);
 			Color borderColor = (Color)(rand() % 15 + 1);
@@ -202,7 +201,7 @@ void Level::generateLine(int roadPosition, int roadWidth) {
 					}
 				}
 			}
-				
+
 			i += aicar->rect.size.width - 1;
 
 			// Se non esce dalla strada, aggiungila alla scena

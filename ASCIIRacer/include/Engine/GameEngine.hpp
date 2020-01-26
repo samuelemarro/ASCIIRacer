@@ -11,20 +11,36 @@
 #include "GameObjects/GameObject.hpp"
 #include "Scenes/Scene.hpp"
 
+/// <summary>	Gestisce l'esecuzione del gioco. </summary>
+
 class GameEngine
 {
 private:
 
+	/// <summary>	Costruttore di default (privato). </summary>
+
 	GameEngine();
+
+	/// <summary>	Il momento in cui il motore ha
+	/// 			eseguito l'ultimo ciclo. </summary>
 	static std::chrono::time_point<std::chrono::steady_clock> lastLoopTime_;
 
+	/// <summary>	La prossima scena. </summary>
 	static ptr_Scene nextScene;
 
+	/// <summary>	Il tempo impiegato per l'esecuzione di
+	/// 			un ciclo. </summary>
 	static float deltaTime_;
 
 public:
+
+	/// <summary>	La scena di gioco. </summary>
 	static GameScene* gameScene;
+
+	/// <summary>	La scena di Game Over. </summary>
 	static GameOverScene* gameOverScene;
+
+	/// <summary>	La scena del menu. </summary>
 	static MenuScene* menuScene;
 
 	/// <summary>	La scena attuale. </summary>

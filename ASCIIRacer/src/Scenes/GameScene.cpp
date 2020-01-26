@@ -37,7 +37,7 @@ void GameScene::onStart()
 	// Inizializzazione della macchinina del giocatore
 	PlayerCar* p1 = new PlayerCar(Point2D(30, 27), 40, 60, 20);
 	this->playerCar = p1;
-	
+
 	// Inizializzazione della strada
 	Road* road = new Road(Graphics::screenSize, 5, 0);
 	this->road = road;
@@ -436,14 +436,13 @@ GameScene::~GameScene() {
 	this->collisionBuffer.erase(this->collisionBuffer.begin(), this->collisionBuffer.end());
 	delete this->currentLevel;
 	this->otherObjects.erase(this->otherObjects.begin(), this->otherObjects.end());
-	delete this->nextScene;
 	delete this->playerCar;
 }
 
 void GameScene::increasePoints() {
 	// Bonus dovuto al passaggio di "deltaTime" tempo, arriva a 1 ogni secondo trascorso
 	this->travelBonus += GameEngine::deltaTime();
-	
+
 	// Ogni secondo trascorso guadagno 5 punti
 	if (travelBonus >= 1.0) {
 		this->playerCar->points += 5;

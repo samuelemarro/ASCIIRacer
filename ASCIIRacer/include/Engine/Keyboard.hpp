@@ -5,6 +5,8 @@
 #include "Key.hpp"
 #include "KeyboardStatus.hpp"
 
+/// <summary>	Gestisce la tastiera. </summary>
+
 class Keyboard
 {
 private:
@@ -15,6 +17,8 @@ private:
 	/// <returns>	Il vettore di chiavi virtuali. </returns>
 
 	static std::vector<Key> getDownKeys();
+
+	/// <summary>	Costruttore di default (privato). </summary>
 
 	Keyboard();
 

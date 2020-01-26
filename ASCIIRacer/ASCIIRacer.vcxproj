@@ -161,6 +161,7 @@
     <ClCompile Include="src\Scenes\GameScene.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Scenes\MenuScene.cpp" />
+    <ClCompile Include="src\Scenes\Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Core\Cell.hpp" />

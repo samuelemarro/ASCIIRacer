@@ -3,6 +3,8 @@
 #include "Core/Point2D.hpp"
 #include "Core/Size.hpp"
 
+/// <summary>	Rappresenta un rettangolo. </summary>
+
 class Rect {
 public:
 

@@ -3,14 +3,37 @@
 
 class Scene {
 public:
+
+	/// <summary>	Vero se la scena è inizializzata. </summary>
 	bool initialised = false;
-	Scene* nextScene = NULL;
 
-	virtual void onStart() = 0;
+	/// <summary>	Viene chiamato quando la scena
+	/// 			viene caricata. </summary>
 
-	virtual void onLoop() = 0;
-	virtual void onGraphics() = 0;
-	virtual void onEndLoop() = 0;
+	virtual void onStart();
+
+	/// <summary>	Viene chiamato ogni esecuzione
+	/// 			del ciclo di gioco. </summary>
+	///
+	/// <remarks>	Non inserire codice legato
+	/// 			alla grafica. </remarks>
+
+	virtual void onLoop();
+
+	/// <summary>	Viene chiamato ogni esecuzione
+	/// 			del ciclo di gioco, quando il
+	/// 			motore è pronto per la grafica. </summary>
+	///
+	/// <remarks>	Non inserire codice non legato
+	/// 			alla grafica. </remarks>
+
+	virtual void onGraphics();
+
+	/// <summary>	Viene chiamato alla fine
+	/// 			di ogni esecuzione del ciclo
+	/// 			di gioco. </summary>
+
+	virtual void onEndLoop();
 };
 
 typedef Scene* ptr_Scene;

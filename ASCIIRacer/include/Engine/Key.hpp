@@ -8,6 +8,5 @@ enum class Key
 	Down,
 	Right,
 	Left,
-	Confirm,
-	Back
+	Confirm
 };

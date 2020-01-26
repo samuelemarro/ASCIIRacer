@@ -8,6 +8,9 @@
 using std::string;
 using std::to_string;
 
+/// <summary>	Un oggetto all'interno della
+/// 			GameScene. </summary>
+
 class GameObject {
 public:
 

@@ -4,6 +4,8 @@
 
 #include "Key.hpp"
 
+/// <summary>	Rappresenta lo stato della tastiera. </summary>
+
 class KeyboardStatus
 {
 public:

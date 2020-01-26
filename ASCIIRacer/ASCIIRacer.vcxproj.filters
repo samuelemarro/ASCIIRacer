@@ -25,6 +25,7 @@
     <ClCompile Include="src\Core\CollisionInfo.cpp" />
     <ClCompile Include="src\Core\CollisionType.cpp" />
     <ClCompile Include="src\GameObjects\Popup.cpp" />
+    <ClCompile Include="src\Scenes\Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">

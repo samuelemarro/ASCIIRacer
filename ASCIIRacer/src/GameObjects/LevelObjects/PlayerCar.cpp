@@ -49,7 +49,6 @@ void PlayerCar::onUpdate() {
 	else {
 		velocity.x = 0;
 	}
-	
 }
 
 void PlayerCar::onCollision(CollisionInfo collisionInfo) {
@@ -59,9 +58,9 @@ void PlayerCar::onCollision(CollisionInfo collisionInfo) {
 	}
 
 	/** Effetto della collisione in base al tipo di oggetto:
-	 *	- aumenta o diminuisci i punti 
+	 *	- aumenta o diminuisci i punti
 	 *	- segna come da distruggere se è un oggetto
-	 *	- aggiungi il suo id all'insieme degli id degli oggetti 
+	 *	- aggiungi il suo id all'insieme degli id degli oggetti
 	 *	  da distruggere del livello a cui appartiene
 	 */
 	if (collider->name == "Upgrade") {
@@ -95,11 +94,11 @@ void PlayerCar::onCollision(CollisionInfo collisionInfo) {
 	if (collider->name == "Road") {
 		if (collisionInfo.future.any && collisionInfo.present.any) {
 			//Scontro verticale
-			if (collisionInfo.present.left) { 
+			if (collisionInfo.present.left) {
 				this->rect.position.x++;
 			}
-			else{ 
-				this->rect.position.x--; 
+			else {
+				this->rect.position.x--;
 			}
 		}
 	}

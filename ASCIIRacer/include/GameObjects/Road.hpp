@@ -7,8 +7,17 @@
 
 class Road : public GameObject {
 private:
+
+	/// <summary>	Genera una nuovo pezzo di strada. </summary>
+	/// <returns>	Un vettore con le celle del
+	/// 			pezzo di strada. </returns>
+
 	std::vector<Cell> newLine();
+
+	/// <summary>	La posizione in cui inizia la strada. </summary>
 	int roadBeginning;
+
+	/// <summary>	La larghezza della strada. </summary>
 	int roadWidth;
 public:
 

@@ -7,8 +7,18 @@
 
 class Popup : public GameObject {
 private:
+
+	/// <summary>	Quanto tempo è passato
+	/// 			dall'ultima chiamata di
+	/// 			notify(). </summary>
 	float shownTime;
+
+	/// <summary>	Vero se il Popup è al
+	/// 			momento attivo. </summary>
 	bool active;
+
+	/// <summary>	La durata della notifica
+	/// 			attuale. </summary>
 	float currentDuration;
 public:
 

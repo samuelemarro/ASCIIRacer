@@ -3,7 +3,7 @@
 #include "Levels/Level.hpp"
 #include "GameObjects/GameObject.hpp"
 
-/// <summary>	Un oggetto generato da <see cref="Level">. </summary>
+/// <summary>	Un oggetto generato da Level. </summary>
 
 class GeneratedObject : public GameObject {
 public:

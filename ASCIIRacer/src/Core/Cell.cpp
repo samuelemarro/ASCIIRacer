@@ -13,10 +13,6 @@ Cell::Cell(char character, bool collision) : Cell(character, collision, Color::N
 {
 }
 
-Cell::Cell(char character, bool collision, Color foreground) : Cell(character, collision, foreground, Color::No_Color)
-{
-}
-
 Cell::Cell(char character, bool collision, Color foreground, Color background)
 {
 	this->character = character;

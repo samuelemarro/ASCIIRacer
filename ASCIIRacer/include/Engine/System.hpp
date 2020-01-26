@@ -6,8 +6,14 @@
 #include "Core/Color.hpp"
 #include "Core/Size.hpp"
 
+/// <summary>	Si interfaccia con il sistema
+/// 			operativo. </summary>
+
 class System {
 private:
+
+	/// <summary>	Costruttore di default (privato). </summary>
+
 	System();
 public:
 
