@@ -24,25 +24,28 @@ using std::sort;
 
 void GameScene::onStart()
 {
+	// Inizializzazione del seed col tempo attuale
 	srand(time(NULL));
 
-	ptr_Level first_level = new Level(1000, -1, 10, 1);  //initial level with difficulty 1
+	// Inizializzazione del primo livello
+	ptr_Level first_level = new Level(1000, -1, 10, 1);
 	this->currentLevel = first_level;
 
+	// Inizializzazione della macchinina del giocatore
 	PlayerCar* p1 = new PlayerCar(Point2D(30, 27), 60);
 	this->playerCar = p1;
-	this->playerCar->points = 0;
 	
+	// Inizializzazione della strada
 	Road* road = new Road(Graphics::screenSize, 5, 0);
 	this->road = road;
 
+	// Preparazione del primo livello
 	this->currentLevel->prepareLevel();
 
-	for (auto gameObject : getLevelObjects()) {
-		gameObject->velocity.y = currentLevel->speed;
-	}
+	// Sincronizzazione della velocità della strada con quella del livello
+	this->road->velocity.y = currentLevel->speed;
 
-	//Prepara il collisionBuffer
+	// Prepara il collisionBuffer
 	Size screenSize = Graphics::screenSize;
 	collisionBuffer.reserve(screenSize.height);
 
@@ -55,20 +58,24 @@ void GameScene::onStart()
 		collisionBuffer.push_back(row);
 	}
 
+	// Inizializzazione del Popup (LevelUp e LevelDown)
 	this->popup = new Popup(Point2D(100, 9));
 
 }
 
 void GameScene::onLoop() {
 
+	// Se bisogna cambiare il livello
 	if (currentLevel->changeLevel(this->playerCar->points)) {
 		int oldDifficulty = currentLevel->difficulty;
 
+		// Effettua transizione e prepara il livello
 		this->currentLevel = currentLevel->newLevel(this->playerCar->points);
 		this->currentLevel->prepareLevel();
 
 		string directory = System::getExecutableDirectory();
 
+		// Animazione del Popup
 		if (currentLevel->difficulty > oldDifficulty) {
 			this->popup->notify(directory + "/sprites/LevelUp.txt", 0.5);
 		}
@@ -76,23 +83,31 @@ void GameScene::onLoop() {
 			this->popup->notify(directory + "/sprites/LevelDown.txt", 0.5);
 		}
 
+		// Se il gioco continua dopo il cambio di livello
 		if (this->playerCar->points >= 0) {
+			// Sincronizza la velocità degli oggetti già presenti con quella del nuovo livello 
 			for (auto gameObject : getLevelObjects()) {
 				gameObject->velocity.y = currentLevel->speed  * ((gameObject->name == "AICar") ? 0.5f : 1);
 			}
 		}
+		// Altrimenti passa a scena di GameOver
 		else {
 			GameEngine::changeScene("GameOverScene");
 		}
 	}
 
+	// Aggiorna tutti gli oggetti
 	for (auto gameObject : getGameObjects()) {
 		gameObject->onUpdate();
 	}
 
+	// Aumenta i punti secondo il tempo trascorso
 	this->increasePoints();
 
+	// Controllo collisioni
 	checkCollisions();
+
+	// Aggiorna la posizione degli oggetti a seconda della loro velocità
 	for (auto GameObject : getGameObjects()) {
 		GameObject->rect.position.x += GameObject->velocity.x * GameEngine::deltaTime();
 		GameObject->rect.position.y += GameObject->velocity.y * GameEngine::deltaTime();
@@ -101,12 +116,14 @@ void GameScene::onLoop() {
 
 void GameScene::onGraphics()
 {
+	// Disegna numero del livello e punteggio
 	Graphics::write(100, 5, "LEVEL: " + std::to_string(currentLevel->difficulty));
-	if (this->playerCar->points >= 0)Graphics::write(100, 7, "SCORE: " + std::to_string(this->playerCar->points));
-	else GameEngine::changeScene("GameOverScene");
-	//test printing
-	//Graphics::write(100, 9, to_string(this->currentLevel->currentId));
-	//test printing
+	if (this->playerCar->points >= 0)
+		Graphics::write(100, 7, "SCORE: " + std::to_string(this->playerCar->points));
+	else 
+		GameEngine::changeScene("GameOverScene");
+
+	// Disegna tutti gli oggetti rispettando la precedenza dei layers
 	for (Layer layer : getLayers()) {
 		for (auto gameObject : getGameObjects()) {
 			if (gameObject->layer == layer) {
@@ -118,19 +135,20 @@ void GameScene::onGraphics()
 
 void GameScene::onEndLoop()
 {
+	// Segna come da distruggere gli oggetti non più da visualizzare su schermo
 	for (auto gameObject : getGameObjects()) {
 		if (gameObject->rect.position.y > Graphics::screenSize.height) {
 			gameObject->toBeDestroyed = true;
 		}
 	}
 
-	//Finalizzazione
+	// Finalizzazione
 	removeToBeDestroyed();
 }
 
 void GameScene::removeToBeDestroyed()
 {
-	//Rimuovi i GameObject da distruggere
+	// Rimuovi i GameObject da distruggere
 	for (int i = 0; i < otherObjects.size(); i++) {
 		if (otherObjects[i]->toBeDestroyed) {
 			delete otherObjects[i];
@@ -362,6 +380,7 @@ void GameScene::checkCollisions()
 
 vector<ptr_GameObject> GameScene::getGameObjects()
 {
+	// Tutti gli oggetti
 	vector<ptr_GameObject> allGameObjects(this->otherObjects.begin(), this->otherObjects.end());
 	if (this->road != NULL) {
 		allGameObjects.push_back(this->road);
@@ -378,6 +397,7 @@ vector<ptr_GameObject> GameScene::getGameObjects()
 
 std::vector<ptr_GameObject> GameScene::getLevelObjects()
 {
+	// Solo gli oggetti specifici del livello
 	vector<ptr_GameObject> collisionGameObjects(this->otherObjects.begin(), this->otherObjects.end());
 	if (this->road != NULL) {
 		collisionGameObjects.push_back(this->road);
@@ -416,11 +436,12 @@ GameScene::~GameScene() {
 }
 
 void GameScene::increasePoints() {
-	this->travelBonus += GameEngine::deltaTime();    //tiene il conto dei quadretti percorsi dall'ultimo increase di punti dovuti all'andare avanti
+	// Bonus dovuto al passaggio di "deltaTime" tempo, arriva a 1 ogni secondo trascorso
+	this->travelBonus += GameEngine::deltaTime();
 	
-	//ogni 10 quadretti mi dà 1 punto
+	// Ogni secondo trascorso guadagno 5 punti
 	if (travelBonus >= 1.0) {
 		this->playerCar->points += 5;
-		this->travelBonus = 0;
+		this->travelBonus = 0.0;
 	}
 }

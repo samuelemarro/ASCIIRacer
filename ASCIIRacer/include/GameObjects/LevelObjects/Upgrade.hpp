@@ -11,7 +11,6 @@ public:
 	/// 			di collisione con la PlayerCar. </summary>
 	int bonus;
 
-
 	/// <summary>	Il tipo di Upgrade. </summary>
 	int type;
 

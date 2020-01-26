@@ -17,6 +17,7 @@ PlayerCar::PlayerCar(Point2D position, float maxSpeed) {
 	std::string directory = System::getExecutableDirectory();
 	this->sprite = Graphics::loadSpriteFromFile(directory + "/sprites/PlayerCar.txt", size);
 	this->rect = Rect(position, size);
+	this->points = 0;
 }
 
 void PlayerCar::onUpdate() {
@@ -38,6 +39,35 @@ void PlayerCar::onCollision(CollisionInfo collisionInfo) {
 	if (collisionInfo.future.any) {
 		this->velocity.x = 0;
 	}
+
+	if (collider->name == "Upgrade") {
+		Upgrade* up = dynamic_cast<Upgrade*>(collider);
+		this->points += up->bonus;
+		collider->toBeDestroyed = true;
+
+		up->parentLevel->removedIds.push_back(up->generationId);
+	}
+	else if (collider->name == "Obstacle") {
+		Obstacle* obs = dynamic_cast<Obstacle*>(collider);
+		this->points -= obs->damage;
+		collider->toBeDestroyed = true;
+
+		obs->parentLevel->removedIds.push_back(obs->generationId);
+	}
+	else if (collider->name == "Road") {
+		if (collisionInfo.future.left && collisionInfo.future.right)
+			this->points -= 250;
+		else
+			this->points -= 1000 * GameEngine::deltaTime();
+	}
+	else if (collider->name == "AICar") {
+		AICar* aicar = dynamic_cast<AICar*>(collider);
+		if (collisionInfo.future.left && collisionInfo.future.right)
+			this->points -= aicar->damage;
+		else
+			this->points -= aicar->damage * GameEngine::deltaTime();
+	}
+
 	if (collider->name == "Road") {
 		if (collisionInfo.future.any && collisionInfo.present.any) {
 			//Scontro verticale
@@ -62,32 +92,4 @@ void PlayerCar::onCollision(CollisionInfo collisionInfo) {
 			}
 		}
 	}
-
-	if (collider->name == "Upgrade") { 
-		Upgrade* up = dynamic_cast<Upgrade*>(collider);
-		this->points += up->bonus; 
-		collider->toBeDestroyed = true; 
-
-		up->parentLevel->removedIds.push_back(up->generationId);
-	}
-	else if (collider->name == "Obstacle") { 
-		Obstacle* obs = dynamic_cast<Obstacle*>(collider);
-		this->points -= obs->damage; 
-		collider->toBeDestroyed = true; 
-
-		obs->parentLevel->removedIds.push_back(obs->generationId);
-	}
-	else if (collider->name == "Road") {
-		if (collisionInfo.future.left && collisionInfo.future.right)
-			this->points -= 250;
-		else
-			this->points -= 1000 * GameEngine::deltaTime();
-	}
-	else if (collider->name == "AICar") {
-		AICar* aicar = dynamic_cast<AICar*>(collider);
-		if (collisionInfo.future.left && collisionInfo.future.right)
-			this->points -= aicar->damage;
-		else 
-			this->points -= aicar->damage * GameEngine::deltaTime();
-	}	
 }

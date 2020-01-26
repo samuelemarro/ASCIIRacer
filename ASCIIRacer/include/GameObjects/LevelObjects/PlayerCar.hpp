@@ -11,7 +11,7 @@ private:
 public:
 
 	/// <summary>	Il punteggio del giocatore. </summary>
-	int points = 0;
+	int points;
 
 	/// <summary>	Eseguito ogni ciclo del motore di gioco. </summary>
 	void onUpdate();

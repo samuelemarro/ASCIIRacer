@@ -39,13 +39,6 @@ public:
 
 	virtual void onUpdate();
 
-	/// <summary>	Distrugge questo GameObject. </summary>
-	///
-	/// <remarks>	L'oggetto viene effettivamente distrutto solo
-	/// 			alla fine dell'esecuzione del ciclo. </remarks>
-
-	void destroy();
-
 	/// <summary>	La posizione che il GameObject avrà nella prossima
 	/// 			esecuzione del ciclo. </summary>
 	///

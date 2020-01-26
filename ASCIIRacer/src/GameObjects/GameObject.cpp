@@ -12,10 +12,6 @@ GameObject::GameObject() {
 	this->solid = true;
 }
 
-void GameObject::destroy() {
-	this->toBeDestroyed = true;
-}
-
 Point2D GameObject::futurePosition()
 {
 	Point2D futurePos = this->rect.position;
